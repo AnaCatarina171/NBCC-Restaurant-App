@@ -18,8 +18,8 @@ import javax.persistence.Table;
 public class Employee {
 
 	@Id
-	@SequenceGenerator(name = "CUS_SEQ_GEN", sequenceName = "CUS_SEQ", initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CUS_SEQ_GEN")
+	@SequenceGenerator(name = "EMP_SEQ_GEN", sequenceName = "EMP_SEQ", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EMP_SEQ_GEN")
 	@Column(name = "EMP_ID", unique = true)
 	private Long id;
 	
