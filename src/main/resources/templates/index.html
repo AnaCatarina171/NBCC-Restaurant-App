@@ -18,7 +18,9 @@
 	<div class="header">
 		<div class="flex-container-column">
 			<div class="content-top logo">
-				<h2>LOGO</h2>
+				<div class="image-container">
+					<img src="img/NBCC.png">
+				</div>
 			</div>
 			<div class="content-bottom">
 				<div class="navigation">
@@ -26,7 +28,7 @@
 						<a href="#" class="nav-link"> Home </a>
 					</div>
 					<div class="navigation-item right-border">
-						<a href="menus-display" class="nav-link "> Menus </a>
+						<a th:href="@{/customerMenuDisplay}" class="nav-link "> Menus </a>
 					</div>
 					<div class="navigation-item">
 						<a href="book-reservation" class="nav-link"> Book a
@@ -38,10 +40,12 @@
 	</div>
 
 	<div class="main  medium-width">
-		<div class="flex-container margin-top-5">
+		<div class="flex-container margin-top-5 ">
 			<div class="content-left">
-				<h2>Come to know our amazing team of instructors and students,
-					which together create an exceptional restaurant experience.</h2>
+				<h2>Come experience cuisines from around the world as our
+					students learn new cooking techniques. Each week features a banquet
+					style 3 course meal highlighting the cuisine of a different country
+					or region.</h2>
 				<br> <br> <a href="book-reservation" class="button-6">Book
 					a Reservation</a>
 			</div>
