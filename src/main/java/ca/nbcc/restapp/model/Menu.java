@@ -30,8 +30,14 @@ public class Menu {
 	@Column(name="MENU_DESCRIPTION")
 	private String description;
 	
+	@Column(name="MENU_TYPE")
+	private String type;
+	
 	@Column(name="MENU_DATE")
 	private LocalDate date;
+	
+	@Column(name="MENU_TODISPLAY")
+	private Boolean toDisplay; 
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="FK_REST_ID")
@@ -42,12 +48,13 @@ public class Menu {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Menu(String title, String description, LocalDate date, Restaurant restaurant) {
+	public Menu(String title, String description, LocalDate date, Restaurant restaurant, Boolean toDisplay) {
 		super();
 		this.title = title;
 		this.description = description;
 		this.date = date;
 		this.restaurant = restaurant;
+		this.toDisplay = toDisplay;
 	}
 
 	public Long getId() {
@@ -88,6 +95,14 @@ public class Menu {
 
 	public void setRestaurant(Restaurant restaurant) {
 		this.restaurant = restaurant;
+	}	
+
+	public Boolean getToDisplay() {
+		return toDisplay;
+	}
+
+	public void setToDisplay(Boolean toDisplay) {
+		this.toDisplay = toDisplay;
 	}
 
 	@Override

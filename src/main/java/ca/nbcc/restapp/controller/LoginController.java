@@ -1,5 +1,21 @@
 package ca.nbcc.restapp.controller;
 
-public class LoginController {
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
+@Controller
+public class LoginController {
+	private ApplicationContext ctx;	
+	
+	public LoginController(ApplicationContext ctx) {
+		super();
+		this.ctx = ctx;
+	}
+
+
+	@GetMapping("/userPanel")
+	public String toUserPannel() {
+		return "user-panel";
+	}
 }

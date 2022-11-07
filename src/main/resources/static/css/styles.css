@@ -160,7 +160,9 @@ img {
     max-width: 100%;
     height: auto;
   }
-  
+ .center{
+ 	text-align:center;
+ }
 .center-container{
 	margin-top:100px;
 	text-align:center;
@@ -284,6 +286,122 @@ h4{
 	color: rgba(255, 255, 255, 0.5);
 }
 
+/* USER PANEL  */
+
+.admin-page{
+	box-sizing:border-box;
+	margin:0;	
+}
+.admin-page .user-left-panel{
+	position:fixed;
+	top:0;
+	left:0;
+	height:100%;
+	background-color: #A08679;
+	width: 15%;
+	padding: 1rem;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	justify-content:center;
+}
+
+.admin-page .logo{
+	margin-bottom: 40px;
+}
+
+.admin-page .navigation-item{
+	margin-left: 0;
+}
+.admin-page .user-navigation{
+	border-top:solid 2px #000;
+	padding-top:20px;
+}
+
+.admin-page .main{
+	position:fixed;
+	top:0;
+	margin-left:15%;
+	width:100%;
+	height:100%;
+	background-color:#fff;
+}
+
+
+.admin-page .main .top-information{
+	height:50px;
+	padding:5px;
+	background-color:#fff;
+	border-bottom:1px solid grey;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 15px;
+}
+
+.admin-page .main .content{	
+	padding:20px;
+	background-color:#fff;
+	display:flex;
+	flex-direction:column;
+	gap:20px;
+}
+
+.cart-primary{	
+	width:80%;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+	border-radius:10px;
+}
+
+.cart-primary-title{
+	padding: 15px;
+	background-color: #d3d3d3;
+	border-radius:10px 10px 0 0 ;
+}
+
+.cart-primary-content{
+	padding:25px;
+	display:flex;
+	flex-wrap: wrap;
+	gap:10px;
+}
+
+.cart-secondary{	
+	width:23%;
+	padding:5px;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+	border-radius:10px;
+}
+
+.cart-secondary-title{
+	height:2.5rem;
+	padding: 5px;
+	border-radius:10px 10px 0 0 ;
+}
+
+.cart-secondary-content{
+	padding:5px;
+	display:flex;
+	justify-content:space-between;
+}
+
+.cart-secondary-content .content-left{
+	width: fit-content;
+}
+
+.cart-secondary-content .content-right{
+	width: fit-content;
+}
+
+
+.cart-secondary-content .button-6{
+	padding:5px;
+	background-color: #f4f2ec;
+}
+
+.user-actions-panel{
+	display: flex;
+	flex-direction: row-reverse;
+	width:80%;
+}
+
 .booking-form .form-control::placeholder {
 	color: rgba(255, 255, 255, 0.5);
 }
@@ -387,3 +505,4 @@ h4{
 .booking-form .submit-btn:focus {
 	opacity: 0.9;
 }
+
