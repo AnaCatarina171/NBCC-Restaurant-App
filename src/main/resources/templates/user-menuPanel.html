@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<title>RESTO-APP</title>
+</head>
+
+<body>
+	<div class="admin-page">
+		<div class="user-left-panel">
+			<div class="logo">NBCC 1234 Room</div>
+
+			<div class="user-navigation">
+				<div class="navigation-item">
+					<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
+				</div>
+				<br>
+				<div class="navigation-item">
+					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
+				</div>
+				<br>
+				<div class="navigation-item">
+					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
+				</div>
+				<br>
+				<div class="navigation-item">
+					<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="main">
+			<div class="top-information center">USER INFORMATION</div>
+			<div class="content">
+				<div class="user-actions-panel">
+					<div class="user-action">
+						<a th:href="@{/toAddMenu}" class="button-6">Create New Menu</a>
+					</div>
+				</div>
+				<div class="cart-primary">
+					<div class="cart-primary-title">Past Menus</div>
+					<div class="cart-primary-content">
+					
+						<div class="cart-secondary">
+							<div class="cart-secondary-title">Menu Title (e.g. Thailand)</div>
+							<div class="cart-secondary-content">
+								<div class="content-left">
+									Served From - To : <br> Total Items: 15 <br>Last Modified:  
+								</div>
+								<div class="content-right">
+									<a href="toReservationProcess" class="button-6">Recall</a>
+								</div>
+							</div>
+						</div>						
+					</div>
+					
+				</div>
+
+			<div class="footer"></div>
+		</div>
+
+
+	</div>
+</body>
+
+</html>
