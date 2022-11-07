@@ -1,6 +1,7 @@
 package ca.nbcc.restapp.model;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -14,12 +15,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name="Reservation_Table")
 public class Reservation {
 
 	@Id
-	@SequenceGenerator(name = "RES_SEQ_GEN", sequenceName = "RES_SEQ", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "RES_SEQ_GEN", sequenceName = "RES_SEQ", initialValue = 0001, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RES_SEQ_GEN")
 	@Column(name = "RES_ID", unique = true)
 	private Long id;
@@ -27,8 +30,15 @@ public class Reservation {
 	@Column(name="RES_TRACKING_NUMBER")
 	private String trackingNumber;
 	
-	@Column(name="RES_DATETIME")
-	private LocalDateTime dateTime;
+	@Column(name="RES_DATE")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date date;
+	
+	@Column(name="RES_TIME")
+	private String time;
+	
+	@Column(name="RES_GUESTS")
+	private int guests;
 	
 	@Column(name="RES_ADULTS")
 	private int adults;
@@ -43,7 +53,10 @@ public class Reservation {
 	private int vegan;
 	
 	@Column(name="RES_WHEEL_CHAIR")
-	private int wheelChair;
+	private boolean wheelChair;
+	
+	@Column(name="RES_INFO")
+	private String additionalInfo;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="FK_REST_ID")
@@ -58,11 +71,10 @@ public class Reservation {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Reservation(String trackingNumber, LocalDateTime dateTime, int adults, int kids, int vegetarian, int vegan,
-			int wheelChair, Restaurant restaurant, Customer customer) {
+	public Reservation(Date dateTime, int adults, int kids, int vegetarian, int vegan,
+			boolean wheelChair, Restaurant restaurant, Customer customer) {
 		super();
-		this.trackingNumber = trackingNumber;
-		this.dateTime = dateTime;
+		this.date = dateTime;
 		this.adults = adults;
 		this.kids = kids;
 		this.vegetarian = vegetarian;
@@ -88,12 +100,29 @@ public class Reservation {
 		this.trackingNumber = trackingNumber;
 	}
 
-	public LocalDateTime getDateTime() {
-		return dateTime;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setDateTime(LocalDateTime dateTime) {
-		this.dateTime = dateTime;
+	public void setDate(Date dateTime) {
+		this.date = dateTime;
+	}
+
+	
+	public int getGuests() {
+		return guests;
+	}
+
+	public void setGuests(int guests) {
+		this.guests = guests;
+	}
+
+	public String getAdditionalInfo() {
+		return additionalInfo;
+	}
+
+	public void setAdditionalInfo(String additionalInfo) {
+		this.additionalInfo = additionalInfo;
 	}
 
 	public int getAdults() {
@@ -128,11 +157,11 @@ public class Reservation {
 		this.vegan = vegan;
 	}
 
-	public int getWheelChair() {
+	public boolean getWheelChair() {
 		return wheelChair;
 	}
 
-	public void setWheelChair(int wheelChair) {
+	public void setWheelChair(boolean wheelChair) {
 		this.wheelChair = wheelChair;
 	}
 
@@ -152,9 +181,17 @@ public class Reservation {
 		this.customer = customer;
 	}
 
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(adults, customer, dateTime, id, kids, restaurant, trackingNumber, vegan, vegetarian,
+		return Objects.hash(adults, customer, date, id, kids, restaurant, trackingNumber, vegan, vegetarian,
 				wheelChair);
 	}
 
@@ -168,14 +205,14 @@ public class Reservation {
 			return false;
 		Reservation other = (Reservation) obj;
 		return adults == other.adults && Objects.equals(customer, other.customer)
-				&& Objects.equals(dateTime, other.dateTime) && Objects.equals(id, other.id) && kids == other.kids
+				&& Objects.equals(date, other.date) && Objects.equals(id, other.id) && kids == other.kids
 				&& Objects.equals(restaurant, other.restaurant) && Objects.equals(trackingNumber, other.trackingNumber)
 				&& vegan == other.vegan && vegetarian == other.vegetarian && wheelChair == other.wheelChair;
 	}
 
 	@Override
 	public String toString() {
-		return "Reservation [id=" + id + ", trackingNumber=" + trackingNumber + ", dateTime=" + dateTime + ", adults="
+		return "Reservation [id=" + id + ", trackingNumber=" + trackingNumber + ", dateTime=" + date + ", adults="
 				+ adults + ", kids=" + kids + ", vegetarian=" + vegetarian + ", vegan=" + vegan + ", wheelChair="
 				+ wheelChair + ", restaurant=" + restaurant + ", customer=" + customer + "]";
 	}

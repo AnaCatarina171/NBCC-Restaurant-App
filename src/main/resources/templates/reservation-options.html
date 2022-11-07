@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap"
+	rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="css/bootstrap.css" />
+<link rel="stylesheet" href="css/styles.css">
+<title>RESTO-APP</title>
+</head>
+
+<body>
+	<div class="header">
+		<div class="flex-container-column">
+			<div class="content-top logo">
+				<div class="image-container">
+					<img src="img/NBCC.png">
+				</div>
+			</div>
+			<div class="content-bottom">
+				<div class="navigation">
+					<div class="navigation-item  right-border">
+						<a href="/" class="nav-link"> Home </a>
+					</div>
+					<div class="navigation-item right-border">
+						<a th:href="@{/customerMenuDisplay}" class="nav-link "> Menus
+						</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/reservationOptions}" class="nav-link"> Book a
+							Reservation </a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="main medium-width">
+		<div class="center-container row">
+			<h2>Choose Your Booking Time</h2>
+
+			<div class="table-container col-md-4">
+				<div>
+					<a th:href="@{/addNewReservation}" class="button-6">Breakfast
+						Menu</a>
+				</div>
+				<table class="styled-table1">
+					<thead class="theadStyle">
+						<tr>
+							<th>Breakfast Hours</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>7:30am</td>
+							<td>
+								<form th:action="@{/addNewReservation}" method="POST">
+									<input id="reservationTime" name="reservationTime" type="text"
+										value="7:30 am" hidden> <input type="submit"
+										class="button-6" value="Book">
+								</form>
+							</td>
+						</tr>
+						<tr>
+							<td>8:00am</td>
+							<td>
+								<form th:action="@{/addNewReservation}" method="POST">
+									<input id="reservationTime" name="reservationTime" type="text"
+										value="8:00 am" hidden> <input type="submit"
+										class="button-6" value="Book">
+								</form>
+							</td>
+						</tr>
+						<tr>
+							<td>8:30am</td>
+							<td><form th:action="@{/addNewReservation}" method="POST">
+									<input id="reservationTime" name="reservationTime" type="text"
+										value="8:30 am" hidden> <input type="submit"
+										class="button-6" value="Book">
+								</form></td>
+						</tr>
+						<tr>
+							<td>9:00am</td>
+							<td><form th:action="@{/addNewReservation}" method="POST">
+									<input id="reservationTime" name="reservationTime" type="text"
+										value="9:00 am" hidden> <input type="submit"
+										class="button-6" value="Book">
+								</form></td>
+						</tr>
+						<tr>
+							<td>9:30am</td>
+							<td><form th:action="@{/addNewReservation}" method="POST">
+									<input id="reservationTime" name="reservationTime" type="text"
+										value="9:30 am" hidden> <input type="submit"
+										class="button-6" value="Book">
+								</form></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="table-container  col-md-4">
+				<div>
+					<a th:href="@{/addNewReservation}" class="button-6">Lunch Menu</a>
+				</div>
+				<table class="styled-table1">
+					<thead class="theadStyle">
+						<tr>
+							<th>Lunch Hours</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>11:45am</td>
+							<td><form th:action="@{/addNewReservation}" method="POST">
+									<input id="reservationTime" name="reservationTime" type="text"
+										value="11:45 am" hidden> <input type="submit"
+										class="button-6" value="Book">
+								</form></td>
+						</tr>
+						<tr>
+							<td>12:15pm</td>
+							<td><form th:action="@{/addNewReservation}" method="POST">
+									<input id="reservationTime" name="reservationTime" type="text"
+										value="12:15 pm" hidden> <input type="submit"
+										class="button-6" value="Book">
+								</form></td>
+						</tr>
+						<tr>
+							<td>12:45pm</td>
+							<td><form th:action="@{/addNewReservation}" method="POST">
+									<input id="reservationTime" name="reservationTime" type="text"
+										value="12:45 pm" hidden> <input type="submit"
+										class="button-6" value="Book">
+								</form></td>
+						</tr>
+						<tr>
+							<td>1:00pm</td>
+							<td><form th:action="@{/addNewReservation}" method="POST">
+									<input id="reservationTime" name="reservationTime" type="text"
+										value="1:00 pm" hidden> <input type="submit"
+										class="button-6" value="Book">
+								</form></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="table-container  col-md-4">
+				<div>
+					<a th:href="@{/addNewReservation}" class="button-6">Night Menu</a>
+				</div>
+				<table class="styled-table1">
+					<thead class="theadStyle">
+						<tr>
+							<th>Night Hours</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>6:00pm</td>
+							<td><form th:action="@{/addNewReservation}" method="POST">
+									<input id="reservationTime" name="reservationTime" type="text"
+										value="6:00 pm" hidden> <input type="submit"
+										class="button-6" value="Book">
+								</form></td>
+						</tr>
+						<tr>
+							<td>6:30pm</td>
+							<td><form th:action="@{/addNewReservation}" method="POST">
+									<input id="reservationTime" name="reservationTime" type="text"
+										value="6:30 pm" hidden> <input type="submit"
+										class="button-6" value="Book">
+								</form></td>
+						</tr>
+						<tr>
+							<td>7:00pm</td>
+							<td><form th:action="@{/addNewReservation}" method="POST">
+									<input id="reservationTime" name="reservationTime" type="text"
+										value="7:00 pm" hidden> <input type="submit"
+										class="button-6" value="Book">
+								</form></td>
+						</tr>
+						<tr>
+							<td>7:30pm</td>
+							<td><form th:action="@{/addNewReservation}" method="POST">
+									<input id="reservationTime" name="reservationTime" type="text"
+										value="7:30 pm" hidden> <input type="submit"
+										class="button-6" value="Book">
+								</form></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="footer"></div>
+</body>
+
+</html>
