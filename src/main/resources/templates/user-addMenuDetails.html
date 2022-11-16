@@ -11,6 +11,8 @@
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap"
 	rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<script src="https://kit.fontawesome.com/cbb0aad349.js"
+	crossorigin="anonymous"></script>
 <title>RESTO-APP</title>
 </head>
 
@@ -41,22 +43,25 @@
 		<div class="main">
 			<div class="top-information center">USER INFORMATION</div>
 			<div class="content">
-				<div class="user-actions-panel">
-					<div class="user-action">
-						<a th:href="@{/toCreateMenu}" class="button-6">Create New Menu</a>
-					</div>
-				</div>
-				<div class="cart-primary">
-					<div class="cart-primary-title">Add Menu</div>
-					<div class="cart-primary-content">
-						<div class="form-container">
-							<form class="styled-form">
 
-							</form>
+				<div class="cart-primary menu-action1" style="display: block"
+					id="menu-action1">
+					<div>
+						<h2>Please, provide some menu information</h2>
+					</div>
+
+					<form class="styled-form" th:action="@{/processMenuDetails}"
+						method="POST" th:object="${menuToPopulate}">
+						<div class="form-item">
+							<label>Title</label> <input type="text" th:field="*{title}"
+								placeholder="Title...">
 						</div>
-					</div>
-
-				</div>
+						<div class="form-item">
+							<label>Description</label> <input type="text"
+								th:field="*{description}" placeholder="Description...">
+						</div>
+						<button id="btnMenuDetails" class="button-6">Submit</button>
+					</form>
 
 				<div class="footer"></div>
 			</div>
