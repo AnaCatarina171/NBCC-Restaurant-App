@@ -148,11 +148,17 @@ public class MenuController {
 		List<Dish> allDishes = ds.getAllDishes();
 		int itemPerPage = 10;
 		List<Pageable> pageableDishes = generatePageableDishes(allDishes.size(), itemPerPage);
-		List<Dish> dishList = ds.getAllDishesPaginated(pageableDishes.get(pageNumber));
+		System.out.println(pageableDishes.toString());
+		if(pageableDishes.size() != 0) {
+			List<Dish> dishList = ds.getAllDishesPaginated(pageableDishes.get(pageNumber));
+			model.addAttribute("dishList", dishList);
+		}else {
+			model.addAttribute("dishList", ds.getAllDishes());
+		}
+		
 		
 		model.addAttribute("menuToPopulate", menuToPopulate);
-		model.addAttribute("dishToAdd", dishToAdd);
-		model.addAttribute("dishList", dishList);
+		model.addAttribute("dishToAdd", dishToAdd);		
 		model.addAttribute("categories", categories);
 		model.addAttribute("nationalities", nationalities);
 	}
