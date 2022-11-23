@@ -634,6 +634,47 @@ table tr:last-child td:last-child {
 
 /** Booking Form **/
 
+.center {
+	text-align: center;
+}
+
+.center-container {
+	margin-top: 100px;
+	text-align: center;
+}
+
+.styled-table1 {
+	border-collapse: collapse;
+	border-radius: 10px;
+	margin: 10px auto;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.20);
+}
+
+.styled-table2{
+	border-collapse: collapse;
+	border-radius: 10px;
+	margin: 10px auto;
+}
+
+.styled-table2 td, .styled-table2 th {
+	padding: 15px;
+	border-bottom: 0px solid #fff;
+}
+
+.styled-table1 td, .styled-table1 th {
+	padding: 15px;
+	border-bottom: 0px solid #fff;
+}
+
+.theadStyle {
+	padding: 10px;
+	background-color: #b57031;
+	color: #fff;
+}
+
+.styled-table1 tbody tr:nth-of-type(even) {
+	background-color: #f3f3f3;
+}
 
 /** Reservation Form **/
 .section {
@@ -727,6 +768,7 @@ h4 {
 .booking-form .form-control:-ms-input-placeholder {
 	color: rgba(255, 255, 255, 0.5);
 }
+
 
 /* USER PANEL  */
 .admin-page {
@@ -1324,6 +1366,7 @@ Simple CSS3 Fade-in Animation
 		margin: 0% 3%;
 	}
 }
+
 .booking-form .submit-btn:hover, .booking-form .submit-btn:focus {
 	opacity: 0.9;
 }
