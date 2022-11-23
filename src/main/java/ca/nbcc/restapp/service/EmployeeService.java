@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ca.nbcc.restapp.model.Employee;
+import ca.nbcc.restapp.model.EmployeeDetails;
 import ca.nbcc.restapp.repo.EmployeeJpaRepo;
 
 @Service
 public class EmployeeService {
 
-private EmployeeJpaRepo er;
+	private EmployeeJpaRepo er;
 	
 	@Autowired
 	public EmployeeService(EmployeeJpaRepo er) {
@@ -34,6 +35,17 @@ private EmployeeJpaRepo er;
 		return null;
 	}
 	
+	public Employee findEmployeeDetailsById(Long eMID_LONG) throws Exception{
+		if(er.findById((long)eMID_LONG).isPresent()) {
+			Employee emp = er.findById((long)eMID_LONG).get();
+			
+			return new EmployeeDetails(emp);
+		}
+		else if(er.findById((long)eMID_LONG).isEmpty()) {
+			throw new Exception("Employee not found: ID " + eMID_LONG);
+		}
+		return null;
+	}
 	
 	public List<Employee> getAllEmployees(){
 		return er.findAll();

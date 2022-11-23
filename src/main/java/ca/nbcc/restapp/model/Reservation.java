@@ -22,7 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Reservation {
 
 	@Id
-	@SequenceGenerator(name = "RES_SEQ_GEN", sequenceName = "RES_SEQ", initialValue = 0001, allocationSize = 1)
+	@SequenceGenerator(name = "RES_SEQ_GEN", sequenceName = "RES_SEQ", initialValue = 1000, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RES_SEQ_GEN")
 	@Column(name = "RES_ID", unique = true)
 	private Long id;
@@ -57,6 +57,21 @@ public class Reservation {
 	
 	@Column(name="RES_INFO")
 	private String additionalInfo;
+	
+	@Column(name="RES_STATUS")
+	private ReservationStatus status;
+	
+	@Column(name="RES_FNAME")
+	private String firstName;
+	
+	@Column(name="RES_LNAME")
+	private String lastName;
+	
+	@Column(name="RES_PHONE")
+	private String phone;
+	
+	@Column(name="RES_EMAIL")
+	private String email;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="FK_REST_ID")
@@ -187,6 +202,46 @@ public class Reservation {
 
 	public void setTime(String time) {
 		this.time = time;
+	}
+
+	public ReservationStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ReservationStatus status) {
+		this.status = status;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override

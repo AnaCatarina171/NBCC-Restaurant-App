@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.css" />
+<title>RESTO-APP</title>
+</head>
+
+<body>
+	<div class="admin-page">
+		<div class="user-left-panel">
+			<div class="logoAdmin">NBCC 1234 Room</div>
+
+			<div class="user-navigation">
+				<div class="navigation-item">
+					<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
+				</div>
+				<br>
+				<div class="navigation-item">
+					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
+				</div>
+				<br>
+				<div class="navigation-item">
+					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
+				</div>
+				<br>
+				<div class="navigation-item">
+					<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="main">
+			<div class="top-information center">USER INFORMATION</div>
+			<div class="content">
+				<div class="container">
+					<div class="row">
+						<div id="booking" class="section col-md-6">
+							<h2>
+								Reservation #<span th:text="${rToEdit.id}"></span>
+							</h2>
+							<div class="booking-form">
+								<form th:action="@{/updateReservation}" method="POST"
+									th:object="${rToEdit}">
+									<input type="text" th:field="*{id}" hidden>
+									<div class="row">
+										<div class="col-md-3"></div>
+										<div class="col-md-2">
+											<h4>Status:</h4>
+										</div>
+										<div class="col-md-5">
+											<select class="form-control selectStatus" name="status"
+												th:field="*{status}">
+												<option th:each="status : ${statusList}"
+													th:value="${status}" th:text="${status}"></option>
+											</select><span class="select-arrow"></span>
+										</div>
+										<div class="col-md-3"></div>
+									</div>
+									<div class="">
+										<button class="submit-btn2">Submit</button>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<input class="form-control" id="datefield" type='date'
+													th:attr="min=${minDate}" th:field="*{date}" readonly>
+												<span class="form-label">Date</span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<input class="form-control" type="text" th:field="*{time}"
+													readonly> <span class="form-label">Time</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<input class="form-control" id="" type='text'
+													th:field="*{guests}" readonly> <span
+													class="form-label">Guests</span>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+												<input class="form-control" id="" type='text'
+													th:field="*{adults}" readonly> <span
+													class="form-label">Adults</span>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+												<input class="form-control" id="" type='text'
+													th:field="*{kids}" readonly> <span
+													class="form-label">Children</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-4">
+											<div class="form-group">
+												<input class="form-control" id="datefield" type='text'
+													th:field="*{vegetarian}" readonly> <span
+													class="form-label">Vegetarian</span>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<input class="form-control" id="datefield" type='text'
+													th:field="*{vegan}" readonly> <span
+													class="form-label">Vegan</span>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<input class="form-control" id="datefield" type='text'
+													th:field="*{wheelChair}" readonly> <span
+													class="form-label">Wheel Chairs</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<input class="form-control" id="" type='text'
+												th:field="*{additionalInfo}" readonly> <span
+												class="form-label">Additional Information</span>
+										</div>
+									</div>
+									<div>
+										<h4>Personal Information</h4>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<input class="form-control" type="text"
+													th:field="*{firstName}" readonly
+													placeholder="Enter your First Name"> <span
+													class="form-label">First Name</span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<input class="form-control" type="text"
+													th:field="*{lastName}" readonly
+													placeholder="Enter you Last Name"> <span
+													class="form-label">Last Name</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<input class="form-control" type="email" th:field="*{email}"
+													placeholder="Enter your Email" readonly> <span
+													class="form-label">Email</span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<input class="form-control" type="tel" th:field="*{phone}"
+													placeholder="Enter you Phone" readonly> <span
+													class="form-label">Phone</span>
+											</div>
+										</div>
+									</div>
+								</form>
+								<div class="containerDelete">
+									<a th:href="@{/deleteReservation/{rId} (rId = ${rToEdit.id})}"
+										class="button-6 deleteBtn">Delete Reservation</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<h2>
+								Reservations For <span th:text="${formattedToday}"></span>
+							</h2>
+							<div class="cart-primary">
+								<div class="cart-primary-content">
+
+									<div class="cart-secondary">
+										<div class="cart-secondary-title">Reservation #2334</div>
+										<div class="cart-secondary-content">
+											<div class="content-left">
+												Monday, Nov 14th <br> Time: 11:45am <br> Guest #:
+												4
+											</div>
+										</div>
+									</div>
+									<div class="cart-secondary">
+										<div class="cart-secondary-title">Reservation #2334</div>
+										<div class="cart-secondary-content">
+											<div class="content-left">
+												Monday, Nov 14th <br> Time: 11:45am <br> Guest #:
+												4
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="cart-primary">
+							<div class="cart-primary-title">Floor Plan</div>
+							<div class="cart-primary-content">
+									<div class="image-floor-container">
+										<img src="../img/basic-floor-planning.png">
+									</div>
+								</div>
+						</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<div class="footer"></div>
+		</div>
+
+
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/bootstrap.css">
+<title>RESTO-APP</title>
+</head>
+
+<body>
+	<div class="admin-page">
+		<div class="user-left-panel">
+			<div class="logoAdmin">NBCC 1234 Room</div>
+
+			<div class="user-navigation">
+				<div class="navigation-item">
+					<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
+				</div>
+				<br>
+				<div class="navigation-item">
+					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
+				</div>
+				<br>
+				<div class="navigation-item">
+					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
+				</div>
+				<br>
+				<div class="navigation-item">
+					<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="main">
+			<div class="top-information center">USER INFORMATION</div>
+			<div class="content">
+				<div class="row">
+					<div class="col-md-3">
+						<h2>Reservations List</h2>
+					</div>
+					<div class="col-md-4">
+						<div class="right-content-header">
+							<div class="search-container">
+								<form th:action="@{/viewReservations}" method="GET"
+									class="search-form">
+									<input type="number" name="rId" th:value="${rId}"
+										placeholder="Reservation No."> <input type="submit"
+										value="Search">
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<form th:action="@{/filterReservations}" method="POST"
+							class="order-form">
+							<div class="orderBy order-content-header">
+								<div class="orderBy-title">Order by:</div>
+
+								<div class="item">
+									<div class="radio"
+										th:if="${orderBySelected == null || orderBySelected == 'newest'}">
+										<input id="newest" name="orderBy" type="radio" value="newest"
+											checked> <label for="newest" class="radio-label">Newest</label>
+									</div>
+									<div class="radio"
+										th:unless="${orderBySelected == null || orderBySelected == 'newest'}">
+										<input id="newest" name="orderBy" type="radio" value="newest">
+										<label for="newest" class="radio-label">Newest</label>
+									</div>
+								</div>
+
+								<div class="item">
+									<div class="radio" th:if="${orderBySelected == 'oldest'}">
+										<input id="oldest" name="orderBy" type="radio"
+											value="oldest" checked> <label for="oldest"
+											class="radio-label">Oldest</label>
+									</div>
+									<div class="radio" th:unless="${orderBySelected == 'oldest'}">
+										<input id="oldest" name="orderBy" type="radio"
+											value="oldest"> <label for="oldest"
+											class="radio-label">Oldest</label>
+									</div>
+								</div>
+								<div class="">
+									<input type="submit" value="Apply" class="button-31 addElement">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+
+
+				<div class="cart-primary">
+
+					<div class="cart-primary-content">
+						<div class="cart-secondary" th:each="res : ${reservations}">
+							<div class="cart-secondary-title">
+								Reservation #<span th:text="${res.id}"></span>
+							</div>
+							<div class="cart-secondary-content">
+								<div class="content-left">
+									<span th:text="${res.date}"></span> <br> Time: <span
+										th:text="${res.time}"></span> <br> Guest #: <span
+										th:text="${res.guests}"></span>
+								</div>
+								<div class="content-right">
+									<a th:href="@{/processReservation/{rId} (rId = ${res.id})}"
+										class="button-6">Details</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="cart-primary">
+					<div class="cart-primary-title">
+						<div>Past Reservations</div>
+					</div>
+					<div class="row search-container-s">
+						<div class="col-md-6">
+							<div class="right-content-header">
+								<div class="">
+									<form th:action="@{/viewReservations}" method="GET"
+										class="search-form">
+										<input type="number" name="pastRId" th:value="${pastRId}"
+											placeholder="Reservation No."> <input type="submit"
+											value="Search">
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<form th:action="@{/filterReservations}" method="POST"
+								class="order-form">
+								<div class="orderBy order-content-header">
+									<div class="orderBy-title">Order by:</div>
+
+									<div class="item">
+										<div class="radio"
+											th:if="${orderBySelectedP == null || orderBySelectedP == 'newest'}">
+											<input id="newest" name="orderBy" type="radio" value="newest"
+												checked> <label for="newest" class="radio-label">Newest</label>
+										</div>
+										<div class="radio"
+											th:unless="${orderBySelectedP == null || orderBySelectedP == 'newest'}">
+											<input id="newest" name="orderBy" type="radio" value="newest">
+											<label for="newest" class="radio-label">Newest</label>
+										</div>
+									</div>
+
+									<div class="item">
+										<div class="radio" th:if="${orderBySelectedP == 'oldest'}">
+											<input id="oldest" name="orderByP" type="radio"
+												value="oldest" checked> <label for="oldest"
+												class="radio-label">Oldest</label>
+										</div>
+										<div class="radio"
+											th:unless="${orderBySelectedP == 'oldest'}">
+											<input id="oldest" name="orderByP" type="radio"
+												value="oldest"> <label for="oldest"
+												class="radio-label">Oldest</label>
+										</div>
+									</div>
+									<div class="">
+										<input type="submit" value="Apply"
+											class="button-31 addElement">
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="cart-primary-content">
+						<div class="cart-secondary" th:each="res : ${pastReservations}">
+							<div class="cart-secondary-title">
+								Reservation #<span th:text="${res.id}"></span>
+							</div>
+							<div class="cart-secondary-content">
+								<div class="content-left">
+									<span th:text="${res.date}"></span> <br> Time: <span
+										th:text="${res.time}"></span> <br> Guest #: <span
+										th:text="${res.guests}"></span>
+								</div>
+								<div class="content-right">
+									<a th:href="@{/processReservation/{rId} (rId = ${res.id})}"
+										class="button-6">Details</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="footer footerPanel">
+				<div class="row">
+					<div class="col-md-12">© Copyright 2022. All Rights Reserved.
+						|| Designed By: DevAtlantics - Ana Silva & Jose Silva</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</body>
+
+</html>

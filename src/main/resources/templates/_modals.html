@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<!-- Modal -->
+<div th:fragment="modal(id)" class="modal fade" th:id="${id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+				<div class="modal-body">
+					<div class="content">
+						<div class="container">
+							<div class="row">
+								<div id="booking" class="section">
+									<div class="booking-form booking-form-s">
+										<div class="form-header">
+											<h1>Book Your Reservation</h1>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
