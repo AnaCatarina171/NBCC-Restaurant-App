@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.css" />
+<title>RESTO-APP</title>
+</head>
+
+<body>
+	<div class="admin-page">
+		<div class="user-left-panel">
+			<div class="logoAdmin">NBCC 1234 Room</div>
+
+			<div class="user-navigation">
+				<div class="navigation-item">
+					<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
+				</div>
+				<br>
+				<div class="navigation-item">
+					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
+				</div>
+				<br>
+				<div class="navigation-item">
+					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
+				</div>
+				<br>
+				<div class="navigation-item">
+					<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="main">
+			<div class="top-information center">USER INFORMATION</div>
+			<div class="content">
+				<div class="container">
+					<h1>Today's Floor Plan</h1>
+					<div class="row">
+						<div class="col-md-3">
+							<h2>
+								Reservations For Today:<br> <span th:text="${formattedToday}"></span>
+							</h2>
+							<div class="cart-primary">
+								<div class="cart-primary-content">
+
+									<div class="cart-secondary">
+										<div class="cart-secondary-title">Reservation #2334</div>
+										<div class="cart-secondary-content">
+											<div class="content-left">
+												Monday, Nov 14th <br> Time: 11:45am <br> Guest #:
+												4
+											</div>
+										</div>
+									</div>
+									<div class="cart-secondary">
+										<div class="cart-secondary-title">Reservation #2334</div>
+										<div class="cart-secondary-content">
+											<div class="content-left">
+												Monday, Nov 14th <br> Time: 11:45am <br> Guest #:
+												4
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-9 margin-top-5">
+							<div class="cart-primary">
+								<div class="cart-primary-title">Floor Plan</div>
+								<div class="cart-primary-content">
+									<div class="image-floor-container">
+										<img src="img/basic-floor-planning.png">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="footer"></div>
+		</div>
+
+
+	</div>
+</body>
+
+</html>
