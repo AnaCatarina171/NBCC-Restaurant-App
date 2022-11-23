@@ -27,8 +27,6 @@ body {
 	width: 100%;
 	height: fit-content;
 	position: sticky;
-    top: 0;
-    /*z-index: -1;*/
 }
 
 .firstPageTitle{
@@ -158,11 +156,6 @@ body {
 	width: 50%;
 }
 
-.logo {
-	text-align: center;
-	width: 150px;
-}
-
 .logo2 {
 	text-align: center;
 	width: 180px;
@@ -246,6 +239,8 @@ body {
 	padding: calc(.875rem - 1px) calc(1.5rem - 1px);
 	/*position: relative;*/
 	text-decoration: none !important;
+	position: relative;
+	text-decoration: none;
 	transition: all 250ms;
 	user-select: none;
 	-webkit-user-select: none;
@@ -281,6 +276,7 @@ body {
 	color: #A08679;
 	transform: translateY(0);
 }
+
 
 .deleteBtn {
 	background: #ec9595;
@@ -342,6 +338,10 @@ body {
 	padding-top: 1em;
 	margin: 2em 0 1em 0;
 	color: #916a37;
+
+.medium-width {
+	margin: auto;
+	width: 70%;
 }
 
 img {
@@ -617,6 +617,55 @@ table tr:last-child td:last-child {
 
 
 /** Booking Form **/
+
+.center {
+	text-align: center;
+}
+
+.center-container {
+	margin-top: 100px;
+	text-align: center;
+}
+
+.styled-table1 {
+	border-collapse: collapse;
+	border-radius: 10px;
+	margin: 10px auto;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.20);
+}
+
+.styled-table2{
+	border-collapse: collapse;
+	border-radius: 10px;
+	margin: 10px auto;
+}
+
+.styled-table2 td, .styled-table2 th {
+	padding: 15px;
+	border-bottom: 0px solid #fff;
+}
+
+.styled-table1 td, .styled-table1 th {
+	padding: 15px;
+	border-bottom: 0px solid #fff;
+}
+
+.theadStyle {
+	padding: 10px;
+	background-color: #b57031;
+	color: #fff;
+}
+
+.styled-table1 tbody tr:nth-of-type(even) {
+	background-color: #f3f3f3;
+}
+
+.styled-table1 tbody tr {
+	/*border-bottom: 4px dotted blue;*/
+	
+}
+
+/** Reservation Form **/
 .section {
 	position: relative;
 	/*height: 130vh;*/
@@ -707,6 +756,124 @@ h4 {
 
 .booking-form .form-control:-ms-input-placeholder {
 	color: rgba(255, 255, 255, 0.5);
+}
+
+
+/* USER PANEL  */
+.admin-page {
+	box-sizing: border-box;
+	margin: 0;
+}
+
+.admin-page .user-left-panel {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	background-color: #A08679;
+	width: 15%;
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.admin-page .logo {
+	margin-bottom: 40px;
+}
+
+.admin-page .navigation-item {
+	margin-left: 0;
+}
+
+.admin-page .user-navigation {
+	border-top: solid 2px #000;
+	padding-top: 20px;
+}
+
+.admin-page .main {
+	position: fixed;
+	top: 0;
+	overflow: auto;
+	margin-left: 15%;
+	width: 85%;
+	height: 100%;
+	background-color: #fff;
+}
+
+.admin-page .main .top-information {
+	height: 50px;
+	padding: 5px;
+	background-color: #fff;
+	border-bottom: 1px solid grey;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 15px;
+}
+
+.admin-page .main .content {
+	padding: 20px;
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.cart-primary {
+	width: 90%;
+	margin:auto;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+	border-radius: 10px;
+}
+
+.cart-primary-title {
+	padding: 15px;
+	background-color: #d3d3d3;
+	border-radius: 10px 10px 0 0;
+}
+
+.cart-primary-content {
+	padding: 25px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.cart-secondary {
+	width: 23%;
+	padding: 5px;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+	border-radius: 10px;
+}
+
+.cart-secondary-title {
+	height: 2.5rem;
+	padding: 5px;
+	border-radius: 10px 10px 0 0;
+}
+
+.cart-secondary-content {
+	padding: 5px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.cart-secondary-content .content-left {
+	width: fit-content;
+}
+
+.cart-secondary-content .content-right {
+	width: fit-content;
+}
+
+.cart-secondary-content .button-6 {
+	padding: 5px;
+	background-color: #f4f2ec;
+}
+
+.user-actions-panel {
+	display: flex;
+	flex-direction: row-reverse;
+	width: 80%;
 }
 
 .booking-form .form-control::placeholder {
@@ -1188,3 +1355,182 @@ Simple CSS3 Fade-in Animation
 		margin: 0% 3%;
 	}
 }
+
+.booking-form .submit-btn:hover, .booking-form .submit-btn:focus {
+	opacity: 0.9;
+}
+
+.open-icon {
+	border: none;
+	padding: 10px;
+	background-color: #fff; font-size : 2.5rem;
+	cursor: pointer;
+	transition: all .2s ease-in-out;
+	font-size: 2rem;
+}
+
+.open-icon:hover {
+	transform: scale(1.2);
+}
+
+.modal-container {
+	display:none;
+	position: fixed;
+	z-index: 1; /* Sit on top */
+	top: 0;
+	width: 100%; /* Full width */
+  	height: 100%; /* Full height */
+  	overflow: auto; /* Enable scroll if needed */
+	border: 3px solid #f1f1f1;
+	background-color: rgb(0,0,0); /* Fallback color */
+  	background-color: rgba(0,0,0,0.4);
+}
+
+.modal-wrapper{
+	margin:10% auto;
+	background-color: #fefefe;		
+	border: 1px solid #888;
+	border-radius: 1rem;
+	width: 60%;
+  	animation-name: animatetop;
+  	animation-duration: 0.5s;
+}
+
+.modal-header{
+	display:flex;
+	justify-content:space-between;	
+	padding: 0 1rem;
+    pointer-events: all;
+    position: relative;
+    
+}
+
+.modal-header h2{
+	line-height: normal;
+}
+.modal-content {
+	border-top:solid 1px #e0e0e0;
+	position: relative;
+	background-color: #fefefe;	
+	padding: 20px;	
+	border-bottom-left-radius: 1rem;
+	border-bottom-right-radius: 1rem;
+	display:flex;
+	justify-content:center;
+	gap:0;
+}
+
+.form-actions{
+	display:flex; 
+	gap: 50px;
+}
+
+/* Add Animation */
+@keyframes animatetop {
+  from {left: -300px; opacity: 0}
+  to {left: 0; opacity: 1}
+}
+
+.search{
+	width:300px;
+	height:40px;
+	background: #fff;
+	
+  	border-radius:  3px;
+ 	border: 1px solid #000;	
+}
+
+.search input[type="text"] {
+    width: 80%;
+    padding: 10px 5px;
+    float: left;
+    color: #000;
+    border: 0;
+    background: transparent;
+    border-radius: 3px 0 0 3px;
+    
+}
+
+.search input[type="text"]:focus {
+      outline: 0;
+      background:transparent;
+}
+
+.search input[type="submit"]{
+	position: relative;
+    float: right;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    height: 40px;
+    width: 20%;
+    color: #000;
+    background: transparent;
+    border-left: 1px solid #000;
+    border-radius: 0 3px 3px 0;
+}
+
+.search input[type="submit"]:hover{
+	background: #000;
+	color:#fff;
+}
+.addNewDishPanel{
+	width:40%;
+}
+
+.admin-menuDisplay{
+	width:50%;	
+}
+.menu-action1{
+	display:flex;
+	flex-direction:column;
+	text-align:center;
+	padding: 25px;
+}
+
+.form-item{
+	margin-block:30px;
+}
+/* Add styles to the form container 
+.form-container {
+	max-width: 300px;
+	padding: 10px;
+	background-color: white;
+}
+
+ Full-width input fields 
+.form-container input[type=text], .form-container input[type=password] {
+	width: 100%;
+	padding: 15px;
+	margin: 5px 0 22px 0;
+	border: none;
+	background: #f1f1f1;
+}
+
+ When the inputs get focus, do something 
+.form-container input[type=text]:focus {
+	background-color: #ddd;
+	outline: none;
+}
+
+ Set a style for the submit/login button *
+.form-container .btn {
+	background-color: #04AA6D;
+	color: white;
+	padding: 16px 20px;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	margin-bottom: 10px;
+	opacity: 0.8;
+}
+
+ Add a red background color to the cancel button
+.form-container .cancel {
+	background-color: red;
+}
+
+ Add some hover effects to buttons
+.form-container .btn:hover, .open-button:hover {
+	opacity: 1;
+}*/
