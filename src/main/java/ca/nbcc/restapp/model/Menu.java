@@ -1,6 +1,7 @@
 package ca.nbcc.restapp.model;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -38,6 +40,9 @@ public class Menu {
 	
 	@Column(name="MENU_TODISPLAY")
 	private Boolean toDisplay; 
+	
+	@OneToMany(mappedBy="menu")
+	private List<Dish> dishList;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="FK_REST_ID")
@@ -103,6 +108,14 @@ public class Menu {
 
 	public void setToDisplay(Boolean toDisplay) {
 		this.toDisplay = toDisplay;
+	}
+	
+	public List<Dish> getDishList() {
+		return dishList;
+	}
+
+	public void setDishList(List<Dish> dishList) {
+		this.dishList = dishList;
 	}
 
 	@Override
