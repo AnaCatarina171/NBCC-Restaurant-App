@@ -11,13 +11,14 @@
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap"
 	rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/bootstrap.css">
 <title>RESTO-APP</title>
 </head>
 
 <body>
-	<div class="admin-page">
+	<div class="admin-page row">
 		<div class="user-left-panel">
-			<div class="logo">NBCC 1234 Room</div>
+			<div class="logoAdmin">NBCC 1234 Room</div>
 
 			<div class="user-navigation">
 				<div class="navigation-item">
@@ -42,81 +43,61 @@
 			<div class="top-information center">USER INFORMATION</div>
 			<div class="content">
 				<div class="cart-primary">
-					<div class="cart-primary-title">New Reservations</div>
+					<div class="cart-primary-title cartTitleAttetion">New
+						Reservations</div>
 					<div class="cart-primary-content">
-
-						<div class="cart-secondary">
-							<div class="cart-secondary-title">Reservation #2334</div>
-							<div class="cart-secondary-content">
-								<div class="content-left">
-									Monday, Nov 14th <br> Time: 11:45am <br> Guest #: 4
-								</div>
-								<div class="content-right">
-									<a href="toReservationProcess" class="button-6">Process</a>
-								</div>
+						<div class="cart-secondary" th:each="res : ${pendingReservations}">
+							<div class="cart-secondary-title">
+								Reservation #<span th:text="${res.id}"></span>
 							</div>
-						</div>
-
-						<div class="cart-secondary">
-							<div class="cart-secondary-title">Reservation #4568</div>
 							<div class="cart-secondary-content">
 								<div class="content-left">
-									Monday, Nov 14th <br> Time: 11:45am <br> Guest #: 4
+									<span th:text="${res.date}"></span> <br> Time: <span
+										th:text="${res.time}"></span> <br> Guest #: <span
+										th:text="${res.guests}"></span>
 								</div>
 								<div class="content-right">
-									<a href="toReservationProcess" class="button-6">Process</a>
-								</div>
-							</div>
-						</div>
-
-						<div class="cart-secondary">
-							<div class="cart-secondary-title">Reservation #2334</div>
-							<div class="cart-secondary-content">
-								<div class="content-left">
-									Monday, Nov 14th <br> Time: 11:45am <br> Guest #: 4
-								</div>
-								<div class="content-right">
-									<a href="toReservationProcess" class="button-6">Process</a>
-								</div>
-							</div>
-						</div>
-
-						<div class="cart-secondary">
-							<div class="cart-secondary-title">Reservation #2334</div>
-							<div class="cart-secondary-content">
-								<div class="content-left">
-									Monday, Nov 14th <br> Time: 11:45am <br> Guest #: 4
-								</div>
-								<div class="content-right">
-									<a href="toReservationProcess" class="button-6">Process</a>
-								</div>
-							</div>
-						</div>
-
-						<div class="cart-secondary">
-							<div class="cart-secondary-title">Reservation #2334</div>
-							<div class="cart-secondary-content">
-								<div class="content-left">
-									Monday, Nov 14th <br> Time: 11:45am <br> Guest
-									#: 4
-								</div>
-								<div class="content-right">
-									<a href="toReservationProcess" class="button-6">Process</a>
+									<a th:href="@{/processReservation/{rId} (rId = ${res.id})}"
+										class="button-6 btnAttention">Process</a>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-
+				<div class="cart-primary">
+					<div class="cart-primary-title cartTitleAttetion">New
+						Reservations</div>
+					<div class="cart-primary-content">
+						<div class="cart-secondary" th:each="res : ${pendingReservations}">
+							<div class="cart-secondary-title">
+								Reservation #<span th:text="${res.id}"></span>
+							</div>
+							<div class="cart-secondary-content">
+								<div class="content-left">
+									<span th:text="${res.date}"></span> <br> Time: <span
+										th:text="${res.time}"></span> <br> Guest #: <span
+										th:text="${res.guests}"></span>
+								</div>
+								<div class="content-right">
+									<a th:href="@{/processReservation/{rId} (rId = ${res.id})}"
+										class="button-6 btnAttention">Process</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="cart-primary">
 					<div class="cart-primary-title">Floor Plan</div>
 					<div class="cart-primary-content">"Floor Plan Representation"</div>
 				</div>
 			</div>
-
-			<div class="footer"></div>
+			<div class="footer footerPanel">
+				<div class="row">
+					<div class="col-md-12">© Copyright 2022. All Rights Reserved.
+						|| Designed By: DevAtlantics - Ana Silva & Jose Silva</div>
+				</div>
+			</div>
 		</div>
-
 
 	</div>
 </body>

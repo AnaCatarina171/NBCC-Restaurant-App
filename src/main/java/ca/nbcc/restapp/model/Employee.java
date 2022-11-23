@@ -12,7 +12,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
+
+@Validated
+@Component
+@Scope("prototype")
 @Entity
 @Table(name="Employee_Table")
 public class Employee {
@@ -23,7 +31,8 @@ public class Employee {
 	@Column(name = "EMP_ID", unique = true)
 	private Long id;
 	
-	@Column(name="EMP_USERNAME")
+	@NotNull
+	@Column(name="EMP_USERNAME", unique=true)
 	private String username;
 	
 	@Column(name="EMP_PASSWORD")
@@ -68,6 +77,19 @@ public class Employee {
 		this.address = address;
 		this.role = role;
 		this.department = department;
+	}
+	
+	public Employee(Employee emp) {
+		super();
+		this.username = emp.getUsername();
+		this.password = emp.getPassword();
+		this.firstName = emp.getFirstName();
+		this.lastName = emp.getLastName();
+		this.phone = emp.getPhone();
+		this.email = emp.getEmail();
+		this.address = emp.getAddress();
+		this.role = emp.getRole();
+		this.department = emp.getDepartment();
 	}
 
 	public Long getId() {
