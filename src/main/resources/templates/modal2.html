@@ -1,0 +1,175 @@
+<div id="booking" class="section">
+	<div class="booking-form">
+		<div class="form-header">
+			<h1>Book Your Reservation</h1>
+		</div>
+		<form th:action="processAddReservation" method="POST"
+			th:object="${reservationToAdd}">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<input class="form-control" id="datefield" type='date'
+							th:attr="min=${minDate}" th:field="*{date}" required> <span
+							class="form-label">Date</span>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<input class="form-control" type="text" th:field="*{time}" readonly> <span
+							class="form-label">Time</span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<select class="form-control" th:field="*{guests}" required>
+							<option value="0" selected hidden>Number of Guests</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+						</select> <span class="select-arrow"></span> <span class="form-label">Guests</span>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<select class="form-control" th:field="*{adults}" required>
+							<option value="0" selected hidden>Adults</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+						</select> <span class="select-arrow"></span> <span class="form-label">Adults</span>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<select class="form-control" th:field="*{kids}" required>
+							<option value="0" selected hidden>Children</option>
+							<option value="-1">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+						</select> <span class="select-arrow"></span> <span class="form-label">Children</span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<select class="form-control" th:field="*{vegetarian}" required>
+							<option value="0" selected hidden>Vegetarian ?</option>
+							<option value="-1">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+						</select> <span class="select-arrow"></span> <span class="form-label">Rooms</span>
+
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<select class="form-control" th:field="*{vegan}" required>
+							<option value="0" selected hidden>Vegan ?</option>
+							<option value="-1">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+						</select> <span class="select-arrow"></span>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<select class="form-control" th:filed="*{wheelChair}" required>
+							<option value="" selected hidden>Wheel Chairs?</option>
+							<option value="true">Yes</option>
+							<option value="false">No</option>
+						</select> <span class="select-arrow"></span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<input class="form-control" type="text"
+							th:field="*{additionalInfo}"
+							placeholder="(Allergies, Intolerances, Requests)"> <span
+							class="form-label">Additional Information</span>
+					</div>
+				</div>
+			</div>
+
+			<hr>
+			<div>
+				<h4>Personal Information</h4>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<input class="form-control" type="text" th:field="*{firstName}"
+							required placeholder="Enter your First Name"> <span
+							class="form-label">First Name</span>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<input class="form-control" type="text" th:field="*{lastName}"
+							required placeholder="Enter you Last Name"> <span
+							class="form-label">Last Name</span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<input class="form-control" type="email" th:field="*{email}"
+							placeholder="Enter your Email"> <span class="form-label">Email</span>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<input class="form-control" type="tel" th:field="*{phone}"
+							placeholder="Enter you Phone"> <span class="form-label">Phone</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-btn">
+				<input type="submit" class="submit-btn" value="Book Now" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+	<script>
+		$('.form-control').each(function() {
+			floatedLabel($(this));
+		});
+
+		$('.form-control').on('input', function() {
+			floatedLabel($(this));
+		});
+
+		function floatedLabel(input) {
+			var $field = input.closest('.form-group');
+			if (input.val()) {
+				$field.addClass('input-not-empty');
+			} else {
+				$field.removeClass('input-not-empty');
+			}
+		}
+	</script>

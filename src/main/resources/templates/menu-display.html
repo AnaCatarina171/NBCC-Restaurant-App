@@ -16,25 +16,37 @@
 
 <body>
 	<div class="header">
-		<div class="flex-container-column">
-			<div class="content-top logo">
-				<h2>LOGO</h2>
-			</div>
+		<div class="flex-container-top-header">
+				<div class="">
+					<div class="" style="visibility: hidden;">Invisible</div>
+				</div>
+				<div class="logo">
+					<img src="img/NBCC.png">
+				</div>
+				<div class="">
+					<div class="button-6">Sign In</div>
+				</div>
+		</div>
+			<div class="flex-container-column">
 			<div class="content-bottom">
 				<div class="navigation">
 					<div class="navigation-item  right-border">
-						<a href="#" class="nav-link"> Home </a>
+						<a th:href="@{/toCustomerView}" class="nav-link"> Home </a>
 					</div>
 					<div class="navigation-item right-border">
-						<a href="menu-display" class="nav-link "> Menus </a>
+						<a th:href="@{/customerMenuDisplay}" class="nav-link "> Menus </a>
 					</div>
 					<div class="navigation-item">
-						<a href="@{/reservationOptions}" class="nav-link"> Book a
+						<a th:href="@{/reservationOptions}" class="nav-link"> Book a
 							Reservation </a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/userPanel}" class="nav-link">User Panel</a>
 					</div>
 				</div>
 			</div>
 		</div>
+		
 	</div>
 
 	<div class="main  medium-width">
