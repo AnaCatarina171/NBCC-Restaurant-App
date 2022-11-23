@@ -44,6 +44,7 @@
 			<div class="top-information center">USER INFORMATION</div>
 			<div class="content">
 				<div class="menu-action2" id="menu-action2">
+					<h1 th:text="${totalPages}"></h1>
 					<h2 class="center">To create a new menu you can create a new
 						dish or select one existing from the database.</h2>
 					<div class="flex-container">
@@ -51,9 +52,10 @@
 							<h2 class="center">Select or Create a New Dish</h2>
 							<div class="dish-panel-header flex-container">
 								<div class="search-panel">
-									<form class="search" th:action="@{/toPopulateMenu}" method="POST">
-										<input type="text" placeholder="Search..." name="searchTerm"> <input
-											type="submit">
+									<form class="search" th:action="@{/toPopulateMenu}"
+										method="POST">
+										<input type="text" placeholder="Search..." name="searchTerm">
+										<input type="submit">
 									</form>
 								</div>
 								<div class="add-new-item">
@@ -90,13 +92,45 @@
 											</tr>
 										</tbody>
 									</table>
+
+
+									<div class="pagination">
+
+										<a href="#">&laquo;</a>
+										<div th:each="page: ${pagesList}">
+											<div th:if="${page == pageNumber + 1}">
+												<a th:text="${page}"
+													th:href="@{/toPopulateMenu/{pageNum}(pageNum=${page - 1})}"
+													class="active"></a>
+											</div>
+											<div th:unless="${page == pageNumber + 1}">
+												<a th:text="${page}"
+													th:href="@{/toPopulateMenu/{pageNum}(pageNum=${page - 1})}"></a>
+											</div>
+										</div>
+										<a href="#">&raquo;</a>
+									</div>
 								</div>
 
 							</div>
 						</div>
 
 						<div class="admin-menuDisplay cart-primary">
-							<h2 class="center"> <span th:text="${menuToPopulate.title}"></span> Menu</h2>
+							<div class="flex-container">
+								<h2 class="center">
+									<span th:text="${menuToPopulate.title}"></span> Menu
+								</h2>
+								<div class="content-right flex-container">
+									<div>
+										<a class="button-6" th:href="@{/toSaveMenu}">Save </a>
+									</div>
+									<div>
+										<a class="button-6" th:href="@{/toCancelMenu}"
+											style="color: #8d0101; background-color: #FF9e79;">Cancel</a>
+									</div>
+								</div>
+							</div>
+
 							<div th:if="menuToPopulate != null">
 								<table class="styled-table2">
 									<thead>

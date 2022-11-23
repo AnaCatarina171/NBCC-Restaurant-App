@@ -2,6 +2,7 @@ package ca.nbcc.restapp.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +36,7 @@ public class DishService {
 		return dishRepo.findByName(searchTerm);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<Dish> getAllDishesPaginated(Pageable  page){
-		return (List<Dish>) dishRepo.findAll(page);
+	public Page<Dish> getAllDishesPaginated(Pageable  page){
+		return dishRepo.findAll(page);
 	}
 }
