@@ -50,11 +50,11 @@
 					<div class="cart-primary-title">Past Menus</div>
 					<div class="cart-primary-content">
 					
-						<div class="cart-secondary">
-							<div class="cart-secondary-title">Menu Title (e.g. Thailand)</div>
+						<div th:each="menu : ${allMenus}" class="cart-secondary">
+							<div class="cart-secondary-title" th:text="${menu.title}"></div>
 							<div class="cart-secondary-content">
 								<div class="content-left">
-									Served From - To : <br> Total Items: 15 <br>Last Modified:  
+									Served From - To : <br> Total Items: 15 <br> Last Modified: <span th:text="${menu.date}"></span>									
 								</div>
 								<div class="content-right">
 									<a href="toReservationProcess" class="button-6">Recall</a>

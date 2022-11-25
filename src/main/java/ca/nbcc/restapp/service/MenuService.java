@@ -37,4 +37,8 @@ public class MenuService {
 		return allMenus.get(allMenus.size() - 1);
 
 	}
+
+	public List<Menu> getAllMenus() {
+		return mRepo.findAll();
+	}
 }
