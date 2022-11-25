@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import ca.nbcc.restapp.model.DishNationality;
 import ca.nbcc.restapp.model.Menu;
 import ca.nbcc.restapp.service.DishService;
 import ca.nbcc.restapp.service.MenuService;
+import ca.nbcc.restapp.service.PaginationService;
 
 @Controller
 public class MenuController {
@@ -29,14 +31,16 @@ public class MenuController {
 	private ApplicationContext ctx;
 	private MenuService ms;
 	private DishService ds;
+	private PaginationService<Dish> pags;
 	
 	
 		
-	public MenuController(ApplicationContext ctx, MenuService ms, DishService ds) {
+	public MenuController(ApplicationContext ctx, MenuService ms, DishService ds, PaginationService<Dish> pags) {
 		super();
 		this.ctx = ctx;
 		this.ms = ms;
 		this.ds = ds;
+		this.pags = pags;
 	}
 	
 	/*
@@ -57,6 +61,8 @@ public class MenuController {
 	
 	@GetMapping("/toMenuPanel")
 	public String toMenuPanel(Model model) {		
+		List<Menu> allMenus = ms.getAllMenus();
+		model.addAttribute("allMenus", allMenus);
 		return "user-menuPanel";
 	}
 	
@@ -70,8 +76,12 @@ public class MenuController {
 	}
 	
 	@PostMapping("/processMenuDetails")
-	public String processMenuDetails(Model model, Menu menuToAdd) {
-		menuToAdd.setDate(LocalDate.now());
+	public String processMenuDetails(Model model, Menu menuToPopulate) {
+		Menu menuToAdd = ms.getLastMenu();
+		System.out.println(menuToPopulate);
+		System.out.println(menuToAdd);
+		menuToAdd.setTitle(menuToPopulate.getTitle());
+		menuToAdd.setDescription(menuToPopulate.getDescription());
 		ms.saveMenu(menuToAdd);
 		
 		setupPopulateMenuPage(model, 0);
@@ -98,6 +108,16 @@ public class MenuController {
 		return "user-populateMenu";
 	}
 	
+	@GetMapping("/toSaveMenu")
+	public String toSaveMenu(Model model) {
+		Menu menuToSave = ms.getLastMenu();
+		System.out.println(menuToSave.toString());
+		menuToSave.setDate(LocalDate.now());
+		ms.saveMenu(menuToSave);
+		
+		return "redirect:/toMenuPanel";
+	}
+	
 	@PostMapping("/processAddNewItem")
 	public String processAddNewItem(Model model, Dish dishToAdd) {
 		Menu menuToPopulate = ms.getLastMenu();
@@ -120,43 +140,41 @@ public class MenuController {
 		setupPopulateMenuPage(model, 0);
 		return "user-populateMenu";
 	}
-	
-	
-	private List<Pageable> generatePageableDishes(int totalItems, int itemPerPage){
-		List<Pageable> pageableDishes = new ArrayList<>();
-		int totalPages = 0;
 		
-		if(totalItems/itemPerPage > (int)(totalItems / itemPerPage) ) {
-			totalPages = (int) totalItems / itemPerPage + 1;
-		}else {
-			totalPages = (int) totalItems / itemPerPage;
-		}
-		
-		
-		for (int i = 0; i < totalPages ; i++) {
-			pageableDishes.add(PageRequest.of(itemPerPage, i));
-		}
-		System.out.println(pageableDishes.toString());
-		return pageableDishes;
-	}
 	
 	private void setupPopulateMenuPage(Model model, int pageNumber) {
 		Dish dishToAdd= new Dish();
 		Menu menuToPopulate = ms.getLastMenu();
 		EnumSet<DishCategory> categories = EnumSet.allOf(DishCategory.class);
 		EnumSet<DishNationality> nationalities = EnumSet.allOf(DishNationality.class);
-		List<Dish> allDishes = ds.getAllDishes();
-		int itemPerPage = 10;
-		List<Pageable> pageableDishes = generatePageableDishes(allDishes.size(), itemPerPage);
-		List<Dish> dishList = ds.getAllDishesPaginated(pageableDishes.get(pageNumber));
 		
+		List<Dish> allDishes = ds.getAllDishes();
+		int itemPerPage = 2;
+		List<Pageable> pageableDishes = pags.generatePageableList(allDishes.size(), itemPerPage);
+		System.out.println(pageableDishes.toString());
+		System.out.println(pageNumber);
+		
+		if(pageableDishes.size() != 0) {
+			Page<Dish> dishList = ds.getAllDishesPaginated(pageableDishes.get(pageNumber));
+			// List of pages for pagination
+			
+			model.addAttribute("pagesList", pags.generatePagesList(dishList));
+			model.addAttribute("totalPages", dishList.getTotalPages());
+			model.addAttribute("dishList", dishList.getContent());
+		}else {
+			model.addAttribute("pagesList", pags.generatePagesList());
+			model.addAttribute("totalPages", "0");
+			model.addAttribute("dishList", ds.getAllDishes());
+		}
+				
 		model.addAttribute("menuToPopulate", menuToPopulate);
-		model.addAttribute("dishToAdd", dishToAdd);
-		model.addAttribute("dishList", dishList);
+		model.addAttribute("dishToAdd", dishToAdd);		
 		model.addAttribute("categories", categories);
 		model.addAttribute("nationalities", nationalities);
+		model.addAttribute("pageNumber", pageNumber);
 	}
 	
+		
 	private void setupPopulateMenuPage(Model model, String searchTerm) {
 		Dish dishToAdd= new Dish();
 		List<Dish> dishList;
