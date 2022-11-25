@@ -94,8 +94,8 @@
 	<div class="main  medium-width">
 		<div class="flex-container margin-top-5 ">
 			<div class="content-left">
-				<h4 class="styledH4">Who are we?</h4>
-				<h1>Dining Room 1234 NBCC Moncton Campus</h1>
+				<h4 class="styledH4 titleSmall">Who are we?</h4>
+				<h1 class="bigTitle">Dining Room 1234 NBCC Moncton Campus</h1>
 				<h2>Dining Room 1234 is the practical learning experience for
 					students in the Hospitality Department at Moncton Campus to show
 					their outstanding potential while working in our amazing cafeteria.</h2>
@@ -109,9 +109,12 @@
 		</div>
 
 		<div class="center-container">
-			<h4>What Do We Offer?</h4>
+			<h4 class="titleSmall">What Do We Offer?</h4>
 			<h2>Every week we feature a unique banquet style 3 course meal
 				inspired in different nationalities and cultures.</h2>
+			<ul>
+				<li></li>
+			</ul>
 			<div class="row margin-top-5">
 				<div class="col-md-12"></div>
 			</div>
@@ -177,9 +180,9 @@
 			<div class="row">
 				<div class="col-md-12">
 					<ul>
-						<li><a href="#">About Us</a></li>
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Reservations</a></li>
+						<li><a th:href="@{/toAboutUs}">About Us</a></li>
+						<li><a th:href="@{/toCustomerView}">Home</a></li>
+						<li><a th:href="@{/reservationOptions}">Reservations</a></li>
 						<li><a href="#">Privacy Policy</a></li>
 					</ul>
 				</div>

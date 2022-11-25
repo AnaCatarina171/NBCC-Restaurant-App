@@ -46,7 +46,7 @@
 						Reservation </a>
 				</div>
 				<div th:if="${#session != null}" class="navigation-item">
-					<a th:href="@{/yourReservations}" class="nav-link">Your
+					<a th:href="@{/customerReservations}" class="nav-link">Your
 						Reservations</a>
 				</div>
 				<div class="navigation-item ">
@@ -100,7 +100,7 @@
 				Time</h2>
 			<div class="row">
 
-				<div class="table-container col-md-4 static-position">
+				<div class="table-container col-md-4">
 					<div>
 						<a th:href="@{/addNewReservation}" class="button-6">Breakfast
 							Menu</a>
@@ -113,22 +113,53 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="reservationTime : ${resTimeBreakfast}">
-								<td th:text="${reservationTime.time}"></td>
+							<tr>
+								<td>7:30am</td>
 								<td><input type="button"
 											class="button-6" data-toggle="modal"
-											data-target="#addReservation"
-											th:attr="data-object-id=''+${reservationTime.time}+'', data-object-name=''+${reservationTime.time}+'', data-target='#addReservation'"
-											value="Book">
+											data-target="#addReservation" value="Book">
 											
 											<th:block th:replace="_modals :: modal('addReservation')">modal</th:block>
 								</td>
+							</tr>
+							<tr>
+								<td>8:00am</td>
+								<td><input type="button"
+											class="button-6" data-toggle="modal"
+											data-target="#addReservation1" value="Book">
+											
+											<th:block th:replace="_modals :: modal('addReservation1')">modal</th:block>
+								</td>
+							</tr>
+							<tr>
+								<td>8:30am</td>
+								<td><form th:action="@{/addNewReservation}" method="POST">
+										<input id="reservationTime" name="reservationTime" type="text"
+											value="8:30 am" hidden> <input type="submit"
+											class="button-6" value="Book">
+									</form></td>
+							</tr>
+							<tr>
+								<td>9:00am</td>
+								<td><form th:action="@{/addNewReservation}" method="POST">
+										<input id="reservationTime" name="reservationTime" type="text"
+											value="9:00 am" hidden> <input type="submit"
+											class="button-6" value="Book">
+									</form></td>
+							</tr>
+							<tr>
+								<td>9:30am</td>
+								<td><form th:action="@{/addNewReservation}" method="POST">
+										<input id="reservationTime" name="reservationTime" type="text"
+											value="9:30 am" hidden> <input type="submit"
+											class="button-6" value="Book">
+									</form></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 
-				<div class="table-container  col-md-4 static-position">
+				<div class="table-container  col-md-4">
 					<div>
 						<a th:href="@{/addNewReservation}" class="button-6">Lunch Menu</a>
 					</div>
@@ -140,22 +171,43 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="reservationTime : ${resTimeLunch}">
-								<td th:text="${reservationTime.time}"></td>
-								<td><input type="button"
-											class="button-6" data-toggle="modal"
-											data-target="#addReservation"
-											th:attr="data-object-id=''+${reservationTime.time}+'', data-object-name=''+${reservationTime.time}+'', data-target='#addReservation'"
-											value="Book">
-											
-											<th:block th:replace="_modals :: modal('addReservation')">modal</th:block>
-								</td>
+							<tr>
+								<td>11:45am</td>
+								<td><form th:action="@{/addNewReservation}" method="POST">
+										<input id="reservationTime" name="reservationTime" type="text"
+											value="11:45 am" hidden> <input type="submit"
+											class="button-6" value="Book">
+									</form></td>
+							</tr>
+							<tr>
+								<td>12:15pm</td>
+								<td><form th:action="@{/addNewReservation}" method="POST">
+										<input id="reservationTime" name="reservationTime" type="text"
+											value="12:15 pm" hidden> <input type="submit"
+											class="button-6" value="Book">
+									</form></td>
+							</tr>
+							<tr>
+								<td>12:45pm</td>
+								<td><form th:action="@{/addNewReservation}" method="POST">
+										<input id="reservationTime" name="reservationTime" type="text"
+											value="12:45 pm" hidden> <input type="submit"
+											class="button-6" value="Book">
+									</form></td>
+							</tr>
+							<tr>
+								<td>1:00pm</td>
+								<td><form th:action="@{/addNewReservation}" method="POST">
+										<input id="reservationTime" name="reservationTime" type="text"
+											value="1:00 pm" hidden> <input type="submit"
+											class="button-6" value="Book">
+									</form></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 
-				<div class="table-container  col-md-4 static-position">
+				<div class="table-container  col-md-4">
 					<div>
 						<a th:href="@{/addNewReservation}" class="button-6">Night Menu</a>
 					</div>
@@ -167,23 +219,44 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="reservationTime : ${resTimeNight}">
-								<td th:text="${reservationTime.time}"></td>
-								<td><input type="button"
-											class="button-6" data-toggle="modal"
-											data-target="#addReservation"
-											th:attr="data-object-id=''+${reservationTime.time}+'', data-object-name=''+${reservationTime.time}+'', data-target='#addReservation'"
-											value="Book">
-											
-											<th:block th:replace="_modals :: modal('addReservation')">modal</th:block>
-								</td>
+							<tr>
+								<td>6:00pm</td>
+								<td><form th:action="@{/addNewReservation}" method="POST">
+										<input id="reservationTime" name="reservationTime" type="text"
+											value="6:00 pm" hidden> <input type="submit"
+											class="button-6" value="Book">
+									</form></td>
+							</tr>
+							<tr>
+								<td>6:30pm</td>
+								<td><form th:action="@{/addNewReservation}" method="POST">
+										<input id="reservationTime" name="reservationTime" type="text"
+											value="6:30 pm" hidden> <input type="submit"
+											class="button-6" value="Book">
+									</form></td>
+							</tr>
+							<tr>
+								<td>7:00pm</td>
+								<td><form th:action="@{/addNewReservation}" method="POST">
+										<input id="reservationTime" name="reservationTime" type="text"
+											value="7:00 pm" hidden> <input type="submit"
+											class="button-6" value="Book">
+									</form></td>
+							</tr>
+							<tr>
+								<td>7:30pm</td>
+								<td><form th:action="@{/addNewReservation}" method="POST">
+										<input id="reservationTime" name="reservationTime" type="text"
+											value="7:30 pm" hidden> <input type="submit"
+											class="button-6" value="Book">
+									</form></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
 			<div class="row">
-				<h2 class="col-md-12 titleTopBorder margin-bottom-3">Cafeteria Display</h2>
+				<h2 class="col-md-12 titleTopBorder">Cafeteria Display</h2>
 				<div class="row">
 					<div class="image-floor-container">
 						<img src="img/basic-floor-planning.png">
@@ -251,17 +324,20 @@
 	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 	
-	<script th:inline="javascript">
-	/*<![CDATA[*/
-		
-    $('#addReservation').on('show.bs.modal', function (event) {
-    	var button = $(event.relatedTarget);
-        var reservationTime = button.data('object-name');
-        $.get("/modals/new-reservation?reservationTime=" + reservationTime, function (data) {
+	<script>
+	
+    $('#addReservation').on('show.bs.modal', function () {
+        var reservationTime = "7:30 am";
+        $.get("/modals/modal2?reservationTime=" + reservationTime, function (data) {
             $('#addReservation').find('.modal-body').html(data);
         })
     })
-    /*]]>*/
+    $('#addReservation1').on('show.bs.modal', function () {
+        var reservationTime = "8:00 am";
+        $.get("/modals/modal2?reservationTime=" + reservationTime, function (data) {
+            $('#addReservation1').find('.modal-body').html(data);
+        })
+    })
 </script>
 	
 </body>
