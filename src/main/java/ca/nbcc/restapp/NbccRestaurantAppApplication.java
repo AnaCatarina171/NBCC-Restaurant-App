@@ -14,49 +14,23 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import ca.nbcc.restapp.controller.EmployeeController;
 import ca.nbcc.restapp.controller.LoginController;
+import ca.nbcc.restapp.controller.ReservationController;
 import ca.nbcc.restapp.controller.TestController;
 import ca.nbcc.restapp.model.Department;
 import ca.nbcc.restapp.model.Employee;
 import ca.nbcc.restapp.model.EmployeeRole;
+import ca.nbcc.restapp.model.Reservation;
+import ca.nbcc.restapp.model.ReservationTimeGroup;
+import ca.nbcc.restapp.model.ReservationTimes;
 import ca.nbcc.restapp.repo.DepartmentJpaRepo;
 import ca.nbcc.restapp.repo.DishJpaRepo;
 import ca.nbcc.restapp.repo.EmployeeJpaRepo;
 import ca.nbcc.restapp.repo.MenuJpaRepo;
 import ca.nbcc.restapp.repo.ProductJpaRepo;
-import ca.nbcc.restapp.service.CustomerService;
-import ca.nbcc.restapp.service.DepartmentService;
-import ca.nbcc.restapp.service.DishService;
-import ca.nbcc.restapp.service.EmployeeService;
-import ca.nbcc.restapp.service.MenuService;
-import ca.nbcc.restapp.service.ProductService;
-
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.util.Set;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import javax.servlet.AsyncContext;
-import javax.servlet.DispatcherType;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpUpgradeHandler;
-import javax.servlet.http.Part;
-import javax.validation.ConstraintViolation;
-import javax.validation.Path.Node;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import ca.nbcc.restapp.repo.ReservationJpaRepo;
+import ca.nbcc.restapp.repo.ReservationTimeJpaRepo;
+import ca.nbcc.restapp.service.ReservationService;
+import ca.nbcc.restapp.service.ReservationTimeService;
 
 @SpringBootApplication(exclude={SecurityAutoConfiguration.class})
 public class NbccRestaurantAppApplication{
@@ -66,15 +40,19 @@ public class NbccRestaurantAppApplication{
 	private static EmployeeJpaRepo eRepo;
 	private static MenuJpaRepo mRepo;
 	private static ProductJpaRepo pRepo;
+	private static ReservationTimeJpaRepo resTRepo;
+	private static ReservationJpaRepo resRepo;
 	
 	@Autowired
 	public NbccRestaurantAppApplication(DepartmentJpaRepo depRepo, DishJpaRepo dishRepo,
-			MenuJpaRepo mRepo, ProductJpaRepo pRepo, EmployeeJpaRepo eRepo){
+			MenuJpaRepo mRepo, ProductJpaRepo pRepo, EmployeeJpaRepo eRepo, ReservationTimeJpaRepo resTRepo, ReservationJpaRepo resRepo){
 		NbccRestaurantAppApplication.depRepo = depRepo;
 		NbccRestaurantAppApplication.dishRepo = dishRepo;
 		NbccRestaurantAppApplication.eRepo = eRepo;
 		NbccRestaurantAppApplication.mRepo = mRepo;
 		NbccRestaurantAppApplication.pRepo = pRepo;
+		NbccRestaurantAppApplication.resTRepo = resTRepo;
+		NbccRestaurantAppApplication.resRepo = resRepo;
 	}
 
 	public static void main(String[] args) {
@@ -84,5 +62,6 @@ public class NbccRestaurantAppApplication{
 		//TestController testController = new TestController(new DepartmentService(depRepo), 
 		//		new DishService(dishRepo), new EmployeeService(eRepo), new MenuService(mRepo), new ProductService(pRepo))
 
+		ReservationController resTestController = new ReservationController(new ReservationService(resRepo), new ReservationTimeService(resTRepo));
 	}
 }

@@ -14,7 +14,7 @@ import ca.nbcc.restapp.model.Reservation;
 @RequestMapping("modals")
 public class ModalController {
     
-    @GetMapping("modal2")
+    @GetMapping("new-reservation")
     public String goToModal(@RequestParam("reservationTime") String resTime, Model model) {
         
     	Reservation reservationToAdd = new Reservation();
@@ -26,6 +26,6 @@ public class ModalController {
 		model.addAttribute("reservationToAdd", reservationToAdd);
 		model.addAttribute("minDate", currentDatePlusOne);
         
-        return "modal2";
+        return "new-reservation";
     }
 }

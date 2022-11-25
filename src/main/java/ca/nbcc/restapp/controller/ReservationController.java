@@ -26,8 +26,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ca.nbcc.restapp.model.Reservation;
 import ca.nbcc.restapp.model.ReservationStatus;
+import ca.nbcc.restapp.model.ReservationTimeGroup;
+import ca.nbcc.restapp.model.ReservationTimes;
 import ca.nbcc.restapp.service.CustomerService;
 import ca.nbcc.restapp.service.ReservationService;
+import ca.nbcc.restapp.service.ReservationTimeService;
 
 @Controller
 public class ReservationController {
@@ -35,6 +38,7 @@ public class ReservationController {
 	ApplicationContext ctx;
 
 	private ReservationService rS;
+	private ReservationTimeService rTS;
 	private CustomerService cS;
 
 	// Email Sender Variables
@@ -49,20 +53,51 @@ public class ReservationController {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Autowired
-	public ReservationController(ApplicationContext ctx, ReservationService rS, CustomerService cS) {
+	
+	public ReservationController(ApplicationContext ctx, ReservationService rS, CustomerService cS, ReservationTimeService rTS) {
 		super();
 		this.ctx = ctx;
 		this.rS = rS;
 		this.cS = cS;
+		this.rTS = rTS;
+	}
+	
+	@Autowired
+	public ReservationController(ReservationService rS, ReservationTimeService rTS) {
+		super();
+		this.rS = rS;
+		this.rTS = rTS;
 	}
 
 	@GetMapping("reservationOptions")
 	public String reservationOptions(Model model) {
-
-		model.addAttribute("reservationTime1", "7:30 am");
+		
+		List<ReservationTimes> resTimeBreakfast = new ArrayList<>();
+		List<ReservationTimes> resTimeLunch = new ArrayList<>();
+		List<ReservationTimes> resTimeNight = new ArrayList<>();
+		
+		for(var resT : rTS.getAllReservationTimes()){
+			
+			if(resT.getResGroup().equals(ReservationTimeGroup.BREAKFAST)) {
+				resTimeBreakfast.add(resT);
+			} else if(resT.getResGroup().equals(ReservationTimeGroup.LUNCH)) {
+				resTimeLunch.add(resT);
+			} else if(resT.getResGroup().equals(ReservationTimeGroup.NIGHT)) {
+				resTimeNight.add(resT);
+			}
+		}
+		
+		model.addAttribute("resTimeBreakfast", resTimeBreakfast);
+		model.addAttribute("resTimeLunch", resTimeLunch);
+		model.addAttribute("resTimeNight", resTimeNight);
 		
 		return "reservation-options";
+	}
+	
+	@GetMapping("/yourReservations")
+	public String goToYourReservations(Model model) {
+		
+		return "your-reservations";
 	}
 
 	@GetMapping("todayFloorPlan")
@@ -100,9 +135,9 @@ public class ReservationController {
 		}
 		if (orderByP != null) {
 			if (orderByP.equals("newest")) {
-				pastReservations = rS.orderByDate();
+				pastReservations = rS.pastReservations();
 			} else if (orderByP.equals("oldest")) {
-				pastReservations = rS.orderByDateDesc();
+				pastReservations = rS.pastReservationsDesc();
 			}
 		}
 
@@ -238,6 +273,14 @@ public class ReservationController {
 		model.addAttribute("minDate", currentDatePlusOne);
 
 		return "new-reservation";
+	}
+	
+	@PostMapping("/addReservationTimes")
+	public String toAddReservationTimes(ReservationTimes rT) {
+		
+		rTS.addNewReservation(rT);
+		
+		return "Reservation Time for " + rT.getTime() + " successfully added.";
 	}
 
 	@PostMapping("processAddReservation")

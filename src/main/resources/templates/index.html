@@ -60,121 +60,6 @@
 				<a th:href="@{/goToLogout}" class="button-6">Sign Out</a>
 			</div>
 		</div>
-		<!-- 
-		<div class="flex-container-column">
-			<div class="content-bottom">
-				<div class="navigation">
-					<div class="navigation-item ">
-						<a th:href="@{/toCustomerView}" class="nav-link"> Home </a>
-					</div>
-					<div class="navigation-item ">
-						<a th:href="@{/customerMenuDisplay}" class="nav-link "> Menus
-						</a>
-					</div>
-					<div class="navigation-item ">
-						<a th:href="@{/reservationOptions}" class="nav-link"> Book a
-							Reservation </a>
-					</div>
-					<div class="navigation-item ">
-						<a th:href="@{/userPanel}" class="nav-link">User Panel</a>
-					</div>
-					<div th:if="${#session != null}" class="navigation-item">
-						<a th:href="@{/customerReservations}" class="nav-link">Your
-							Reservations</a>
-					</div>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="css/styles.css">
-	<script src="https://kit.fontawesome.com/cbb0aad349.js" crossorigin="anonymous"></script>
-	<title>RESTO-APP</title>
-</head>
-
-<body>
-	<div class="admin-page">
-		<div class="user-left-panel">
-			<div class="logo">NBCC 1234 Room</div>
-
-			<div class="user-navigation">
-				<div class="navigation-item">
-					<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
-				</div>
-				<br>
-				<div class="navigation-item">
-					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
-				</div>
-				<br>
-				<div class="navigation-item">
-					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
-				</div>
-				<br>
-				<div class="navigation-item">
-					<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
-				</div>
-			</div>
-		</div>
-
-		<div class="main">
-			<div class="top-information center">USER INFORMATION</div>
-			<div class="content">
-				<h2 class="center">To create a new menu you can create a new
-					dish or select one existing from the database.</h2>
-				<div class="center">
-					<h2>Appetizer</h2>
-					<div class="row">
-						<div class="display-menu">
-							<table class="styled-table">
-								<thead>
-									<tr>
-										<th>Name</th>
-										<th>Description</th>
-										<th>Nationality</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-									</tr>
-
-								</tbody>
-
-							</table>
-						</div>
-						<div class="flex-container">
-							<select class="selectDish">
-								<option value=0 selected>Select a Dish</option>
-							</select>
-							<button class="open-icon" id="btnAppetizer">
-								<i class="fa-solid fa-circle-plus icon-button"></i>
-							</button>
-
-						</div>
-						<div class="form-modal" id="addAppetizerModal">
-							<div class="modal-content">
-								<form th:action="processAddNewItem" method="POST" th:object="${appToAdd}"
-									class="form-container">
-									<label>Name</label> <input type="text" th:field="*{name}" required> <br>
-									<label>Description</label> <input type="text" th:field="*{description}" required>
-									<br>
-									<label>Category</label> <input type="text" th:field="*{category}"
-										placeholder="Appetizer" disabled>
-									<br> <select th:field="*{nationality}" required>
-										<option value="0" selected hidden>Nationality</option>
-										<option th:each="n : ${nationalities}" th:value="${n}" th:text="${n}">
-									</select> <input type="submit" class="button-6">
-									<button class="button-6 close">Cancel</button>
-								</form>
-							</div>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-		 -->
-
 	</div>
 
 <div class="titleBackground titleBackgroundCooker">
@@ -241,7 +126,7 @@
 							</tbody>
 						</table>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-4 ">
 					<h2>Business Hours</h2>
 
 					<div class="table-container">
