@@ -39,4 +39,13 @@ public class DishService {
 	public Page<Dish> getAllDishesPaginated(Pageable  page){
 		return dishRepo.findAll(page);
 	}
+
+	public void saveDish(Dish dish) {
+		dishRepo.save(dish);		
+	}
+
+	public void deleteDish(long dId) {
+		dishRepo.deleteById(dId);
+		
+	}
 }

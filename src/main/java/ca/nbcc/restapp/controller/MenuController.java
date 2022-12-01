@@ -3,8 +3,10 @@ package ca.nbcc.restapp.controller;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
@@ -75,6 +77,54 @@ public class MenuController {
 		return "user-addMenuDetails";
 	}
 	
+	
+	@GetMapping("/recallMenu/{mId}")
+	public String toRecallMenu(Model model,  @PathVariable("mId") long mId) {
+		setupRecallMenuPage(model, 0, mId); 
+		return "user-recallMenu";
+	}
+	
+	
+
+	@GetMapping("/toCancelMenu")
+	public String toCancelMenu(Model model) {
+		try {
+			long menuId = ms.getLastMenu().getId();
+			
+			ms.deleteMenu(menuId);
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return "redirect:/toMenuPanel";
+	}
+	
+	@GetMapping("/deleteDish/{dId}")
+	public String toDeleteDish(Model model, @PathVariable("dId") long dId) {
+		try {
+			ds.deleteDish(dId);
+			setupPopulateMenuPage(model, 0);
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return "user-populateMenu";
+	}
+	
+	@GetMapping("/toDeleteMenu")
+	public String toDeleteMenu(Model model, @RequestParam("menuId") String menuId) {
+		try {
+			System.out.println(menuId);
+			long longMenuId = Long.parseLong(menuId);
+
+			ms.deleteMenu(longMenuId);
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return "redirect:/toMenuPanel";
+	}
+	
 	@PostMapping("/processMenuDetails")
 	public String processMenuDetails(Model model, Menu menuToPopulate) {
 		Menu menuToAdd = ms.getLastMenu();
@@ -118,11 +168,31 @@ public class MenuController {
 		return "redirect:/toMenuPanel";
 	}
 	
+	@GetMapping("/toSaveMenu/{mId}")
+	public String toSaveMenu(Model model, @PathVariable("mId") long mId) {
+		Menu menuToSave = ms.getMenuById(mId);
+		System.out.println(menuToSave.getDishList().toString());
+		menuToSave.setDate(LocalDate.now());
+		ms.saveMenu(menuToSave);
+		
+		return "redirect:/toMenuPanel";
+	}
+	
+	
+	
 	@PostMapping("/processAddNewItem")
 	public String processAddNewItem(Model model, Dish dishToAdd) {
 		Menu menuToPopulate = ms.getLastMenu();
-		dishToAdd.setMenu(menuToPopulate);
+
+		//Changed the variable to a Set since it doesn't allow duplicates
+		Set<Menu> newMenuSet = new HashSet<Menu>();
+		newMenuSet.add(menuToPopulate);
+		dishToAdd.setMenuSet(newMenuSet);
 		ds.addNewDish(dishToAdd);
+		
+		Set<Dish> newMenuDishSet = new HashSet<Dish>();
+		newMenuDishSet.add(dishToAdd);
+		menuToPopulate.setDishList(newMenuDishSet);
 		ms.saveMenu(menuToPopulate);
 
 		setupPopulateMenuPage(model, 0);
@@ -132,8 +202,11 @@ public class MenuController {
 	@GetMapping("/addDishToMenu/{dId}")
 	public String addDishToMenu(Model model, @PathVariable("dId") long rId) {
 		Menu menuToPopulate = ms.getLastMenu();
-		List<Dish> menuDishList = menuToPopulate.getDishList();
+		System.out.println(menuToPopulate.toString());
+		Set<Dish> menuDishList = menuToPopulate.getDishList();
+		System.out.println(menuDishList.toString());
 		menuDishList.add(ds.getDishById(rId));
+		System.out.println(menuDishList.toString());
 		menuToPopulate.setDishList(menuDishList);
 		ms.saveMenu(menuToPopulate);
 		
@@ -141,36 +214,39 @@ public class MenuController {
 		return "user-populateMenu";
 	}
 		
+	@GetMapping("/addDishToRecalledMenu/{dId}/{mId}")
+	public String addDishToRecalledMenu(Model model, @PathVariable("dId") long dId,
+			@PathVariable("mId") long mId) {	
+		Menu menuToPopulate = ms.getMenuById(mId);
+		Set<Dish> menuDishList = menuToPopulate.getDishList();
+
+		menuDishList.add(ds.getDishById(dId));
+		System.out.println(menuDishList.toString());
+		
+		menuToPopulate.setDishList(menuDishList);
+		System.out.println(menuToPopulate.getDishList().toString());
+		ms.saveMenu(menuToPopulate);
+		
+		setupRecallMenuPage(model, 0, mId);
+		return "user-recallMenu";
+	}
+	
+	// Dish Actions
+	@GetMapping("/deleteDishRecalled/{dId}/{mId}")
+	public String deleteDishRecalled(Model model, @PathVariable("dId") long dId,
+			@PathVariable("mId") long mId) {
+		ds.deleteDish(dId);
+		setupRecallMenuPage(model, 0, mId);
+		return "user-recallMenu";
+	}
 	
 	private void setupPopulateMenuPage(Model model, int pageNumber) {
-		Dish dishToAdd= new Dish();
-		Menu menuToPopulate = ms.getLastMenu();
-		EnumSet<DishCategory> categories = EnumSet.allOf(DishCategory.class);
-		EnumSet<DishNationality> nationalities = EnumSet.allOf(DishNationality.class);
+		setupPagination(model, pageNumber, 10);
+		setupDishPanel(model);
 		
-		List<Dish> allDishes = ds.getAllDishes();
-		int itemPerPage = 2;
-		List<Pageable> pageableDishes = pags.generatePageableList(allDishes.size(), itemPerPage);
-		System.out.println(pageableDishes.toString());
-		System.out.println(pageNumber);
+		Menu menuToPopulate = ms.getLastMenu();		
 		
-		if(pageableDishes.size() != 0) {
-			Page<Dish> dishList = ds.getAllDishesPaginated(pageableDishes.get(pageNumber));
-			// List of pages for pagination
-			
-			model.addAttribute("pagesList", pags.generatePagesList(dishList));
-			model.addAttribute("totalPages", dishList.getTotalPages());
-			model.addAttribute("dishList", dishList.getContent());
-		}else {
-			model.addAttribute("pagesList", pags.generatePagesList());
-			model.addAttribute("totalPages", "0");
-			model.addAttribute("dishList", ds.getAllDishes());
-		}
-				
 		model.addAttribute("menuToPopulate", menuToPopulate);
-		model.addAttribute("dishToAdd", dishToAdd);		
-		model.addAttribute("categories", categories);
-		model.addAttribute("nationalities", nationalities);
 		model.addAttribute("pageNumber", pageNumber);
 	}
 	
@@ -194,4 +270,44 @@ public class MenuController {
 		model.addAttribute("nationalities", nationalities);
 	}
 	
+	
+	private void setupRecallMenuPage(Model model, int pageNumber, long mId) {		
+		setupPagination(model, pageNumber, 10);
+		setupDishPanel(model);
+		
+		Menu menuToPopulate = ms.getMenuById(mId);		
+		
+		model.addAttribute("menuToPopulate", menuToPopulate);
+		model.addAttribute("pageNumber", pageNumber);
+	}
+	
+	private void setupDishPanel(Model model) {
+		Dish dishToAdd= new Dish();		
+		EnumSet<DishCategory> categories = EnumSet.allOf(DishCategory.class);
+		EnumSet<DishNationality> nationalities = EnumSet.allOf(DishNationality.class);
+				
+		model.addAttribute("dishToAdd", dishToAdd);		
+		model.addAttribute("categories", categories);
+		model.addAttribute("nationalities", nationalities);
+	}
+	
+	private void setupPagination(Model model, int pageNumber, int itemPerPage) {
+		List<Dish> allDishes = ds.getAllDishes();
+		List<Pageable> pageableDishes = pags.generatePageableList(allDishes.size(), itemPerPage);
+		System.out.println(pageableDishes.toString());
+		System.out.println(pageNumber);
+		
+		if(pageableDishes.size() != 0) {
+			Page<Dish> dishList = ds.getAllDishesPaginated(pageableDishes.get(pageNumber));
+			// List of pages for pagination
+			
+			model.addAttribute("pagesList", pags.generatePagesList(dishList));
+			model.addAttribute("totalPages", dishList.getTotalPages());
+			model.addAttribute("dishList", dishList.getContent());
+		}else {
+			model.addAttribute("pagesList", pags.generatePagesList());
+			model.addAttribute("totalPages", "0");
+			model.addAttribute("dishList", ds.getAllDishes());
+		}
+	}
 }

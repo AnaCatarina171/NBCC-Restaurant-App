@@ -59,7 +59,9 @@
 									</form>
 								</div>
 								<div class="add-new-item">
-									<button class="button-6" id="btnNewDish">Add Dish</button>
+									<button class="button-6" id="btnNewDish">
+										Add Dish
+									</button>
 								</div>
 							</div>
 
@@ -84,12 +86,13 @@
 												<td th:text="${dish.name}"></td>
 												<td th:text="${dish.Nationality}"></td>
 												<td><a
-													th:href="@{/addDishToMenu/{dId}(dId=${dish.id})}"
+													th:href="@{/addDishToRecalledMenu/{dId}/{mId}(dId=${dish.id}, mId=${menuToPopulate.id})}"
 													class="action-link">Add <i
-														class="fa-regular fa-circle-right"></i></a> / <a
-													th:href="@{/deleteDish/{dId}(dId=${dish.id})}"
-													class="action-link">Delete <i class="fa-solid fa-trash"></i></a></td>
-												</td>
+														class="fa-regular fa-circle-right"></i></a> / 
+												<a
+													th:href="@{/deleteDishRecalled/{dId}/{mId}(dId=${dish.id}, mId=${menuToPopulate.id})}"
+													class="action-link">Delete <i
+														class="fa-solid fa-trash"></i></a></td>
 											</tr>
 										</tbody>
 									</table>
@@ -123,13 +126,7 @@
 								</h2>
 								<div class="content-right flex-container">
 									<div>
-										<a class="button-6"
-											th:href="@{/toSaveMenu/{mId}(mId=${menuToPopulate.id})}">Save
-										</a>
-									</div>
-									<div>
-										<a class="button-6" th:href="@{/toCancelMenu}"
-											style="color: #8d0101; background-color: #FF9e79;">Cancel</a>
+										<a class="button-6" th:href="@{/toSaveMenu/{mId}(mId=${menuToPopulate.id})}">Save </a>
 									</div>
 								</div>
 							</div>
@@ -144,7 +141,6 @@
 										</tr>
 									</thead>
 									<tbody>
-										<!-- TO DO:  LIST OF APPETIZER, ENTREE, DESERT AND DRINK BASED ON MENU -->
 										<tr th:each="dish : ${menuToPopulate.getDishList()}">
 											<td th:text="${dish.name}"></td>
 											<td th:text="${dish.Description}"></td>

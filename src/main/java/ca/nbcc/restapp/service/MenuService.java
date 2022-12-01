@@ -41,4 +41,15 @@ public class MenuService {
 	public List<Menu> getAllMenus() {
 		return mRepo.findAll();
 	}
+	
+
+	public void deleteMenu(long id) {
+		// To delete a menu I got to delete all the dishes that it contains
+		mRepo.deleteById(id);
+	}
+
+	public Menu getMenuById(long mId) {
+		// TODO Auto-generated method stub
+		return mRepo.findById(mId).get();
+	}
 }
