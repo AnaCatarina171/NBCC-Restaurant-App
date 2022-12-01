@@ -2,6 +2,9 @@
 	<div class="booking-form">
 		<div class="form-header">
 			<h1>Book Your Reservation</h1>
+			                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
 		</div>
 		<form th:action="processAddReservation" method="POST"
 			th:object="${reservationToAdd}">

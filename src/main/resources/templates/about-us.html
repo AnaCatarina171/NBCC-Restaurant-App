@@ -12,8 +12,8 @@
 	rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="css/bootstrap.css">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" 
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 <title>RESTO-APP</title>
 </head>
 
@@ -91,7 +91,7 @@
 	<div class="titleBackground">
 		<h1 class="firstPageTitle">About Us</h1>
 	</div>
-	<div class="main  medium-width">
+	<div class="  medium-width">
 		<div class="flex-container margin-top-5 ">
 			<div class="content-left">
 				<h4 class="styledH4 titleSmall">Who are we?</h4>
@@ -108,12 +108,18 @@
 			</div>
 		</div>
 
-		<div class="center-container">
+		<div class="center-container ">
 			<h4 class="titleSmall">What Do We Offer?</h4>
 			<h2>Every week we feature a unique banquet style 3 course meal
 				inspired in different nationalities and cultures.</h2>
-			<ul>
-				<li></li>
+			<ul class="ulAboutUs">
+				<li>We operate during breakfast, lunch and dinner times*</li>
+				<li>Breakfast, Lunch and Dinner have different menus</li>
+				<li>Check our menus to see which banquet would you like to
+					enjoy</li>
+				<li>Vegetarian? Vegan? Any allergies or special request? No
+					problem! We are here to make everybody enjoy this experience! Just
+					let us know while filling your reservation form.</li>
 			</ul>
 			<div class="row margin-top-5">
 				<div class="col-md-12"></div>
@@ -121,9 +127,95 @@
 
 		</div>
 
-		<div class="center-container">
-			<h4>Guests Feedback</h4>
-			<h1>What Our Wonderful Clients Say</h1>
+		<div class="center-container testimonials">
+			<h4 class="titleSmall">Guests Feedback</h4>
+			<h1>What Our Clients Say</h1>
+			<div class="carousel-container">
+				<div class="inner-carousel">
+					<div class="track">
+						<div class="card-container">
+							<div class="card">
+								<div class="user-image">
+									<i class="fa-solid fa-circle-user fa-4x "></i>
+								</div>
+								<div class="testimonial-col ">
+									
+									<div>
+										<p>The variety of foods offered and the knowledge and friendliness of the servers.  
+										Great work people.</p>
+										<h3>Lynda McLeod</h3>
+										<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+											class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+											class="fa fa-star"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-container">
+							<div class="card">
+								<div class="user-image">
+									<i class="fa-solid fa-circle-user fa-4x "></i>
+								</div>
+								<div class="testimonial-col ">
+									<div class="fullWidth">
+										<p>Always look for ward to fine dining here</p>
+										<h3>Vida Black</h3>
+										<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+											class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+											class="fa fa-star"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-container">
+							<div class="card">
+								<div class="user-image">
+									<i class="fa-solid fa-circle-user fa-4x "></i>
+								</div>
+								<div class="testimonial-col ">
+									
+									<div class="fullWidth">
+										<p>The food and service is always amazing!</p>
+										<h3>Crystal Loo</h3>
+										<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+											class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+											class="fa fa-star"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-container">
+							<div class="card">
+								<div class="user-image">
+									<i class="fa-solid fa-circle-user fa-4x "></i>
+								</div>
+								<div class="testimonial-col ">
+									
+									<div class="fullWidth">
+										<p>Excellent food and superb service!</p>
+										<h3>Romana Romana</h3>
+										<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+											class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+											class="fa fa-star"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="nav">
+						<button class="prev">
+							<i class="fa fa-arrow-left fa-2x"></i>
+						</button>
+						<button class="next">
+							<i class="fa fa-arrow-right fa-2x"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+			<h5>
+				Feedbacks from Facebook page: <a class="nav-link"
+					href="https://www.facebook.com/DiningRoom1234/">DiningRoom1234</a>
+			</h5>
 		</div>
 	</div>
 
@@ -135,7 +227,7 @@
 				<h1>Make a Reservation Now!</h1>
 			</div>
 			<div class="col-md-3">
-				<a th:href="@{/reservationOptions}" class="button-6">Book a
+				<a th:href="@{/reservationOptions}" class="button-6 aboutResButton">Book a
 					Reservation</a>
 			</div>
 			<div class="col-md-1"></div>
@@ -143,12 +235,10 @@
 	</div>
 
 	<footer>
-		<div class="footer">
+		<div class="footer margin-top-5">
 			<div class="row">
-				<a href="https://www.facebook.com/DiningRoom1234/"><i
-					class="fa fa-facebook"></i></a> <a
-					href="https://www.instagram.com/nbccmoncton/"><i
-					class="fa fa-instagram"></i></a> <a
+				<a href="https://www.facebook.com/DiningRoom1234/"><i class="fa-brands fa-square-facebook"></i></a> <a
+					href="https://www.instagram.com/nbccmoncton/"><i class="fa-brands fa-instagram"></i></a> <a
 					href="mailto:MO.Hospitality@nbcc.ca"><i class="fa fa-envelope"></i></a>
 			</div>
 
@@ -156,7 +246,7 @@
 				<div class="col-xl-3 col-md-3 "></div>
 				<div class="col-xl-4 col-md-4 ">
 					<div class="single-cta">
-						<i class="fa fa-map-marker"></i>
+						<i class="fa-solid fa-location-dot"></i></i>
 						<div class="cta-text">
 							<h4>Find us</h4>
 							<span>1234 Mountain Road, Moncton,</span> <br> <span>
@@ -194,6 +284,35 @@
 			</div>
 		</div>
 	</footer>
-</body>
 
+	<script>
+		/* Carousel */
+		const prev = document.querySelector(".prev");
+		const next = document.querySelector(".next");
+		const carousel = document.querySelector(".carousel-container");
+		const track = document.querySelector(".track");
+		let width = carousel.offsetWidth;
+		let index = 0;
+		window.addEventListener("resize", function() {
+			width = carousel.offsetWidth;
+		});
+		next.addEventListener("click", function(e) {
+			e.preventDefault();
+			index = index + 1;
+			prev.classList.add("show");
+			track.style.transform = "translateX(" + index * -width + "px)";
+			if (track.offsetWidth - index * width < index * width) {
+				next.classList.add("hide");
+			}
+		});
+		prev.addEventListener("click", function() {
+			index = index - 1;
+			next.classList.remove("hide");
+			if (index === 0) {
+				prev.classList.remove("show");
+			}
+			track.style.transform = "translateX(" + index * -width + "px)";
+		});
+	</script>
+</body>
 </html>

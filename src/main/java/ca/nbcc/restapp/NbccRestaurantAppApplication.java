@@ -19,6 +19,7 @@ import ca.nbcc.restapp.controller.TestController;
 import ca.nbcc.restapp.model.Department;
 import ca.nbcc.restapp.model.Employee;
 import ca.nbcc.restapp.model.EmployeeRole;
+import ca.nbcc.restapp.model.RTable;
 import ca.nbcc.restapp.model.Reservation;
 import ca.nbcc.restapp.model.ReservationTimeGroup;
 import ca.nbcc.restapp.model.ReservationTimes;
@@ -27,8 +28,10 @@ import ca.nbcc.restapp.repo.DishJpaRepo;
 import ca.nbcc.restapp.repo.EmployeeJpaRepo;
 import ca.nbcc.restapp.repo.MenuJpaRepo;
 import ca.nbcc.restapp.repo.ProductJpaRepo;
+import ca.nbcc.restapp.repo.RTableJpaRepo;
 import ca.nbcc.restapp.repo.ReservationJpaRepo;
 import ca.nbcc.restapp.repo.ReservationTimeJpaRepo;
+import ca.nbcc.restapp.service.RTableService;
 import ca.nbcc.restapp.service.ReservationService;
 import ca.nbcc.restapp.service.ReservationTimeService;
 
@@ -42,10 +45,12 @@ public class NbccRestaurantAppApplication{
 	private static ProductJpaRepo pRepo;
 	private static ReservationTimeJpaRepo resTRepo;
 	private static ReservationJpaRepo resRepo;
+	private static RTableJpaRepo tableRepo;
 	
 	@Autowired
 	public NbccRestaurantAppApplication(DepartmentJpaRepo depRepo, DishJpaRepo dishRepo,
-			MenuJpaRepo mRepo, ProductJpaRepo pRepo, EmployeeJpaRepo eRepo, ReservationTimeJpaRepo resTRepo, ReservationJpaRepo resRepo){
+			MenuJpaRepo mRepo, ProductJpaRepo pRepo, EmployeeJpaRepo eRepo, 
+			ReservationTimeJpaRepo resTRepo, ReservationJpaRepo resRepo, RTableJpaRepo tableRepo){
 		NbccRestaurantAppApplication.depRepo = depRepo;
 		NbccRestaurantAppApplication.dishRepo = dishRepo;
 		NbccRestaurantAppApplication.eRepo = eRepo;
@@ -53,6 +58,7 @@ public class NbccRestaurantAppApplication{
 		NbccRestaurantAppApplication.pRepo = pRepo;
 		NbccRestaurantAppApplication.resTRepo = resTRepo;
 		NbccRestaurantAppApplication.resRepo = resRepo;
+		NbccRestaurantAppApplication.tableRepo = tableRepo;
 	}
 
 	public static void main(String[] args) {
@@ -62,6 +68,27 @@ public class NbccRestaurantAppApplication{
 		//TestController testController = new TestController(new DepartmentService(depRepo), 
 		//		new DishService(dishRepo), new EmployeeService(eRepo), new MenuService(mRepo), new ProductService(pRepo))
 
-		ReservationController resTestController = new ReservationController(new ReservationService(resRepo), new ReservationTimeService(resTRepo));
+		/*ReservationController resTestController = new ReservationController(new ReservationService(resRepo), new ReservationTimeService(resTRepo));
+		
+		TestController tC = new TestController(new RTableService(tableRepo));
+
+		tC.addTable(new RTable((long)51, 4, false, null));
+		tC.addTable(new RTable((long)50, 4, false, null));
+		tC.addTable(new RTable((long)10, 4, false, null));
+		tC.addTable(new RTable((long)11, 4, false, null));
+		tC.addTable(new RTable((long)12, 4, false, null));
+		tC.addTable(new RTable((long)40, 4, false, null));
+		tC.addTable(new RTable((long)41, 6, false, null));
+		tC.addTable(new RTable((long)42, 6, false, null));
+		tC.addTable(new RTable((long)43, 6, false, null));
+		tC.addTable(new RTable((long)22, 2, false, null));
+		tC.addTable(new RTable((long)21, 2, false, null));
+		tC.addTable(new RTable((long)20, 2, false, null));
+		tC.addTable(new RTable((long)30, 8, false, null));
+		*/
+
+		TestController tC = new TestController(new RTableService(tableRepo));
+		
+		System.out.println(tC.showTables());
 	}
 }

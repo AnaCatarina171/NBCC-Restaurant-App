@@ -1,15 +1,18 @@
 package ca.nbcc.restapp.model;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -23,26 +26,49 @@ public class RTable {
 	@Column(name = "TABLE_ID", unique = true)
 	private Long id;
 	
+	@Column(name="TABLE_NUMBER", unique=true)
+	private Long number;
+	
 	@Column(name="TABLE_GUEST_NUMBER")
 	private int guestNumber;
 	
 	@Column(name="TABLE_IS_ROUND")
-	private int isRound;
+	private boolean isRound;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="FK_SECTION_ID")
 	private Section section;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="table")
+	private List<Reservation> reservations;
 
 	public RTable() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public RTable(int guestNumber, int isRound, Section section) {
+	public RTable(Long number, int guestNumber, boolean isRound, Section section) {
 		super();
+		this.number = number;
 		this.guestNumber = guestNumber;
 		this.isRound = isRound;
 		this.section = section;
+	}
+
+	public Long getNumber() {
+		return number;
+	}
+
+	public void setNumber(Long number) {
+		this.number = number;
+	}
+
+	public List<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
 	}
 
 	public Long getId() {
@@ -61,11 +87,11 @@ public class RTable {
 		this.guestNumber = guestNumber;
 	}
 
-	public int getIsRound() {
+	public boolean getIsRound() {
 		return isRound;
 	}
 
-	public void setIsRound(int isRound) {
+	public void setIsRound(boolean isRound) {
 		this.isRound = isRound;
 	}
 
@@ -97,7 +123,7 @@ public class RTable {
 
 	@Override
 	public String toString() {
-		return "RTable [id=" + id + ", guestNumber=" + guestNumber + ", isRound=" + isRound + ", section=" + section
+		return "RTable [id=" + id + ", number=" + number + ", guestNumber=" + guestNumber + ", isRound=" + isRound + ", section=" + section
 				+ "]";
 	}
 }
