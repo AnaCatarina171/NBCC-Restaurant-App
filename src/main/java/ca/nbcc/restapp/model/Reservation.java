@@ -77,6 +77,10 @@ public class Reservation {
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="FK_CUST_ID")
 	private Customer customer;
+	
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name="FK_TABLE_ID")
+	private RTable table;
 
 	public Reservation() {
 		super();
@@ -231,6 +235,14 @@ public class Reservation {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public RTable getTable() {
+		return table;
+	}
+
+	public void setTable(RTable table) {
+		this.table = table;
 	}
 
 	@Override

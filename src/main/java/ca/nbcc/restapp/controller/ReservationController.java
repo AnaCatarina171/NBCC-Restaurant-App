@@ -24,11 +24,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ca.nbcc.restapp.model.RTable;
 import ca.nbcc.restapp.model.Reservation;
 import ca.nbcc.restapp.model.ReservationStatus;
 import ca.nbcc.restapp.model.ReservationTimeGroup;
 import ca.nbcc.restapp.model.ReservationTimes;
 import ca.nbcc.restapp.service.CustomerService;
+import ca.nbcc.restapp.service.RTableService;
 import ca.nbcc.restapp.service.ReservationService;
 import ca.nbcc.restapp.service.ReservationTimeService;
 
@@ -40,6 +42,7 @@ public class ReservationController {
 	private ReservationService rS;
 	private ReservationTimeService rTS;
 	private CustomerService cS;
+	private RTableService tS;
 
 	// Email Sender Variables
 	@Autowired
@@ -52,7 +55,6 @@ public class ReservationController {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
 	
 	public ReservationController(ApplicationContext ctx, ReservationService rS, CustomerService cS, ReservationTimeService rTS) {
 		super();
@@ -63,10 +65,11 @@ public class ReservationController {
 	}
 	
 	@Autowired
-	public ReservationController(ReservationService rS, ReservationTimeService rTS) {
+	public ReservationController(ReservationService rS, ReservationTimeService rTS,  RTableService tS) {
 		super();
 		this.rS = rS;
 		this.rTS = rTS;
+		this.tS = tS;
 	}
 
 	@GetMapping("reservationOptions")
@@ -226,7 +229,22 @@ public class ReservationController {
 
 		return "user-admin-reservations";
 	}
-
+	
+	@GetMapping("/addResTable/{rId}/{tId}")
+	public String addResTable(Model model, @PathVariable("rId") String rId, @PathVariable("tId") String tId) throws Exception {
+		
+		Long resNumber = Long.parseLong(rId);
+		Long tableNumber = Long.parseLong(tId);
+		
+		Reservation reservation = rS.findReservationById(resNumber);
+		RTable table = tS.findRTableByNumber(tableNumber);
+		
+		reservation.setTable(table);
+		rS.updateReservation(reservation);
+		
+		return "redirect:/processReservation/" + rId;
+	}
+	
 	@GetMapping("/processReservation/{rId}")
 	public String processNewReservation(Model model, @PathVariable("rId") long rId) {
 
@@ -241,8 +259,24 @@ public class ReservationController {
 		try {
 			Reservation rToEdit = rS.findReservationById(rId);
 
+			/*Adding Tables*/
+			/*RTable t10 = tS.findRTableByNumber((long)10);
+			RTable t11 = tS.findRTableByNumber((long)11);
+			RTable t12 = tS.findRTableByNumber((long)12);
+			RTable t40 = tS.findRTableByNumber((long)40);
+			RTable t41 = tS.findRTableByNumber((long)41);
+			RTable t42 = tS.findRTableByNumber((long)42);
+			RTable t43 = tS.findRTableByNumber((long)43);
+			RTable t20 = tS.findRTableByNumber((long)20);
+			RTable t21 = tS.findRTableByNumber((long)21);
+			RTable t22 = tS.findRTableByNumber((long)22);
+			RTable t30 = tS.findRTableByNumber((long)30);
+			RTable t50 = tS.findRTableByNumber((long)50);
+			RTable t51 = tS.findRTableByNumber((long)51);
+			RTable t52 = tS.findRTableByNumber((long)52);*/
+			
 			model.addAttribute("statusList", ReservationStatus.values());
-			model.addAttribute("rToEdit", rToEdit);
+			model.addAttribute("rToEdit", rToEdit);			
 			model.addAttribute("formattedToday", formattedToday);
 
 			return "reservation-process";

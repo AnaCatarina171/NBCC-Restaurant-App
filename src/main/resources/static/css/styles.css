@@ -5,35 +5,44 @@
 html {
 	min-height: 100vh;
 	/* make sure it is at least as tall as the viewport */
-	background-color: rgba(22, 22, 22, 1); 
+	background-color: rgba(22, 22, 22, 1);
 	position: relative;
 	width: 100%;
 }
 
 body {
 	width: 100%;
-	height: 100vh;
+	min-height: 100vh;
 	font-family: 'Noto Sans TC', sans-serif;
 	font-size: 0.8em;
+	font-weight: 100;
 	margin: 0;
 	padding: 0;
-	background-color: rgba(22, 22, 22, 1) !important; 
-	color : #fff;
+	background-color: rgba(22, 22, 22, 1) !important;
+	color: #fff;
 	box-sizing: border-box;
 	cursor: default;
 	overflow-x: hidden;
 	color: #fff;
+	display: flex;
+	flex-direction: column;
+}
+
+.main {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
 
 .header {
 	width: 100%;
 	height: fit-content;
 	position: sticky;
-    top: 0;
-    /*z-index: -1;*/
+	top: 0;
+	/*z-index: -1;*/
 }
 
-.firstPageTitle{
+.firstPageTitle {
 	width: 70%;
 	margin: auto;
 	padding-top: 2em;
@@ -55,11 +64,11 @@ body {
 	font-weight: bolder !important;
 }
 
-.bigTitle{
+.bigTitle {
 	font-size: 30px;
 }
 
-.titleBackgroundRes{
+.titleBackgroundRes {
 	height: 14em;
 	background: linear-gradient(rgba(22, 22, 22, 0.59),
 		rgba(22, 22, 22, 0.59)), url("../img/table-dinning-room.jpg");
@@ -71,7 +80,7 @@ body {
 	padding: 50px;
 }
 
-.titleBackgroundCooker{
+.titleBackgroundCooker {
 	background: linear-gradient(rgba(22, 22, 22, 0.59),
 		rgba(22, 22, 22, 0.59)), url("../img/cooker.jpg");
 	background-repeat: no-repeat;
@@ -93,8 +102,14 @@ body {
 	background-attachment: fixed;
 	background-color: #A08679;
 	padding: 2em;
+	margin-bottom: 5em;
 	font-weight: bolder;
 	align-items: center;
+}
+
+.aboutResButton {
+	position: relative;
+	top: 35px;
 }
 
 .flex-container {
@@ -113,14 +128,14 @@ body {
 	gap: 2rem;
 }
 
-.divider{
+.divider {
 	font-size: 2em;
 	top: 1em;
 	left: 7.9em;
 	color: #d4d4d4;
 }
 
-.flex-container-top-right-header{
+.flex-container-top-right-header {
 	max-height: 100%;
 	display: flex;
 	justify-content: space-between;
@@ -128,7 +143,7 @@ body {
 	gap: 1rem;
 }
 
-.flex-container-top-links-header{
+.flex-container-top-links-header {
 	max-height: 100%;
 	display: flex;
 	justify-content: space-between;
@@ -210,8 +225,8 @@ body {
 
 .nav-link {
 	/*color: #18272F;*/
-	color: #eeeeee !important; 
-	position : relative !important;
+	color: #eeeeee !important;
+	position: relative !important;
 	text-decoration: none !important;
 	position: relative !important;
 }
@@ -352,7 +367,7 @@ body {
 	padding-top: 3em;
 	margin: 4em 0 1em 0;
 	color: rgba(186, 154, 123, 1);
-
+	position: static !important;
 }
 
 .titleSmall {
@@ -377,6 +392,157 @@ img {
 	text-align: center;
 }
 
+.ulAboutUs {
+	text-align: left;
+	list-style-type: none;
+}
+
+/* Carousel */
+.carousel-container {
+	width: 100%;
+	margin: auto;
+	position: relative;
+}
+
+@media ( max-width : 768px) {
+	.carousel-container {
+		width: 95%;
+	}
+}
+
+.inner-carousel {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.track {
+	display: inline-flex;
+	height: 100%;
+	transition: transform 0.5s ease-in-out;
+}
+
+.card-container {
+	width: 33.5%;
+	height: 100%;
+	flex-shrink: 0;
+	padding-right: 2em;
+}
+
+@media ( max-width : 768px) {
+	.card-container {
+		width: 184px;
+	}
+}
+
+.card {
+	width: 100%;
+	height: 100%;
+	/*display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;*/
+	background-position: center bottom;
+	background-size: center;
+	background-repeat: no-repeat;
+	border-radius: 10px;
+}
+
+.nav button {
+	position: absolute;
+	top: 50%;
+	transform: translatey(-50%);
+	width: 40px;
+	height: 40px;
+	background-color: rgba(186, 154, 123, 1);
+	border-radius: 50%;
+	outline: none;
+	border: 1px solid #000;
+	cursor: pointer;
+}
+
+.nav .prev {
+	left: -30px;
+	display: none;
+}
+
+.nav .prev.show {
+	display: block;
+}
+
+.nav .next {
+	right: -30px;
+}
+
+.nav .next.hide {
+	display: none;
+}
+
+/* End Carousel */
+
+/* Feedback */
+.testimonials {
+	width: 80%;
+	margin: auto;
+	padding-top: 50px;
+	text-align: center;
+}
+
+.testimonial-col {
+	flex-basis: 44%;
+	border-radius: 10px;
+	width: 100%;
+	min-height: 180px;
+	margin: 30px auto 5% auto;
+	text-align: center;
+	background: rgba(62, 62, 62, 1);
+	color: #fff;
+	padding: 25px;
+	display: flex;
+}
+
+.fullWidth {
+	width: 100%;
+	margin: auto;
+}
+
+.user-image {
+	width: 53px;
+	height: 60px;
+	border-radius: 50%;
+	position: relative;
+	margin: 0 auto -60px auto;
+	background: rgba(62, 62, 62, 1);
+}
+
+.user-image i {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+	-webkit-border-radius: 100%;
+	color: rgba(186, 154, 123, 1);
+}
+
+.testimonial-col p {
+	padding: 0;
+	font-size: 14px;
+}
+
+.testimonial-col h3 {
+	margin-top: 15px;
+	text-align: center;
+	font-weight: 700;
+	font-size: 18px;
+}
+
+.testimonial-col .fa {
+	color: rgba(186, 154, 123, 1);
+}
+
+/* End Feedback */
 .styled-table1 {
 	border-collapse: collapse;
 	border-radius: 10px;
@@ -386,7 +552,7 @@ img {
 	color: #000;
 }
 
-.styled-table2{
+.styled-table2 {
 	border-collapse: collapse;
 	border-radius: 10px;
 	margin: 10px auto;
@@ -428,7 +594,7 @@ table tr:last-child td:last-child {
 	border-bottom-right-radius: 5px;
 }
 
-.static-position{
+.static-position {
 	position: static !important;
 }
 
@@ -512,18 +678,23 @@ table tr:last-child td:last-child {
 }
 
 /** Modal **/
-
-.modal-dialog{
+.modal-dialog-styled {
 	max-width: 700px !important;
 }
-	
-.modal-body{
+
+.modal-body-styled {
 	padding: 0 !important;
+}
+
+.modal-content {
+	padding: 15px !important;
+	margin-top: 5em;
+	border-radius: 10px;
 }
 
 /* End Modal */
 
-/** Reservation Form **/
+/** Booking Form **/
 .section {
 	position: relative;
 	/*height: 130vh;*/
@@ -545,11 +716,10 @@ table tr:last-child td:last-child {
 .booking-form {
 	position: relative;
 	width: 100%;
-	margin: 20px auto;
+	margin: auto;
 	padding: 40px;
 	overflow: hidden;
-	background: linear-gradient(rgba(46, 40, 43, 0.8),
-		rgba(46, 40, 43, 0.8)), url("../img/world-food.jpg");
+	background: linear-gradient(rgba(39, 39, 39, 1), rgba(73, 54, 35, 1));
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -583,7 +753,6 @@ table tr:last-child td:last-child {
 
 h4 {
 	font-weight: 700;
-	text-transform: capitalize;
 	font-size: 20px;
 	margin-bottom: 20px;
 	color: #fff;
@@ -699,7 +868,7 @@ h4 {
 	padding-top: 16px;
 }
 
-.no-top-padding  {
+.no-top-padding {
 	padding-top: 0px !important;
 }
 
@@ -749,6 +918,251 @@ h4 {
 	height: 65px;
 }
 /** End Booking Form **/
+
+/* Grid Floor Plan */
+.floor-plan-one-grid {
+	display: inline-grid;
+	background-color: #a0a0a0; 
+	width : 610px;
+	margin: auto;
+	grid-template-columns: [line1] 100px [line2] 15px [line3] 100px [line4] 100px [line5]
+		 15px [line6] 100px [line7] 100px [line8];
+	grid-template-rows: [row1] 100px [row2] 100px [row3] 100px [row4] 50px [row5] 50px [row6] 50px [row7]
+		 30px [row8] 30px [row9];
+	gap: 1em;
+	border: thin solid #fff;
+}
+
+.item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.item a {
+	font-size: 16px;
+	text-decoration: none;
+	color: #fff;
+	font-weight: bold;
+}
+
+.item-1 {
+	grid-column: line1/line2;
+	grid-row: row1/row2;
+	background: url("../img/my-table-4.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.item-2 {
+	grid-column: line3/line4;
+	grid-row: row1/row2;
+	background: url("../img/my-table-4.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.item-3 {
+	grid-column: line4/line5;
+	grid-row: row1/row2;
+	background: url("../img/my-table-4.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.item-4 {
+	grid-column: line6/line7;
+	grid-row: row1/row2;
+	background: url("../img/my-table-4.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.item-door {
+	grid-column: line7/line8;
+	grid-row: row1/row2;
+	background: url("../img/door-cashier.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.item-5 {
+	grid-column: line1/line2;
+	grid-row: row2/row3;
+	background: url("../img/my-table-6.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.item-6 {
+	grid-column: line2/line3;
+	grid-row: row2/row3;
+	background: url("../img/divider.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-color: #000;
+	border-radius: 5px;
+}
+
+.item-7 {
+	grid-column: line3/line4;
+	grid-row: row2/row3;
+	background: url("../img/my-table-2.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.item-8 {
+	grid-column: line4/line5;
+	grid-row: row2/row3;
+	background: url("../img/my-table-2.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.item-9 {
+	grid-column: line5/line6;
+	grid-row: row2/row3;
+	background: url("../img/divider.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-color: #000;
+	border-radius: 5px;
+}
+
+.item-10 {
+	grid-column: line6/line7;
+	grid-row: row2/row3;
+	background: url("../img/my-table-2.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.item-11 {
+	grid-column: line7/line8;
+	grid-row: row2/row3;
+	background: url("../img/my-table-4.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.item-12 {
+	grid-column: line1/line2;
+	grid-row: row3/row4;
+	background: url("../img/my-table-6.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.item-13 {
+	grid-column: line2/line3;
+	grid-row: row3/row4;
+	background: url("../img/divider.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-color: #000;
+	border-radius: 5px;
+}
+
+.item-14 {
+	grid-column: line7/line8;
+	grid-row: row3/row4;
+	background: url("../img/my-table-4.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.item-15 {
+	grid-column: line1/line2;
+	grid-row: row4/row6;
+	background: url("../img/my-table-6.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.item-16 {
+	grid-column: line3/line6;
+	grid-row: row3/row5;
+	background: url("../img/my-table-8.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.item-17 {
+	grid-column: line7/line8;
+	grid-row: row4/row6;
+	background: url("../img/my-table-4.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.item-18 {
+	grid-column: line3/line6;
+	grid-row: row6/row7;
+	background: url("../img/server-station.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-color: #fff;
+	border-radius: 5px;
+}
+
+.item-19 {
+	grid-column: line7/line8;
+	grid-row: row6/row7;
+	background: url("../img/bar.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 150px;
+	border-radius: 5px;
+}
+
+.item-20 {
+	grid-column: line1/line3;
+	grid-row: row7/row9;
+	background: url("../img/side-station.png");
+	background-position: bottom center;
+	background-repeat: no-repeat;
+	background-size: 150px;
+}
+
+.item-21 {
+	grid-column: line3/line6;
+	grid-row: row7/row9;
+	background: url("../img/kitchen.png");
+	background-position: center -35px;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.item-22 {
+	grid-column: line7/line8;
+	grid-row: row7/row9;
+	background: url("../img/wine-beer.png");
+	background-position: bottom center;
+	background-repeat: no-repeat;
+	background-size: 130px;
+}
+
+/* End Grid Floor Plan */
 
 /* USER PANEL  */
 .admin-page .user-left-panel {
@@ -813,7 +1227,7 @@ h4 {
 
 .cart-primary-title {
 	padding: 15px;
-	background-color: #d3d3d3;
+	background-color: #808080;
 	border-radius: 10px 10px 0 0;
 }
 
@@ -826,7 +1240,8 @@ h4 {
 
 .cart-secondary {
 	background-color: #c0c0c0;
-	color: #000; width : 14em;
+	color: #000;
+	width: 14em;
 	padding: 5px;
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 	border-radius: 10px;
@@ -870,13 +1285,12 @@ h4 {
 }
 /** End User Panel**/
 
-
 /** Login Page **/
 
 /* BASIC */
 .loginBody {
-	background: linear-gradient(rgba(0, 0, 0, 0.67),
-		rgba(0, 0, 0, 0.67)), url("../img/nbcc-bulding.jpg");
+	background: linear-gradient(rgba(0, 0, 0, 0.67), rgba(0, 0, 0, 0.67)),
+		url("../img/nbcc-bulding.jpg");
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -1138,12 +1552,12 @@ Simple CSS3 Fade-in Animation
 /* Footer */
 .footer {
 	background: #000;
-	margin-top: 5em;
+	margin-top: auto;
 	padding: 20px 0px;
 	text-align: center;
 	min-height: 21em;
 	position: relative;
-	display:inline-box;
+	display: inline-box;
 }
 
 .footerPanel {
@@ -1183,30 +1597,33 @@ Simple CSS3 Fade-in Animation
 	margin: 0% 1%;
 }
 
-.single-cta{
-	text-align:left;
+.single-cta {
+	text-align: left;
 	margin-bottom: 3em;
 }
 
 .single-cta i {
-  color: #916a37;
-  font-size: 30px;
-  float: left;
-  margin-top: 1.3em;
+	color: #916a37;
+	font-size: 25px;
+	float: left;
+	margin-top: 1.3em;
 }
+
 .cta-text {
-  padding-left: 9px;
-  display: inline-block;
+	padding-left: 9px;
+	display: inline-block;
 }
+
 .cta-text h4 {
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 2px;
+	color: #fff;
+	font-size: 15px;
+	font-weight: 600;
+	margin-bottom: 2px;
 }
+
 .cta-text span {
-  color: #757575;
-  font-size: 1.3em;
+	color: #757575;
+	font-size: 1.3em;
 }
 
 @media ( max-width :720px) {
@@ -1222,10 +1639,6 @@ Simple CSS3 Fade-in Animation
 	.footer .row a i {
 		margin: 0% 3%;
 	}
-}
-
-.booking-form .submit-btn:hover, .booking-form .submit-btn:focus {
-	opacity: 0.9;
 }
 
 .open-icon {
@@ -1295,7 +1708,8 @@ Simple CSS3 Fade-in Animation
 }
 
 /* Add Animation */
-@keyframes animatetop {
+
+keyframes animatetop {
 	from {left: -300px;
 	opacity: 0
 }
@@ -1368,35 +1782,37 @@ to {
 }
 
 .pagination {
-  display: flex;
-  justify-content:center;
-  margin-bottom:1rem;
+	display: flex;
+	justify-content: center;
+	margin-bottom: 1rem;
 }
 
 .pagination a {
-  color: black;
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
-  border: 1px solid #ddd;
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+	border: 1px solid #ddd;
 }
 
 .pagination a.active {
-  background-color: #A08679;
-  color: white;
-  border: 1px solid #A08679;
+	background-color: #A08679;
+	color: white;
+	border: 1px solid #A08679;
 }
 
-.pagination a:hover:not(.active) {background-color: #ddd;}
+.pagination a:hover:not(.active) {
+	background-color: #ddd;
+}
 
 .pagination a:first-child {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
 }
 
 .pagination a:last-child {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
 /* Add styles to the form container 
 .form-container {

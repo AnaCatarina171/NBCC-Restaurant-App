@@ -10,8 +10,9 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap"
 	rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="../css/modal.css" />
+<link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
 <link rel="stylesheet" href="../css/styles.css">
-<link type="text/css" rel="stylesheet" href="/css/bootstrap.css" />
 <title>RESTO-APP</title>
 </head>
 
@@ -24,6 +25,7 @@
 				<div class="navigation-item">
 					<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
 				</div>
+
 				<br>
 				<div class="navigation-item">
 					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
@@ -58,13 +60,33 @@
 											<h4>Status:</h4>
 										</div>
 										<div class="col-md-5">
-											<select class="form-control selectStatus" name="status"
-												th:field="*{status}">
-												<option th:each="status : ${statusList}"
-													th:value="${status}" th:text="${status}"></option>
-											</select><span class="select-arrow"></span>
+											<div class="form-group">
+												<select class="form-control selectStatus" name="status"
+													th:field="*{status}">
+													<option th:each="status : ${statusList}"
+														th:value="${status}" th:text="${status}"></option>
+												</select><span class="select-arrow"></span>
+											</div>
 										</div>
+										<div class="col-md-2"></div>
+									</div>
+									<div th:if="${rToEdit.table != null}" class="row">
 										<div class="col-md-3"></div>
+										<div class="col-md-2">
+											<h4>Table:</h4>
+										</div>
+										<div class="col-md-5">
+											<div class="form-group">
+												<input class="form-control no-top-padding" id="datefield" type='text'
+													 th:field="*{table.number}" readonly style="font-size: 18px;">
+											</div>
+										</div>
+										<div class="col-md-2"></div>
+									</div>
+									<div th:if="${rToEdit.table == null}" class="row">
+										<div class="col-md-12">
+											<h4 style="text-align: center;">No Table Assigned</h4>
+										</div>
 									</div>
 									<div class="">
 										<button class="submit-btn2">Submit</button>
@@ -214,23 +236,138 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="cart-primary">
-							<div class="cart-primary-title">Floor Plan</div>
-							<div class="cart-primary-content">
-									<div class="image-floor-container">
-										<img src="../img/basic-floor-planning.png">
+								<div class="cart-primary-title margin-top-5">Floor Plan -
+									Select an available table to place reservation</div>
+								<div class="cart-primary-content">
+									<div class="floor-plan-one-grid">
+										<div class="item item-1" >
+											<a href="#addTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+40+'', data-object-name=''+40+'', data-target='#addTableToRes'"
+												class="mymodalonline" onclick="return false;">40</a>
+										</div>
+										<div class="item item-2">
+											<a href="#addTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+12+'', data-object-name=''+12+'', data-target='#addTableToRes'"
+												class="mymodalonline" onclick="return false;">12</a>
+										</div>
+										<div class="item item-3">
+											<a href="#addTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+11+'', data-object-name=''+11+'', data-target='#addTableToRes'"
+												class="mymodalonline" onclick="return false;">11</a>
+										</div>
+										<div class="item item-4">
+											<a href="#addTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+10+'', data-object-name=''+10+'', data-target='#addTableToRes'"
+												class="mymodalonline" onclick="return false;">10</a>
+										</div>
+										<div class="item item-door"></div>
+										<div class="item item-5">
+											<a href="#addTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+41+'', data-object-name=''+41+'', data-target='#addTableToRes'"
+												class="mymodalonline" onclick="return false;">41</a>
+										</div>
+										<div class="item item-6"></div>
+										<div class="item item-7">
+											<a href="#addTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+22+'', data-object-name=''+22+'', data-target='#addTableToRes'"
+												class="mymodalonline" onclick="return false;">22</a>
+										</div>
+										<div class="item item-8">
+											<a href="#addTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+21+'', data-object-name=''+21+'', data-target='#addTableToRes'"
+												class="mymodalonline" onclick="return false;">21</a>
+										</div>
+										<div class="item item-9"></div>
+										<div class="item item-10">
+											<a href="#addTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+20+'', data-object-name=''+20+'', data-target='#addTableToRes'"
+												class="mymodalonline" onclick="return false;">20</a>
+										</div>
+										<div class="item item-11">
+											<a href="#addTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+50+'', data-object-name=''+50+'', data-target='#addTableToRes'"
+												class="mymodalonline" onclick="return false;">50</a>
+										</div>
+										<div class="item item-12">
+											<a href="#addTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+42+'', data-object-name=''+42+'', data-target='#addTableToRes'"
+												class="mymodalonline" onclick="return false;">42</a>
+										</div>
+										<div class="item item-13"></div>
+										<div class="item item-14">
+											<a href="#addTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+51+'', data-object-name=''+51+'', data-target='#addTableToRes'"
+												class="mymodalonline" onclick="return false;">51</a>
+										</div>
+										<div class="item item-15">
+											<a href="#addTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+43+'', data-object-name=''+43+'', data-target='#addTableToRes'"
+												class="mymodalonline" onclick="return false;">43</a>
+										</div>
+										<div class="item item-16">
+											<a href="#addTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+30+'', data-object-name=''+30+'', data-target='#addTableToRes'"
+												class="mymodalonline" onclick="return false;">30</a>
+										</div>
+										<div class="item item-17">
+											<a href="#addTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+52+'', data-object-name=''+52+'', data-target='#addTableToRes'"
+												class="mymodalonline" onclick="return false;">52</a>
+										</div>
+										<div class="item item-18"></div>
+										<div class="item item-19"></div>
+										<div class="item item-20"></div>
+										<div class="item item-21"></div>
+										<div class="item item-22"></div>
 									</div>
 								</div>
+							</div>
 						</div>
-						</div>
-						
+
 					</div>
 				</div>
 			</div>
-			<div class="footer"></div>
+			<div class="footer footerPanel">
+				<div class="row">
+					<div class="col-md-12">© Copyright 2022. All Rights Reserved.
+						|| Designed By: DevAtlantics - Ana Silva & Jose Silva</div>
+				</div>
+			</div>
 		</div>
-
-
 	</div>
+
+	<div id="addTableToRes" class="modal fade text-center">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" id="closf" class="close" data-dismiss="modal"
+						aria-hidden="true">x</button>
+				</div>
+				<div class="modal-body">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+
+	    $('#addTableToRes').on('show.bs.modal', function (event) {
+	    	var resNumber = [[${rToEdit.id}]];
+	    	var button = $(event.relatedTarget);
+	        var table = button.data('object-name');
+	        $.get("/modals/add-table-to-res?table=" + table + "&resNumber=" + resNumber, function (data) {
+	            $('#addTableToRes').find('.modal-body').html(data);
+	        })
+	    })
+    /*]]>*/
+</script>
 </body>
+
+
 
 </html>

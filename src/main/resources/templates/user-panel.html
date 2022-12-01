@@ -65,28 +65,6 @@
 					</div>
 				</div>
 				<div class="cart-primary">
-					<div class="cart-primary-title cartTitleAttetion">New
-						Reservations</div>
-					<div class="cart-primary-content">
-						<div class="cart-secondary" th:each="res : ${pendingReservations}">
-							<div class="cart-secondary-title">
-								Reservation #<span th:text="${res.id}"></span>
-							</div>
-							<div class="cart-secondary-content">
-								<div class="content-left">
-									<span th:text="${res.date}"></span> <br> Time: <span
-										th:text="${res.time}"></span> <br> Guest #: <span
-										th:text="${res.guests}"></span>
-								</div>
-								<div class="content-right">
-									<a th:href="@{/processReservation/{rId} (rId = ${res.id})}"
-										class="button-6 btnAttention">Process</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="cart-primary">
 					<div class="cart-primary-title">Floor Plan</div>
 					<div class="cart-primary-content">"Floor Plan Representation"</div>
 				</div>
