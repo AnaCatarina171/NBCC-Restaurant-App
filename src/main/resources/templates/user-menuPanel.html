@@ -11,6 +11,8 @@
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap"
 	rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<script src="https://kit.fontawesome.com/cbb0aad349.js"
+	crossorigin="anonymous"></script>
 <title>RESTO-APP</title>
 </head>
 
@@ -49,27 +51,64 @@
 				<div class="cart-primary">
 					<div class="cart-primary-title">Past Menus</div>
 					<div class="cart-primary-content">
-					
+
 						<div th:each="menu : ${allMenus}" class="cart-secondary">
-							<div class="cart-secondary-title" th:text="${menu.title}"></div>
-							<div class="cart-secondary-content">
-								<div class="content-left">
-									Served From - To : <br> Total Items: 15 <br> Last Modified: <span th:text="${menu.date}"></span>									
+							<div class="cart-secondary-title flex-container-top-right-header">
+								<div>
+									<h3 th:text="${menu.title}"></h3>
 								</div>
-								<div class="content-right">
-									<a href="toReservationProcess" class="button-6">Recall</a>
+								<div>
+
+									<form th:action="@{/toDeleteMenu}" method="GET">
+										<input type="text" name="menuId" hidden th:value="${menu.id}">
+										<button class="icon-small">
+											<i class="fa-solid fa-trash"></i>
+										</button>
+									</form>
+
+
 								</div>
 							</div>
-						</div>						
+							<div class="cart-secondary-content">
+								<div class="content-left">
+									Total Items: <span th:text="${menu.dishList.size()}"></span> <br>
+									Last Modified: <span th:text="${menu.date}"></span>
+								</div>
+								<div class="content-right flex-container-2">
+									<div th:if="${menu.toDisplay}">
+										<button class="button-6" id="btnHide">Hide</button>
+									</div>
+									<div th:unless="${menu.toDisplay}">
+										<button class="button-6" id="btnDisplay">Display</button>
+									</div>
+									<a th:href="@{/recallMenu/{mId}(mId=${menu.id})}"
+										class="button-6">Recall</a>
+								</div>
+							</div>
+						</div>
 					</div>
-					
+
 				</div>
 
-			<div class="footer"></div>
+				<div class="modal-container" id="displayMenuModal">
+					<div class="modal-wrapper">
+						<div class="modal-content">
+						<!-- 
+							<h2> Are you sure you want to display the menu <span th:text="${menuToDisplay.title}"></span>?</h2>
+							<form th:action="@{/processDisplayMenu}" method="POST"
+								class="form-container">
+								
+							</form>
+						</div>
+						<div class="modal-footer"></div>
+					</div>
+					 -->
+				</div>
+
+				<div class="footer"></div>
+			</div>
+
 		</div>
-
-
-	</div>
 </body>
 
 </html>

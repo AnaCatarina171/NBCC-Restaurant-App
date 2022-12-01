@@ -3,6 +3,7 @@ package ca.nbcc.restapp.model;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -41,8 +44,13 @@ public class Menu {
 	@Column(name="MENU_TODISPLAY")
 	private Boolean toDisplay; 
 	
-	@OneToMany(mappedBy="menu")
-	private List<Dish> dishList;
+	//@OneToMany(mappedBy="menu", cascade = CascadeType.ALL, orphanRemoval = true)
+	@ManyToMany
+	@JoinTable(
+			name="menu_dishes",
+			joinColumns = @JoinColumn(name = "menu_id"), 
+			inverseJoinColumns = @JoinColumn(name = "dish_id"))
+	private Set<Dish> dishList;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="FK_REST_ID")
@@ -110,11 +118,11 @@ public class Menu {
 		this.toDisplay = toDisplay;
 	}
 	
-	public List<Dish> getDishList() {
+	public Set<Dish> getDishList() {
 		return dishList;
 	}
 
-	public void setDishList(List<Dish> dishList) {
+	public void setDishList(Set<Dish> dishList) {
 		this.dishList = dishList;
 	}
 

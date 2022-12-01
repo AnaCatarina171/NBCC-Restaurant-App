@@ -96,6 +96,14 @@ body {
 	align-items: center;
 }
 
+.flex-container-2 {
+	max-height: 100%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	gap:0.2rem;
+}
+
 .flex-container-column {
 	max-height: 100%;
 	display: flex;
@@ -104,6 +112,7 @@ body {
 	align-items: center;
 	gap: 2rem;
 }
+
 
 .divider{
 	font-size: 2em;
@@ -338,7 +347,7 @@ body {
 	padding-top: 1em;
 	margin: 2em 0 1em 0;
 	color: #916a37;
-
+} 
 .medium-width {
 	margin: auto;
 	width: 70%;
@@ -1360,17 +1369,37 @@ Simple CSS3 Fade-in Animation
 	opacity: 0.9;
 }
 
-.open-icon {
+.icon-small {
 	border: none;
 	padding: 10px;
-	background-color: #fff;
+	background-color: transparent;
+	background-repeat: no-repeat;
 	font-size: 2.5rem;
 	cursor: pointer;
+	overflow: hidden;
+    outline: none;
+	transition: all .2s ease-in-out;
+	font-size: 1rem;
+}
+
+.icon-medium {
+	border: none;
+	padding: 10px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	font-size: 2.5rem;
+	cursor: pointer;
+	overflow: hidden;
+    outline: none;
 	transition: all .2s ease-in-out;
 	font-size: 2rem;
 }
 
-.open-icon:hover {
+.icon-medium:hover {
+	transform: scale(1.2);
+}
+
+.icon-small:hover {
 	transform: scale(1.2);
 }
 
@@ -1529,6 +1558,10 @@ to {
 .pagination a:last-child {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+}
+
+.action-link{
+	color:#fff;
 }
 /* Add styles to the form container 
 .form-container {
