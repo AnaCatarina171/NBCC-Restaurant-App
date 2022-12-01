@@ -95,27 +95,6 @@
 						No Reservations For This Week
 					</div>
 				</div>
-				<div class="cart-primary">
-					<div class="cart-primary-title">Reservations For This Week</div>
-					<div th:unless="${weekReservations.size == 0}" class="cart-primary-content">
-						<div class="cart-secondary" th:each="res : ${weekReservations}">
-							<div class="cart-secondary-title">Reservation <span th:text="${res.id}"></span></div>
-							<div class="cart-secondary-content">
-								<div class="content-left">
-									<span th:text="${res.date}"></span> 
-									<br> Time: <span th:text="${res.time}"></span> 
-									<br> Guest #: <span th:text="${res.guests}"></span>
-								</div>
-								<div class="content-right">
-									<a th:href="@{/processReservation/{rId} (rId = ${res.id})}" class="button-6">Details</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div th:if="${weekReservations.size == 0}" class="cart-primary-content">
-						Blank Space
-					</div>
-				</div>
 			</div>
 
 			<div class="footer footerPanel">

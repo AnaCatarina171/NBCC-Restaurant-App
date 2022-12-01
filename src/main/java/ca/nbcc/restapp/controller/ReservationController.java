@@ -24,10 +24,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ca.nbcc.restapp.model.RTable;
 import ca.nbcc.restapp.model.Reservation;
 import ca.nbcc.restapp.model.ReservationStatus;
+import ca.nbcc.restapp.model.ReservationTimeGroup;
+import ca.nbcc.restapp.model.ReservationTimes;
 import ca.nbcc.restapp.service.CustomerService;
+import ca.nbcc.restapp.service.RTableService;
 import ca.nbcc.restapp.service.ReservationService;
+import ca.nbcc.restapp.service.ReservationTimeService;
 
 @Controller
 public class ReservationController {
@@ -35,7 +40,9 @@ public class ReservationController {
 	ApplicationContext ctx;
 
 	private ReservationService rS;
+	private ReservationTimeService rTS;
 	private CustomerService cS;
+	private RTableService tS;
 
 	// Email Sender Variables
 	@Autowired
@@ -48,21 +55,52 @@ public class ReservationController {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	@Autowired
-	public ReservationController(ApplicationContext ctx, ReservationService rS, CustomerService cS) {
+	
+	public ReservationController(ApplicationContext ctx, ReservationService rS, CustomerService cS, ReservationTimeService rTS) {
 		super();
 		this.ctx = ctx;
 		this.rS = rS;
 		this.cS = cS;
+		this.rTS = rTS;
+	}
+	
+	@Autowired
+	public ReservationController(ReservationService rS, ReservationTimeService rTS,  RTableService tS) {
+		super();
+		this.rS = rS;
+		this.rTS = rTS;
+		this.tS = tS;
 	}
 
 	@GetMapping("reservationOptions")
 	public String reservationOptions(Model model) {
-
-		model.addAttribute("reservationTime1", "7:30 am");
+		
+		List<ReservationTimes> resTimeBreakfast = new ArrayList<>();
+		List<ReservationTimes> resTimeLunch = new ArrayList<>();
+		List<ReservationTimes> resTimeNight = new ArrayList<>();
+		
+		for(var resT : rTS.getAllReservationTimes()){
+			
+			if(resT.getResGroup().equals(ReservationTimeGroup.BREAKFAST)) {
+				resTimeBreakfast.add(resT);
+			} else if(resT.getResGroup().equals(ReservationTimeGroup.LUNCH)) {
+				resTimeLunch.add(resT);
+			} else if(resT.getResGroup().equals(ReservationTimeGroup.NIGHT)) {
+				resTimeNight.add(resT);
+			}
+		}
+		
+		model.addAttribute("resTimeBreakfast", resTimeBreakfast);
+		model.addAttribute("resTimeLunch", resTimeLunch);
+		model.addAttribute("resTimeNight", resTimeNight);
 		
 		return "reservation-options";
+	}
+	
+	@GetMapping("/yourReservations")
+	public String goToYourReservations(Model model) {
+		
+		return "your-reservations";
 	}
 
 	@GetMapping("todayFloorPlan")
@@ -100,9 +138,9 @@ public class ReservationController {
 		}
 		if (orderByP != null) {
 			if (orderByP.equals("newest")) {
-				pastReservations = rS.orderByDate();
+				pastReservations = rS.pastReservations();
 			} else if (orderByP.equals("oldest")) {
-				pastReservations = rS.orderByDateDesc();
+				pastReservations = rS.pastReservationsDesc();
 			}
 		}
 
@@ -191,7 +229,22 @@ public class ReservationController {
 
 		return "user-admin-reservations";
 	}
-
+	
+	@GetMapping("/addResTable/{rId}/{tId}")
+	public String addResTable(Model model, @PathVariable("rId") String rId, @PathVariable("tId") String tId) throws Exception {
+		
+		Long resNumber = Long.parseLong(rId);
+		Long tableNumber = Long.parseLong(tId);
+		
+		Reservation reservation = rS.findReservationById(resNumber);
+		RTable table = tS.findRTableByNumber(tableNumber);
+		
+		reservation.setTable(table);
+		rS.updateReservation(reservation);
+		
+		return "redirect:/processReservation/" + rId;
+	}
+	
 	@GetMapping("/processReservation/{rId}")
 	public String processNewReservation(Model model, @PathVariable("rId") long rId) {
 
@@ -206,8 +259,24 @@ public class ReservationController {
 		try {
 			Reservation rToEdit = rS.findReservationById(rId);
 
+			/*Adding Tables*/
+			/*RTable t10 = tS.findRTableByNumber((long)10);
+			RTable t11 = tS.findRTableByNumber((long)11);
+			RTable t12 = tS.findRTableByNumber((long)12);
+			RTable t40 = tS.findRTableByNumber((long)40);
+			RTable t41 = tS.findRTableByNumber((long)41);
+			RTable t42 = tS.findRTableByNumber((long)42);
+			RTable t43 = tS.findRTableByNumber((long)43);
+			RTable t20 = tS.findRTableByNumber((long)20);
+			RTable t21 = tS.findRTableByNumber((long)21);
+			RTable t22 = tS.findRTableByNumber((long)22);
+			RTable t30 = tS.findRTableByNumber((long)30);
+			RTable t50 = tS.findRTableByNumber((long)50);
+			RTable t51 = tS.findRTableByNumber((long)51);
+			RTable t52 = tS.findRTableByNumber((long)52);*/
+			
 			model.addAttribute("statusList", ReservationStatus.values());
-			model.addAttribute("rToEdit", rToEdit);
+			model.addAttribute("rToEdit", rToEdit);			
 			model.addAttribute("formattedToday", formattedToday);
 
 			return "reservation-process";
@@ -238,6 +307,14 @@ public class ReservationController {
 		model.addAttribute("minDate", currentDatePlusOne);
 
 		return "new-reservation";
+	}
+	
+	@PostMapping("/addReservationTimes")
+	public String toAddReservationTimes(ReservationTimes rT) {
+		
+		rTS.addNewReservation(rT);
+		
+		return "Reservation Time for " + rT.getTime() + " successfully added.";
 	}
 
 	@PostMapping("processAddReservation")

@@ -10,14 +10,22 @@ import ca.nbcc.restapp.model.Reservation;
 
 public interface ReservationJpaRepo extends JpaRepository<Reservation, Long>{
 	
-	String customQuery = "select r from Reservation r where r.date < CURRENT_DATE";
-	
+	String customQueryPastRes = "select r from Reservation r where r.date < CURRENT_DATE order by r.date";
+	String customQueryPastResDesc = "select r from Reservation r where r.date < CURRENT_DATE order by r.date desc";
+	String customQueryFutureRes = "select r from Reservation r where r.date = CURRENT_DATE order by r.date";
+	String customQueryFutureResDesc = "select r from Reservation r where r.date >= CURRENT_DATE order by r.date desc";
+
 	List<Reservation> findByOrderByDateAscTimeDesc();
 	
+	//@Query(customQueryFutureRes)
 	List<Reservation> findByOrderByDate();
 	
+	//@Query(customQueryFutureResDesc)
 	List<Reservation> findByOrderByDateDesc();
 	
-	@Query(customQuery)
-	List<Reservation> findPastReservations();
+	@Query(customQueryPastRes)
+	List<Reservation> findPastReservationsDate();
+	
+	@Query(customQueryPastResDesc)
+	List<Reservation> findPastReservationsDateDesc();
 }

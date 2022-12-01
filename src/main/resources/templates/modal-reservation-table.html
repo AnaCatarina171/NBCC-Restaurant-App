@@ -1,0 +1,17 @@
+<div>
+	Add Reservation #<span th:text="${rToEdit.id}"></span> to Table #<span
+		th:text="${tableNumber}"></span> ?
+</div>
+<hr>
+<div>
+	Reservations at Table <span th:text="${tableNumber}"></span> on <span
+		th:text="${#dates.format(rToEdit.date, 'dd-MMM-yyyy')}"></span>
+</div>
+<div class="modal-footer">
+	<a th:href="@{/addResTable/{rId}/{tId} (rId = ${rToEdit.id}, tId = ${tableNumber})}">Confirm</a>
+	
+<!-- 	<a th:href="@{/processReservation/{rId} (rId = ${res.id})}" class="button-6 btnAttention">Process</a> -->
+	
+	<button type="button" id="closf" class="close" data-dismiss="modal"
+		aria-label="Close">Cancel</button>
+</div>
