@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<title>RESTO-APP</title>
+</head>
+
+<body>
+	<div class="admin-page">
+		<div class="user-left-panel">
+			<div class="logo">NBCC 1234 Room</div>
+
+			<div class="user-navigation">
+				<div class="navigation-item">
+					<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
+				</div>
+				<br>
+				<div class="navigation-item">
+					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
+				</div>
+				<br>
+				<div class="navigation-item">
+					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
+				</div>
+				<br>
+				<div class="navigation-item">
+					<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="main">
+			<div class="top-information center">USER INFORMATION</div>
+			<div class="content">
+
+				<div class="floor-plan-one-grid">
+					<div class="item item-1">
+						<a class="table-button" href="#">40</a>
+					</div>
+					<div class="item item-2">
+						<a class="table-button" href="#">12</a>
+					</div>
+					<div class="item item-3">
+						<a class="table-button" href="#">11</a>
+					</div>
+					<div class="item item-4">
+						<a class="table-button" href="#">10</a>
+					</div>
+					<div class="item item-door">
+					</div>
+					<div class="item item-5">
+						<a class="table-button" href="#">41</a>
+					</div>
+					<div class="item item-6">
+					</div>
+					<div class="item item-7">
+						<a class="table-button" href="#">22</a>
+					</div>
+					<div class="item item-8">
+						<a class="table-button" href="#">21</a>
+					</div>
+					<div class="item item-9">
+					</div>
+					<div class="item item-10">
+						<a class="table-button" href="#">20</a>
+					</div>
+					<div class="item item-11">
+						<a class="table-button" href="#">50</a>
+					</div>
+					<div class="item item-12">
+						<a class="table-button" href="#">42</a>
+					</div>
+					<div class="item item-13">
+					</div>
+					<div class="item item-14">
+						<a class="table-button" href="#">51</a>
+					</div>
+					<div class="item item-15">
+						<a class="table-button" href="#">43</a>
+					</div>
+					<div class="item item-16">
+						<a class="table-button" href="#">30</a>
+					</div>
+					<div class="item item-17">
+						<a class="table-button" href="#">52</a>
+					</div>
+					<div class="item item-18"></div>
+					<div class="item item-19"></div>
+					<div class="item item-20"></div>
+					<div class="item item-21"></div>
+					<div class="item item-22"></div>
+				</div>
+
+			</div>
+
+			<div class="footer footerPanel">
+				<div class="row">
+					<div class="col-md-12">© Copyright 2022. All Rights Reserved.
+						|| Designed By: DevAtlantics - Ana Silva & Jose Silva</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</body>
+
+</html>

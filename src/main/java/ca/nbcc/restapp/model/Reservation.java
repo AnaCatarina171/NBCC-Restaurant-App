@@ -27,9 +27,6 @@ public class Reservation {
 	@Column(name = "RES_ID", unique = true)
 	private Long id;
 	
-	@Column(name="RES_TRACKING_NUMBER")
-	private String trackingNumber;
-	
 	@Column(name="RES_DATE")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date date;
@@ -80,6 +77,10 @@ public class Reservation {
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="FK_CUST_ID")
 	private Customer customer;
+	
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name="FK_TABLE_ID")
+	private RTable table;
 
 	public Reservation() {
 		super();
@@ -105,14 +106,6 @@ public class Reservation {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getTrackingNumber() {
-		return trackingNumber;
-	}
-
-	public void setTrackingNumber(String trackingNumber) {
-		this.trackingNumber = trackingNumber;
 	}
 
 	public Date getDate() {
@@ -244,9 +237,17 @@ public class Reservation {
 		this.email = email;
 	}
 
+	public RTable getTable() {
+		return table;
+	}
+
+	public void setTable(RTable table) {
+		this.table = table;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(adults, customer, date, id, kids, restaurant, trackingNumber, vegan, vegetarian,
+		return Objects.hash(adults, customer, date, id, kids, restaurant, vegan, vegetarian,
 				wheelChair);
 	}
 
@@ -261,13 +262,13 @@ public class Reservation {
 		Reservation other = (Reservation) obj;
 		return adults == other.adults && Objects.equals(customer, other.customer)
 				&& Objects.equals(date, other.date) && Objects.equals(id, other.id) && kids == other.kids
-				&& Objects.equals(restaurant, other.restaurant) && Objects.equals(trackingNumber, other.trackingNumber)
+				&& Objects.equals(restaurant, other.restaurant)
 				&& vegan == other.vegan && vegetarian == other.vegetarian && wheelChair == other.wheelChair;
 	}
 
 	@Override
 	public String toString() {
-		return "Reservation [id=" + id + ", trackingNumber=" + trackingNumber + ", dateTime=" + date + ", adults="
+		return "Reservation [id=" + id + ", dateTime=" + date + ", adults="
 				+ adults + ", kids=" + kids + ", vegetarian=" + vegetarian + ", vegan=" + vegan + ", wheelChair="
 				+ wheelChair + ", restaurant=" + restaurant + ", customer=" + customer + "]";
 	}

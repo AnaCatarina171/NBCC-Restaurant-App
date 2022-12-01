@@ -30,11 +30,11 @@
 
 			<!-- Icon -->
 			<div class="fadeIn first">
-				<i class="fa fa-user-circle fa-5x userIcon" aria-hidden="true" style="color:#000;"
+				<i class="fa fa-user-circle fa-5x userIcon" aria-hidden="true" style="color:#cccccc;"
 					title="User Page"> </i>
 			</div>
 			
-			<div th:if="${ error != null || logout != null}" style="color:#000;">
+			<div th:if="${ error != null || logout != null}" style="color:#cccccc;">
 				<p th:text="${error}"></p>
 				<p th:text="${logout}"></p>
 			</div>

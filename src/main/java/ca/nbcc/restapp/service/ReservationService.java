@@ -52,7 +52,11 @@ public class ReservationService {
 	}
 	
 	public List<Reservation> pastReservations(){
-		return rR.findPastReservations();
+		return rR.findPastReservationsDate();
+	}
+	
+	public List<Reservation> pastReservationsDesc(){
+		return rR.findPastReservationsDateDesc();
 	}
 	
 	public Reservation addNewReservation(Reservation r) {
