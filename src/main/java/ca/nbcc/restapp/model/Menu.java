@@ -101,6 +101,14 @@ public class Menu {
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	public Restaurant getRestaurant() {
 		return restaurant;
@@ -147,9 +155,10 @@ public class Menu {
 
 	@Override
 	public String toString() {
-		return "Menu [id=" + id + ", title=" + title + ", description=" + description + ", date=" + date
-				+ ", restaurant=" + restaurant + "]";
+		return "Menu [id=" + id + ", title=" + title + ", description=" + description + ", type=" + type + ", date="
+				+ date + ", toDisplay=" + toDisplay + ", dishList=" + dishList + ", restaurant=" + restaurant + "]";
 	}
+
 	
 	
 }

@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ca.nbcc.restapp.model.Menu;
 import ca.nbcc.restapp.model.Reservation;
+import ca.nbcc.restapp.service.MenuService;
 import ca.nbcc.restapp.service.ReservationService;
 
 @Controller
@@ -17,11 +19,12 @@ import ca.nbcc.restapp.service.ReservationService;
 public class ModalController {
     
 	private ReservationService rS;
-	
+	private MenuService ms;
 	@Autowired
-    public ModalController(ReservationService rS) {
+    public ModalController(ReservationService rS, MenuService ms) {
 		super();
 		this.rS = rS;
+		this.ms = ms;
 	}
 
 	@GetMapping("new-reservation")
@@ -54,5 +57,13 @@ public class ModalController {
     	return "modal-reservation-table";
     }
     
+    @GetMapping("display-menu")
+    public String goToModalMenuDisplay(Model model, @RequestParam("menuId") long menuId) {
+    	Menu menuToCheck = ms.getMenuById(menuId);
+//    	System.out.println(menuToDisplay);
+    	model.addAttribute("menuToCheck", menuToCheck);
+    	
+    	return "modal-menuDisplay";
+    }
     
 }

@@ -52,4 +52,44 @@ public class MenuService {
 		// TODO Auto-generated method stub
 		return mRepo.findById(mId).get();
 	}
+	
+	public List<Menu> getAllBreakfastMenu(){
+		return mRepo.findByTypeAndToDisplay("Breakfast", true);
+	}
+	
+	public Menu getBreakfastMenu() {
+		List<Menu> breakfastMenu = mRepo.findByTypeAndToDisplay("Breakfast", true);
+		
+		if(breakfastMenu.size() == 1) {
+			return breakfastMenu.get(0); 
+		}else {
+			return null;
+		}
+		
+	}
+	public List<Menu> getAllLunchMenu(){
+		return mRepo.findByTypeAndToDisplay("Lunch", true);
+	}
+	
+	public Menu getLunchMenu() {
+		List<Menu> lunchMenu = mRepo.findByTypeAndToDisplay("Lunch", true);
+		if(lunchMenu.size() == 1) {
+			return lunchMenu.get(0); 
+		}else {
+			return null;
+		}
+	}
+
+	public List<Menu> getAllEveningMenu(){
+		return mRepo.findByTypeAndToDisplay("Evening", true);
+	}
+	
+	public Menu getEveningMenu() {
+		List<Menu> eveningMenu = mRepo.findByTypeAndToDisplay("Evening", true);
+		if(eveningMenu.size() == 1) {
+			return eveningMenu.get(0); 
+		}else {
+			return null;
+		}
+	}
 }
