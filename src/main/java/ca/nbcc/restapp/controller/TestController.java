@@ -39,10 +39,10 @@ public class TestController {
 		this.tS = tS;
 	}
 	
-	public void addTable(RTable r) {
+	/*public void addTable(RTable r) {
 		
 		tS.addNewRTable(r);
-	}
+	}*/
 	
 	public List<RTable> showTables() {
 		

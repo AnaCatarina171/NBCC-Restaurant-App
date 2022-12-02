@@ -59,6 +59,10 @@ public class ReservationService {
 		return rR.findPastReservationsDateDesc();
 	}
 	
+	public List<Reservation> getTodayRes(){
+		return rR.findTodayRes();
+	}
+	
 	public Reservation addNewReservation(Reservation r) {
 		return rR.save(r);
 	}

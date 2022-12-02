@@ -48,7 +48,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
 					<a th:href="@{/customerReservations}" class="nav-link">Your
 						Reservations</a>
 				</div>
-				<div class="navigation-item ">
+				<div th:if="${#session != null}" class="navigation-item ">
 					<a th:href="@{/userPanel}" class="nav-link">User Panel</a>
 				</div>
 			</div>
@@ -92,7 +92,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
 		<h1 class="firstPageTitle">About Us</h1>
 	</div>
 	<div class="  medium-width">
-		<div class="flex-container margin-top-5 ">
+		<div class="flex-container margin-top-6 ">
 			<div class="content-left">
 				<h4 class="styledH4 titleSmall">Who are we?</h4>
 				<h1 class="bigTitle">Dining Room 1234 NBCC Moncton Campus</h1>
@@ -108,18 +108,20 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
 			</div>
 		</div>
 
-		<div class="center-container ">
+		<div class="center-container margin-top-6">
 			<h4 class="titleSmall">What Do We Offer?</h4>
-			<h2>Every week we feature a unique banquet style 3 course meal
+			<h2 class="titleBottomBorder">Every week we feature a unique banquet style 3 course meal
 				inspired in different nationalities and cultures.</h2>
 			<ul class="ulAboutUs">
-				<li>We operate during breakfast, lunch and dinner times*</li>
-				<li>Breakfast, Lunch and Dinner have different menus</li>
-				<li>Check our menus to see which banquet would you like to
+				<li>We operate during breakfast, lunch, and dinner times, each one with different menus</li>
+				<li>Check out our menus to see which banquet you would like to
 					enjoy</li>
-				<li>Vegetarian? Vegan? Any allergies or special request? No
-					problem! We are here to make everybody enjoy this experience! Just
-					let us know while filling your reservation form.</li>
+					<br>
+				<li>We recommend booking a reservation in advance, as we usually sell out</li>
+				<li>* Reservations can be made for a maximum of 8 people</li>
+				<li class="specialRequest">Vegetarian? Vegan? Any allergies or special requests? 
+				No problem! We are here to make everybody enjoy this experience! Just let us know 
+				while filling out your reservation form.</li>
 			</ul>
 			<div class="row margin-top-5">
 				<div class="col-md-12"></div>
