@@ -22,15 +22,19 @@
 
 			<div class="user-navigation">
 				<div class="navigation-item">
+					<a th:href="@{/userPanel}" class="nav-link">Home</a>
+				</div>
+				<br>
+				<div class="navigation-item">
 					<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
 				</div>
 				<br>
 				<div class="navigation-item">
-					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
+					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
 				</div>
 				<br>
 				<div class="navigation-item">
-					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
+					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
 				</div>
 				<br>
 				<div class="navigation-item">
@@ -103,13 +107,14 @@
 					<div class="cart-primary-content">
 						<div class="cart-secondary" th:each="res : ${reservations}">
 							<div class="cart-secondary-title">
-								Reservation #<span th:text="${res.id}"></span>
+								<strong>Reservation #<span th:text="${res.id}"></span></strong>
 							</div>
 							<div class="cart-secondary-content">
 								<div class="content-left">
-									<span th:text="${res.date}"></span> <br> Time: <span
+									<span th:text="${#dates.format(res.date, 'EEE, d MMM yyyy')}"></span> <br> Time: <span
 										th:text="${res.time}"></span> <br> Guest #: <span
-										th:text="${res.guests}"></span>
+										th:text="${res.guests}"></span><div th:if="${res.table != null}"> Table : <span
+										th:text="${res.table.number}"></span></div>
 								</div>
 								<div class="content-right">
 									<a th:href="@{/processReservation/{rId} (rId = ${res.id})}"
@@ -180,13 +185,14 @@
 					<div class="cart-primary-content">
 						<div class="cart-secondary" th:each="res : ${pastReservations}">
 							<div class="cart-secondary-title">
-								Reservation #<span th:text="${res.id}"></span>
+								<strong>Reservation #<span th:text="${res.id}"></span></strong>
 							</div>
 							<div class="cart-secondary-content">
 								<div class="content-left">
-									<span th:text="${res.date}"></span> <br> Time: <span
+									<span th:text="${#dates.format(res.date, 'EEE, d MMM yyyy')}"></span> <br> Time: <span
 										th:text="${res.time}"></span> <br> Guest #: <span
-										th:text="${res.guests}"></span>
+										th:text="${res.guests}"></span> <br> <div th:if="${res.table != null}"> Table : <span
+										th:text="${res.table.number}"></span></div>
 								</div>
 								<div class="content-right">
 									<a th:href="@{/processReservation/{rId} (rId = ${res.id})}"

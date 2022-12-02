@@ -47,11 +47,13 @@
 					<a th:href="@{/reservationOptions}" class="nav-link"> Book a
 						Reservation </a>
 				</div>
+				<!-- 
 				<div th:if="${#session != null}" class="navigation-item">
 					<a th:href="@{/yourReservations}" class="nav-link">Your
 						Reservations</a>
 				</div>
-				<div class="navigation-item ">
+				 -->
+				<div th:if="${#session != null}" class="navigation-item ">
 					<a th:href="@{/userPanel}" class="nav-link">User Panel</a>
 				</div>
 			</div>
@@ -117,13 +119,11 @@
 						<tbody>
 							<tr th:each="reservationTime : ${resTimeBreakfast}">
 								<td th:text="${reservationTime.time}"></td>
-								<td><input type="button"
-											class="button-6" data-toggle="modal"
-											data-target="#addReservation"
-											th:attr="data-object-id=''+${reservationTime.time}+'', data-object-name=''+${reservationTime.time}+'', data-target='#addReservation'"
-											value="Book">
-											
-											<th:block th:replace="_modals :: modal('addReservation')">modal</th:block>
+								<td><input type="button" class="button-6"
+									data-toggle="modal" data-target="#addReservation"
+									th:attr="data-object-id=''+${reservationTime.time}+'', data-object-name=''+${reservationTime.time}+'', data-target='#addReservation'"
+									value="Book"> <th:block
+										th:replace="_modals :: modal('addReservation')">modal</th:block>
 								</td>
 							</tr>
 						</tbody>
@@ -144,13 +144,11 @@
 						<tbody>
 							<tr th:each="reservationTime : ${resTimeLunch}">
 								<td th:text="${reservationTime.time}"></td>
-								<td><input type="button"
-											class="button-6" data-toggle="modal"
-											data-target="#addReservation"
-											th:attr="data-object-id=''+${reservationTime.time}+'', data-object-name=''+${reservationTime.time}+'', data-target='#addReservation'"
-											value="Book">
-											
-											<th:block th:replace="_modals :: modal('addReservation')">modal</th:block>
+								<td><input type="button" class="button-6"
+									data-toggle="modal" data-target="#addReservation"
+									th:attr="data-object-id=''+${reservationTime.time}+'', data-object-name=''+${reservationTime.time}+'', data-target='#addReservation'"
+									value="Book"> <th:block
+										th:replace="_modals :: modal('addReservation')">modal</th:block>
 								</td>
 							</tr>
 						</tbody>
@@ -171,13 +169,11 @@
 						<tbody>
 							<tr th:each="reservationTime : ${resTimeNight}">
 								<td th:text="${reservationTime.time}"></td>
-								<td><input type="button"
-											class="button-6" data-toggle="modal"
-											data-target="#addReservation"
-											th:attr="data-object-id=''+${reservationTime.time}+'', data-object-name=''+${reservationTime.time}+'', data-target='#addReservation'"
-											value="Book">
-											
-											<th:block th:replace="_modals :: modal('addReservation')">modal</th:block>
+								<td><input type="button" class="button-6"
+									data-toggle="modal" data-target="#addReservation"
+									th:attr="data-object-id=''+${reservationTime.time}+'', data-object-name=''+${reservationTime.time}+'', data-target='#addReservation'"
+									value="Book"> <th:block
+										th:replace="_modals :: modal('addReservation')">modal</th:block>
 								</td>
 							</tr>
 						</tbody>
@@ -185,25 +181,83 @@
 				</div>
 			</div>
 			<div class="row">
-				<h2 class="col-md-12 titleTopBorder margin-bottom-3">Cafeteria Display</h2>
+				<h2 class="col-md-12 titleTopBorder margin-bottom-3">Cafeteria
+					Display</h2>
+			</div>
 				<div class="row">
-					<div class="image-floor-container">
-						<img src="img/basic-floor-planning.png">
+					<div class="col-md-12">
+						<div class="image-floor-container">
+						<div class="floor-plan-one-grid">
+							<div class="item item-1">
+								<a class="table-button" href="#">40</a>
+							</div>
+							<div class="item item-2">
+								<a class="table-button" href="#">12</a>
+							</div>
+							<div class="item item-3">
+								<a class="table-button" href="#">11</a>
+							</div>
+							<div class="item item-4">
+								<a class="table-button" href="#">10</a>
+							</div>
+							<div class="item item-door"></div>
+							<div class="item item-5">
+								<a class="table-button" href="#">41</a>
+							</div>
+							<div class="item item-6"></div>
+							<div class="item item-7">
+								<a class="table-button" href="#">22</a>
+							</div>
+							<div class="item item-8">
+								<a class="table-button" href="#">21</a>
+							</div>
+							<div class="item item-9"></div>
+							<div class="item item-10">
+								<a class="table-button" href="#">20</a>
+							</div>
+							<div class="item item-11">
+								<a class="table-button" href="#">50</a>
+							</div>
+							<div class="item item-12">
+								<a class="table-button" href="#">42</a>
+							</div>
+							<div class="item item-13"></div>
+							<div class="item item-14">
+								<a class="table-button" href="#">51</a>
+							</div>
+							<div class="item item-15">
+								<a class="table-button" href="#">43</a>
+							</div>
+							<div class="item item-16">
+								<a class="table-button" href="#">30</a>
+							</div>
+							<div class="item item-17">
+								<a class="table-button" href="#">52</a>
+							</div>
+							<div class="item item-18"></div>
+							<div class="item item-19"></div>
+							<div class="item item-20"></div>
+							<div class="item item-21"></div>
+							<div class="item item-22"></div>
+						</div>
+					</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-	</div>
-
 	<footer>
 		<div class="footer">
 			<div class="row">
-				<a href="https://www.facebook.com/DiningRoom1234/"><i
-					class="fa fa-facebook"></i></a> <a
-					href="https://www.instagram.com/nbccmoncton/"><i
-					class="fa fa-instagram"></i></a> <a
-					href="mailto:MO.Hospitality@nbcc.ca"><i class="fa fa-envelope"></i></a>
+				<div class="col-xl-4 col-md-4 "></div>
+				<div class="col-xl-4 col-md-4 ">
+					<a href="https://www.facebook.com/DiningRoom1234/"><i
+						class="fa fa-facebook-square"></i></a> <a
+						href="https://www.instagram.com/nbccmoncton/"><i
+						class="fa fa-instagram"></i></a> <a
+						href="mailto:MO.Hospitality@nbcc.ca"><i class="fa fa-envelope"></i></a>
+				</div>
+				<div class="col-xl-4 col-md-4 "></div>
 			</div>
 
 			<div class="row">
@@ -248,23 +302,26 @@
 			</div>
 		</div>
 	</footer>
-	
+
 	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-	
+
 	<script th:inline="javascript">
-	/*<![CDATA[*/
-		
-    $('#addReservation').on('show.bs.modal', function (event) {
-    	var button = $(event.relatedTarget);
-        var reservationTime = button.data('object-name');
-        $.get("/modals/new-reservation?reservationTime=" + reservationTime, function (data) {
-            $('#addReservation').find('.modal-body').html(data);
-        })
-    })
-    /*]]>*/
-</script>
-	
+		/*<![CDATA[*/
+
+		$('#addReservation').on(
+				'show.bs.modal',
+				function(event) {
+					var button = $(event.relatedTarget);
+					var reservationTime = button.data('object-name');
+					$.get("/modals/new-reservation?reservationTime="
+							+ reservationTime, function(data) {
+						$('#addReservation').find('.modal-body').html(data);
+					})
+				})
+		/*]]>*/
+	</script>
+
 </body>
 </html>
