@@ -44,10 +44,6 @@
 					<a th:href="@{/reservationOptions}" class="nav-link"> Book a
 						Reservation </a>
 				</div>
-				<div th:if="${#session != null}" class="navigation-item">
-					<a th:href="@{/customerReservations}" class="nav-link">Your
-						Reservations</a>
-				</div>
 				<div th:if="${#session != null}" class="navigation-item ">
 					<a th:href="@{/userPanel}" class="nav-link">User Panel</a>
 				</div>
@@ -69,7 +65,7 @@
 		<div class="flex-container margin-top-6 ">
 			<div class="content-left">
 				<div th:if="${#session != null}">
-					<h2>
+					<h2 class="titleSmall">
 						Hi, <span th:text="${#session.getAttribute('CURRENT_USER')}"></span>
 					</h2>
 				</div>
@@ -152,7 +148,7 @@
 	</div>
 
 	<footer>
-		<div class="footer">
+		<div class="footer margin-top-5">
 			<div class="row">
 				<a href="https://www.facebook.com/DiningRoom1234/"><i
 					class="fa fa-facebook-square"></i></a> <a
@@ -189,10 +185,11 @@
 			<div class="row">
 				<div class="col-md-12">
 					<ul>
-						<li><a href="#">About Us</a></li>
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Reservations</a></li>
+						<li><a th:href="@{/toAboutUs}">About Us</a></li>
+						<li><a th:href="@{/toCustomerView}">Home</a></li>
+						<li><a th:href="@{/reservationOptions}">Reservations</a></li>
 						<li><a href="#">Privacy Policy</a></li>
+					</ul>
 					</ul>
 				</div>
 			</div>

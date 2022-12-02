@@ -383,15 +383,15 @@ body {
 }
 
 .margin-top-5 {
-	margin-top: 2rem;
+	margin-top: 2rem !important;
 }
 
 .margin-top-6 {
-	margin-top: 6rem;
+	margin-top: 6rem !important;
 }
 
 .margin-top-10 {
-	margin-top: 10rem;
+	margin-top: 10rem !important;
 }
 
 .margin-bottom-3 {

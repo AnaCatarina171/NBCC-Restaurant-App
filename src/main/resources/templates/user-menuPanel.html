@@ -53,27 +53,31 @@
 				<div class="cart-primary">
 					<div class="cart-primary-title">Past Menus</div>
 					<div class="cart-primary-content">
-					
+
 						<div th:each="menu : ${allMenus}" class="cart-secondary">
 							<div class="cart-secondary-title" th:text="${menu.title}"></div>
 							<div class="cart-secondary-content">
 								<div class="content-left">
-									Served From - To : <br> Total Items: 15 <br> Last Modified: <span th:text="${menu.date}"></span>									
+									Served From - To : <br> Total Items: 15 <br> Last
+									Modified: <span th:text="${menu.date}"></span>
 								</div>
 								<div class="content-right">
 									<a href="toReservationProcess" class="button-6">Recall</a>
 								</div>
 							</div>
-						</div>						
+						</div>
 					</div>
-					
+
 				</div>
+			</div>
+			<div class="footer footerPanel">
+				<div class="row">
+					<div class="col-md-12">© Copyright 2022. All Rights Reserved.
+						|| Designed By: DevAtlantics - Ana Silva & Jose Silva</div>
+				</div>
+			</div>
 
-			<div class="footer"></div>
 		</div>
-
-
-	</div>
 </body>
 
 </html>

@@ -43,10 +43,6 @@
 					<a th:href="@{/reservationOptions}" class="nav-link"> Book a
 						Reservation </a>
 				</div>
-				<div th:if="${#session != null}" class="navigation-item">
-					<a th:href="@{/customerReservations}" class="nav-link">Your
-						Reservations</a>
-				</div>
 				<div th:if="${#session != null}" class="navigation-item ">
 					<a th:href="@{/userPanel}" class="nav-link">User Panel</a>
 				</div>
@@ -140,10 +136,11 @@
 			<div class="row">
 				<div class="col-md-12">
 					<ul>
-						<li><a href="#">About Us</a></li>
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Reservations</a></li>
+						<li><a th:href="@{/toAboutUs}">About Us</a></li>
+						<li><a th:href="@{/toCustomerView}">Home</a></li>
+						<li><a th:href="@{/reservationOptions}">Reservations</a></li>
 						<li><a href="#">Privacy Policy</a></li>
+					</ul>
 					</ul>
 				</div>
 			</div>
