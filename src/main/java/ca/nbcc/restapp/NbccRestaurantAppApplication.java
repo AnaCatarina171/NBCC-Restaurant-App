@@ -68,10 +68,17 @@ public class NbccRestaurantAppApplication{
 		//TestController testController = new TestController(new DepartmentService(depRepo), 
 		//		new DishService(dishRepo), new EmployeeService(eRepo), new MenuService(mRepo), new ProductService(pRepo))
 
-		/*ReservationController resTestController = new ReservationController(new ReservationService(resRepo), new ReservationTimeService(resTRepo));
+		
+		/*ReservationController resTestController = new ReservationController(new ReservationService(resRepo), new ReservationTimeService(resTRepo), null);
 		
 		TestController tC = new TestController(new RTableService(tableRepo));
 
+		for(var t : tC.showTables()) {
+			
+			tC.deleteTable(t.getId());
+		}
+		
+		tC.addTable(new RTable((long)52, 4, false, null));
 		tC.addTable(new RTable((long)51, 4, false, null));
 		tC.addTable(new RTable((long)50, 4, false, null));
 		tC.addTable(new RTable((long)10, 4, false, null));
@@ -85,10 +92,8 @@ public class NbccRestaurantAppApplication{
 		tC.addTable(new RTable((long)21, 2, false, null));
 		tC.addTable(new RTable((long)20, 2, false, null));
 		tC.addTable(new RTable((long)30, 8, false, null));
-		*/
 
-		TestController tC = new TestController(new RTableService(tableRepo));
-		
 		System.out.println(tC.showTables());
+		*/
 	}
 }

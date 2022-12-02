@@ -106,20 +106,150 @@ public class ReservationController {
 	@GetMapping("todayFloorPlan")
 	public String todayResFloorPlan(Model model) {
 
-		List<Reservation> allReservations = rS.getAllReservation();
-		
-		// Today
-		LocalDate today = LocalDate.now();
+		SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd");
+    	String today = sdt.format(new Date());
 
-		// Formating Today Date
-		String pattern = "dd MMMM yyyy";
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
-		String formattedToday = dateTimeFormatter.format(today);
+		List<Reservation> todayReservations = rS.getTodayRes();
 
-		model.addAttribute("formattedToday", formattedToday);
-		model.addAttribute("reservations", allReservations);
+		try {
 
-		return "reservation-floor-plan";
+			// Adding Tables - Too much code for now (will try to reduce later)
+			RTable t10 = tS.findRTableByNumber((long) 10);
+			int t10ResToday = 0;
+			RTable t11 = tS.findRTableByNumber((long) 11);
+			int t11ResToday = 0;
+			RTable t12 = tS.findRTableByNumber((long) 12);
+			int t12ResToday = 0;
+			RTable t40 = tS.findRTableByNumber((long) 40);
+			int t40ResToday = 0;
+			RTable t41 = tS.findRTableByNumber((long) 41);
+			int t41ResToday = 0;
+			RTable t42 = tS.findRTableByNumber((long) 42);
+			int t42ResToday = 0;
+			RTable t43 = tS.findRTableByNumber((long) 43);
+			int t43ResToday = 0;
+			RTable t20 = tS.findRTableByNumber((long) 20);
+			int t20ResToday = 0;
+			RTable t21 = tS.findRTableByNumber((long) 21);
+			int t21ResToday = 0;
+			RTable t22 = tS.findRTableByNumber((long) 22);
+			int t22ResToday = 0;
+			RTable t30 = tS.findRTableByNumber((long) 30);
+			int t30ResToday = 0;
+			RTable t50 = tS.findRTableByNumber((long) 50);
+			int t50ResToday = 0;
+			RTable t51 = tS.findRTableByNumber((long) 51);
+			int t51ResToday = 0;
+			RTable t52 = tS.findRTableByNumber((long) 52);
+			int t52ResToday = 0;
+
+			for (var tR : t10.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(today)) {
+					t10ResToday = 1;
+				}
+			}
+			for (var tR : t11.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(today)) {
+					t11ResToday = 1;
+				}
+			}
+			for (var tR : t12.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(today)) {
+					t12ResToday = 1;
+				}
+			}
+			for (var tR : t40.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(today)) {
+					t40ResToday = 1;
+				}
+			}
+			for (var tR : t41.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(today)) {
+					t41ResToday = 1;
+				}
+			}
+			for (var tR : t42.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(today)) {
+					t42ResToday = 1;
+				}
+			}
+			for (var tR : t43.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(today)) {
+					t43ResToday = 1;
+				}
+			}
+			for (var tR : t20.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(today)) {
+					t20ResToday = 1;
+				}
+			}
+			for (var tR : t21.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(today)) {
+					t21ResToday = 1;
+				}
+			}
+			for (var tR : t22.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(today)) {
+					t22ResToday = 1;
+				}
+			}
+			for (var tR : t30.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(today)) {
+					t30ResToday = 1;
+				}
+			}
+			for (var tR : t50.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(today)) {
+					t50ResToday = 1;
+				}
+			}
+			for (var tR : t51.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(today)) {
+					t51ResToday = 1;
+				}
+			}
+			for (var tR : t52.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(today)) {
+					t52ResToday = 1;
+				}
+			}
+
+			model.addAttribute("todayReservations", todayReservations);
+
+			model.addAttribute("t10ResToday", t10ResToday);
+			model.addAttribute("t11ResToday", t11ResToday);
+			model.addAttribute("t12ResToday", t12ResToday);
+			model.addAttribute("t40ResToday", t40ResToday);
+			model.addAttribute("t41ResToday", t41ResToday);
+			model.addAttribute("t42ResToday", t42ResToday);
+			model.addAttribute("t43ResToday", t43ResToday);
+			model.addAttribute("t20ResToday", t20ResToday);
+			model.addAttribute("t21ResToday", t21ResToday);
+			model.addAttribute("t22ResToday", t22ResToday);
+			model.addAttribute("t30ResToday", t30ResToday);
+			model.addAttribute("t50ResToday", t50ResToday);
+			model.addAttribute("t51ResToday", t51ResToday);
+			model.addAttribute("t52ResToday", t52ResToday);
+
+			return "reservation-floor-plan";
+		} catch (Exception e) {
+
+			return null;
+		}
 	}
 
 	@PostMapping("/filterReservations")
@@ -154,42 +284,45 @@ public class ReservationController {
 
 	@GetMapping("/viewReservations")
 	public String goToReservations(Model model, String rId, String pastRId) throws Exception {
+		
+		try {
+			List<Reservation> allReservations = rS.getAllReservation();
+			List<Reservation> pastReservations = rS.pastReservations();
 
-		List<Reservation> allReservations = rS.getAllReservation();
-		List<Reservation> pastReservations = new ArrayList<>();
+			if (rId != null && rId != "" && !rId.isEmpty()) {
+				Long rLongId = Long.parseLong(rId);
 
-		for (var res : allReservations) {
+				allReservations = new ArrayList<>();
 
-			Date resDate = res.getDate();
-			LocalDate resLocalDate = resDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-			LocalDate today = LocalDate.now();
-
-			if (resLocalDate.isBefore(today)) {
-				pastReservations.add(res);
+				try {
+					allReservations.add(rS.findReservationById(rLongId));
+				} catch(Exception ex) {
+					allReservations = rS.getAllReservation();
+				}
 			}
+
+			if (pastRId != null && pastRId != "" && !pastRId.isEmpty()) {
+				Long rLongId = Long.parseLong(pastRId);
+
+				pastReservations = new ArrayList<>();
+
+				try {
+					pastReservations.add(rS.findReservationById(rLongId));
+				} catch(Exception ex) {
+					pastReservations = rS.pastReservations();
+				}
+			}
+
+			model.addAttribute("pastReservations", pastReservations);
+			model.addAttribute("reservations", allReservations);
+
+			return "reservations-display";
 		}
-
-		if (rId != null && rId != "" && !rId.isEmpty()) {
-			Long rLongId = Long.parseLong(rId);
-
-			allReservations = new ArrayList<>();
-
-			allReservations.add(rS.findReservationById(rLongId));
+		catch(Exception ex) {
+			
+			return "reservations-display";
 		}
-
-		if (pastRId != null && pastRId != "" && !pastRId.isEmpty()) {
-			Long rLongId = Long.parseLong(pastRId);
-
-			pastReservations = new ArrayList<>();
-
-			pastReservations.add(rS.findReservationById(rLongId));
-		}
-
-		model.addAttribute("pastReservations", pastReservations);
-		model.addAttribute("reservations", allReservations);
-
-		return "reservations-display";
+		
 	}
 
 	@GetMapping("toReservationAdmin")
@@ -235,11 +368,18 @@ public class ReservationController {
 		
 		Long resNumber = Long.parseLong(rId);
 		Long tableNumber = Long.parseLong(tId);
+		RTable table = null;
 		
 		Reservation reservation = rS.findReservationById(resNumber);
-		RTable table = tS.findRTableByNumber(tableNumber);
+		
+		for(var t : tS.getAllRTable()) {
+			if(t.getNumber().equals(tableNumber)) {
+				table = t;
+			}
+		}
 		
 		reservation.setTable(table);
+		
 		rS.updateReservation(reservation);
 		
 		return "redirect:/processReservation/" + rId;
@@ -248,36 +388,139 @@ public class ReservationController {
 	@GetMapping("/processReservation/{rId}")
 	public String processNewReservation(Model model, @PathVariable("rId") long rId) {
 
-		// Today
-		LocalDate today = LocalDate.now();
-
-		// Formating Today Date
-		String pattern = "dd MMMM yyyy";
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
-		String formattedToday = dateTimeFormatter.format(today);
+		//Store reservations with same date as current reservation
+		List<Reservation> resDateList = new ArrayList<>();
 
 		try {
 			Reservation rToEdit = rS.findReservationById(rId);
+			
+			//Getting reservations with same date as current reservation
+			for(var r : rS.getAllReservation()) {
+				
+				if(r.getDate().equals(rToEdit.getDate()) && !r.equals(rToEdit)) {
+					resDateList.add(r);
+				}
+			}
 
-			/*Adding Tables*/
-			/*RTable t10 = tS.findRTableByNumber((long)10);
+			//Adding Tables - Too much code for now (will try to reduce later)
+			RTable t10 = tS.findRTableByNumber((long)10);
+			int t10ResToday = 0;
 			RTable t11 = tS.findRTableByNumber((long)11);
+			int t11ResToday = 0;
 			RTable t12 = tS.findRTableByNumber((long)12);
+			int t12ResToday = 0;
 			RTable t40 = tS.findRTableByNumber((long)40);
+			int t40ResToday = 0;
 			RTable t41 = tS.findRTableByNumber((long)41);
+			int t41ResToday = 0;
 			RTable t42 = tS.findRTableByNumber((long)42);
+			int t42ResToday = 0;
 			RTable t43 = tS.findRTableByNumber((long)43);
+			int t43ResToday = 0;
 			RTable t20 = tS.findRTableByNumber((long)20);
+			int t20ResToday = 0;
 			RTable t21 = tS.findRTableByNumber((long)21);
+			int t21ResToday = 0;
 			RTable t22 = tS.findRTableByNumber((long)22);
+			int t22ResToday = 0;
 			RTable t30 = tS.findRTableByNumber((long)30);
+			int t30ResToday = 0;
 			RTable t50 = tS.findRTableByNumber((long)50);
+			int t50ResToday = 0;
 			RTable t51 = tS.findRTableByNumber((long)51);
-			RTable t52 = tS.findRTableByNumber((long)52);*/
+			int t51ResToday = 0;
+			RTable t52 = tS.findRTableByNumber((long)52);
+			int t52ResToday = 0;
+			
+			for (var tR : t10.getReservations()) {
+				if(tR.getDate().equals(rToEdit.getDate())) {
+					t10ResToday = 1;
+				}
+			}
+			for (var tR : t11.getReservations()) {
+				if(tR.getDate().equals(rToEdit.getDate())) {
+					t11ResToday = 1;
+				}
+			}
+			for (var tR : t12.getReservations()) {
+				if(tR.getDate().equals(rToEdit.getDate())) {
+					t12ResToday = 1;
+				}
+			}
+			for (var tR : t40.getReservations()) {
+				if(tR.getDate().equals(rToEdit.getDate())) {
+					t40ResToday = 1;
+				}
+			}
+			for (var tR : t41.getReservations()) {
+				if(tR.getDate().equals(rToEdit.getDate())) {
+					t41ResToday = 1;
+				}
+			}
+			for (var tR : t42.getReservations()) {
+				if(tR.getDate().equals(rToEdit.getDate())) {
+					t42ResToday = 1;
+				}
+			}
+			for (var tR : t43.getReservations()) {
+				if(tR.getDate().equals(rToEdit.getDate())) {
+					t43ResToday = 1;
+				}
+			}
+			for (var tR : t20.getReservations()) {
+				if(tR.getDate().equals(rToEdit.getDate())) {
+					t20ResToday = 1;
+				}
+			}
+			for (var tR : t21.getReservations()) {
+				if(tR.getDate().equals(rToEdit.getDate())) {
+					t21ResToday = 1;
+				}
+			}
+			for (var tR : t22.getReservations()) {
+				if(tR.getDate().equals(rToEdit.getDate())) {
+					t22ResToday = 1;
+				}
+			}
+			for (var tR : t30.getReservations()) {
+				if(tR.getDate().equals(rToEdit.getDate())) {
+					t30ResToday = 1;
+				}
+			}
+			for (var tR : t50.getReservations()) {
+				if(tR.getDate().equals(rToEdit.getDate())) {
+					t50ResToday = 1;
+				}
+			}
+			for (var tR : t51.getReservations()) {
+				if(tR.getDate().equals(rToEdit.getDate())) {
+					t51ResToday = 1;
+				}
+			}
+			for (var tR : t52.getReservations()) {
+				if(tR.getDate().equals(rToEdit.getDate())) {
+					t52ResToday = 1;
+				}
+			}
 			
 			model.addAttribute("statusList", ReservationStatus.values());
 			model.addAttribute("rToEdit", rToEdit);			
-			model.addAttribute("formattedToday", formattedToday);
+			model.addAttribute("resDateList", resDateList);
+			
+			model.addAttribute("t10ResToday", t10ResToday);
+			model.addAttribute("t11ResToday", t11ResToday);
+			model.addAttribute("t12ResToday", t12ResToday);
+			model.addAttribute("t40ResToday", t40ResToday);
+			model.addAttribute("t41ResToday", t41ResToday);
+			model.addAttribute("t42ResToday", t42ResToday);
+			model.addAttribute("t43ResToday", t43ResToday);
+			model.addAttribute("t20ResToday", t20ResToday);
+			model.addAttribute("t21ResToday", t21ResToday);
+			model.addAttribute("t22ResToday", t22ResToday);
+			model.addAttribute("t30ResToday", t30ResToday);
+			model.addAttribute("t50ResToday", t50ResToday);
+			model.addAttribute("t51ResToday", t51ResToday);
+			model.addAttribute("t52ResToday", t52ResToday);
 
 			return "reservation-process";
 		} catch (Exception e) {
