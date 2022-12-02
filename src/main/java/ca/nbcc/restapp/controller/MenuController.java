@@ -53,18 +53,22 @@ public class MenuController {
 	
 	@GetMapping("/customerMenuDisplay")
 	public String userMenuPage(Model model) {
-		List<Menu> menusToDisplay = new ArrayList<>();
-		
-		menusToDisplay = ms.getMenusToDisplay();
-		System.out.println(menusToDisplay.toString());
-		model.addAttribute("menusList", menusToDisplay);
-		return "display-userMenu";
+//		Menu breakfastMenu = ms.getBreakfastMenu();
+//		Menu lunchMenu = ms.getLunchMenu();
+//		Menu eveningMenu = ms.getEveningMenu();
+//		
+//		List<Menu> menusToDisplay = new ArrayList<>();
+//		
+//		menusToDisplay = ms.getMenusToDisplay();
+//		
+//		model.addAttribute("menusList", menusToDisplay);
+		setupMenuPanel(model);
+		return "menu-display";
 	}
 	
 	@GetMapping("/toMenuPanel")
 	public String toMenuPanel(Model model) {		
-		List<Menu> allMenus = ms.getAllMenus();
-		model.addAttribute("allMenus", allMenus);
+		setupMenuPanel(model);
 		return "user-menuPanel";
 	}
 	
@@ -103,11 +107,11 @@ public class MenuController {
 	public String toDeleteDish(Model model, @PathVariable("dId") long dId) {
 		try {
 			ds.deleteDish(dId);
-			setupPopulateMenuPage(model, 0);
+
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
+		setupPopulateMenuPage(model, 0);
 		return "user-populateMenu";
 	}
 	
@@ -128,10 +132,11 @@ public class MenuController {
 	@PostMapping("/processMenuDetails")
 	public String processMenuDetails(Model model, Menu menuToPopulate) {
 		Menu menuToAdd = ms.getLastMenu();
-		System.out.println(menuToPopulate);
-		System.out.println(menuToAdd);
+
 		menuToAdd.setTitle(menuToPopulate.getTitle());
 		menuToAdd.setDescription(menuToPopulate.getDescription());
+		menuToAdd.setType(menuToPopulate.getType());
+		menuToAdd.setToDisplay(false);
 		ms.saveMenu(menuToAdd);
 		
 		setupPopulateMenuPage(model, 0);
@@ -161,7 +166,6 @@ public class MenuController {
 	@GetMapping("/toSaveMenu")
 	public String toSaveMenu(Model model) {
 		Menu menuToSave = ms.getLastMenu();
-		System.out.println(menuToSave.toString());
 		menuToSave.setDate(LocalDate.now());
 		ms.saveMenu(menuToSave);
 		
@@ -171,10 +175,8 @@ public class MenuController {
 	@GetMapping("/toSaveMenu/{mId}")
 	public String toSaveMenu(Model model, @PathVariable("mId") long mId) {
 		Menu menuToSave = ms.getMenuById(mId);
-		System.out.println(menuToSave.getDishList().toString());
 		menuToSave.setDate(LocalDate.now());
 		ms.saveMenu(menuToSave);
-		
 		return "redirect:/toMenuPanel";
 	}
 	
@@ -202,11 +204,10 @@ public class MenuController {
 	@GetMapping("/addDishToMenu/{dId}")
 	public String addDishToMenu(Model model, @PathVariable("dId") long rId) {
 		Menu menuToPopulate = ms.getLastMenu();
-		System.out.println(menuToPopulate.toString());
 		Set<Dish> menuDishList = menuToPopulate.getDishList();
-		System.out.println(menuDishList.toString());
+//		System.out.println(menuDishList.toString());
 		menuDishList.add(ds.getDishById(rId));
-		System.out.println(menuDishList.toString());
+//		System.out.println(menuDishList.toString());
 		menuToPopulate.setDishList(menuDishList);
 		ms.saveMenu(menuToPopulate);
 		
@@ -221,10 +222,10 @@ public class MenuController {
 		Set<Dish> menuDishList = menuToPopulate.getDishList();
 
 		menuDishList.add(ds.getDishById(dId));
-		System.out.println(menuDishList.toString());
+//		System.out.println(menuDishList.toString());
 		
 		menuToPopulate.setDishList(menuDishList);
-		System.out.println(menuToPopulate.getDishList().toString());
+//		System.out.println(menuToPopulate.getDishList().toString());
 		ms.saveMenu(menuToPopulate);
 		
 		setupRecallMenuPage(model, 0, mId);
@@ -238,6 +239,40 @@ public class MenuController {
 		ds.deleteDish(dId);
 		setupRecallMenuPage(model, 0, mId);
 		return "user-recallMenu";
+	}
+	
+	@PostMapping("/startDisplayingMenu")
+	public String startDisplayingMenu(Model model, @RequestParam("menuId") long menuId) {
+		Menu menuToDisplay = ms.getMenuById(menuId);
+		menuToDisplay.setToDisplay(true);
+//		if(!menuToDisplay.getToDisplay()) {
+//			
+//		}
+		setupMenuPanel(model);
+		return "user-menuPanel";
+	}
+	
+	@PostMapping("/stopDisplayingMenu")
+	public String stopDisplayingMenu(Model model, @RequestParam("menuId") long menuId) {
+		Menu menuToStopDisplaying = ms.getMenuById(menuId);
+		menuToStopDisplaying.setToDisplay(false);
+//		if(!menuToDisplay.getToDisplay()) {
+//			
+//		}
+		setupMenuPanel(model);
+		return "user-menuPanel";
+	}
+	
+	private void setupMenuPanel(Model model) {
+		List<Menu> allMenus = ms.getAllMenus();
+		Menu breakfastMenu = ms.getBreakfastMenu();
+		Menu lunchMenu = ms.getLunchMenu();
+		Menu eveningMenu = ms.getEveningMenu();
+		
+		model.addAttribute("allMenus", allMenus);
+		model.addAttribute("breakfastMenu", breakfastMenu);
+		model.addAttribute("lunchMenu", lunchMenu);
+		model.addAttribute("eveningMenu", eveningMenu);
 	}
 	
 	private void setupPopulateMenuPage(Model model, int pageNumber) {

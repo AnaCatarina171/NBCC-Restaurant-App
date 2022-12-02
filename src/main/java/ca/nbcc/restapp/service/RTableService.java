@@ -11,7 +11,7 @@ import ca.nbcc.restapp.repo.RTableJpaRepo;
 @Service
 public class RTableService {
 
-		private RTableJpaRepo tR;;
+		private RTableJpaRepo tR;
 		
 		@Autowired
 		public RTableService(RTableJpaRepo tR) {

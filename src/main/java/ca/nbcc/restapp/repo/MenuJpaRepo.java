@@ -8,4 +8,5 @@ import ca.nbcc.restapp.model.Menu;
 
 public interface MenuJpaRepo extends JpaRepository<Menu, Long>{
 	List<Menu> findByToDisplay(Boolean toDisplay);
+	List<Menu> findByTypeAndToDisplay(String type, boolean toDisplay);
 }

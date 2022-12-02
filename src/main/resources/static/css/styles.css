@@ -1337,9 +1337,12 @@ h4 {
 	padding: 5px;
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 	border-radius: 10px;
-	width: 15em;
+	width: fit-content;
 }
 
+.cart-secondary-content .content-right{
+	margin-left:0.25rem;
+}
 .cart-secondary-title {
 	height: 2.5rem;
 	padding: 5px;
@@ -1735,13 +1738,11 @@ Simple CSS3 Fade-in Animation
 	}
 }
 
-
 .booking-form .submit-btn:hover, .booking-form .submit-btn:focus {
 	opacity: 0.9;
 }
 
 .icon-small {
-
 	border: none;
 	padding: 10px;
 	background-color: transparent;
@@ -1804,11 +1805,13 @@ Simple CSS3 Fade-in Animation
 	padding: 0 1rem;
 	pointer-events: all;
 	position: relative;
+	height:1.5rem;
+	color:black;
 }
 
-.modal-header h2 {
+/*.modal-header h2 {
 	line-height: normal;
-}
+}*/
 
 .modal-content {
 	border-top: solid 1px #e0e0e0;
@@ -1829,14 +1832,10 @@ Simple CSS3 Fade-in Animation
 
 /* Add Animation */
 
-keyframes animatetop {
-	from {left: -300px;
-	opacity: 0
-}
 
-to {
-	left: 0;
-	opacity: 1
+@keyframes animatetop {
+	from {left: -300px;	opacity: 0;}
+	to {left: 0;opacity: 1}
 }
 
 .search {
@@ -1937,6 +1936,10 @@ to {
 .action-link{
 	color:#fff;
 }
+.form-item label{
+	color:#000;
+}
+
 /* Add styles to the form container 
 .form-container {
 	max-width: 300px;

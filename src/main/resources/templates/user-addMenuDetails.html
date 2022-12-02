@@ -58,11 +58,20 @@
 						method="POST" th:object="${menuToPopulate}">
 						<div class="form-item">
 							<label>Title</label> <input type="text" th:field="*{title}"
-								placeholder="Title...">
+								placeholder="Title..." required>
 						</div>
 						<div class="form-item">
 							<label>Description</label> <input type="text"
 								th:field="*{description}" placeholder="Description...">
+						</div>
+						<div class="form-item">
+							<label>Category</label> 
+							<select th:field="*{type}" required>
+							<option value="0" selected hidden>Category</option>
+							<option value="Breakfast">Breakfast</option>
+							<option value="Breakfast">Lunch</option>
+							<option value="Evening">Evening</option>
+							</select>							
 						</div>
 						<button id="btnMenuDetails" class="button-6">Submit</button>
 					</form>
