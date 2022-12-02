@@ -17,19 +17,23 @@
 <body>
 	<div class="admin-page">
 		<div class="user-left-panel">
-			<div class="logo">NBCC 1234 Room</div>
+			<div class="logoAdmin">NBCC 1234 Room</div>
 
 			<div class="user-navigation">
+				<div class="navigation-item">
+					<a th:href="@{/userPanel}" class="nav-link">Home</a>
+				</div>
+				<br>
 				<div class="navigation-item">
 					<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
 				</div>
 				<br>
 				<div class="navigation-item">
-					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
+					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
 				</div>
 				<br>
 				<div class="navigation-item">
-					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
+					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
 				</div>
 				<br>
 				<div class="navigation-item">

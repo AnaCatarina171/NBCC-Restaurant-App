@@ -48,7 +48,7 @@
 					<a th:href="@{/customerReservations}" class="nav-link">Your
 						Reservations</a>
 				</div>
-				<div class="navigation-item ">
+				<div th:if="${#session != null}" class="navigation-item ">
 					<a th:href="@{/userPanel}" class="nav-link">User Panel</a>
 				</div>
 			</div>
@@ -66,7 +66,7 @@
 		<h1 class="firstPageTitle">Home</h1>
 	</div>
 	<div class="main  medium-width">
-		<div class="flex-container margin-top-5 ">
+		<div class="flex-container margin-top-6 ">
 			<div class="content-left">
 				<div th:if="${#session != null}">
 					<h2>
@@ -87,70 +87,43 @@
 			</div>
 		</div>
 		<div class="center-container">
-			<h4>What Do We Offer?</h4>
-			<h2>Every week we feature a unique banquet style 3 course meal
-				inspired in different nationalities and cultures.</h2>
-			<div class="row margin-top-5">
+			<div class="row margin-top-6">
+				<h2 class="titleTopBorder2"></h2>
 				<div class="col-md-4">
-					<h2>Additional Info</h2>
-					<table class="styled-table1">
-							<tbody>
-								<tr>
-									<td>Monday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Tuesday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Wednesday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Thursday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Friday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Saturday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Sunday</td>
-									<td>Closed</td>
-								</tr>
-							</tbody>
-						</table>
+					<h2 class="">Additional Info</h2>
+					<div>
+					<ul class="ulHome">
+						<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+						<li>Sed ut perspiciatis unde omnis iste natus error </li>
+						<li>At vero eos et accusamus et iusto odio dignissimos</li>
+						<li> Aut illo voluptatem hic consectetur alias</li>
+					</ul>
+					</div>
 				</div>
 				<div class="col-md-4 ">
-					<h2>Business Hours</h2>
-
+					<h2 class="">Business Hours</h2>
 					<div class="table-container">
 						<table class="styled-table1">
 							<tbody>
 								<tr>
 									<td>Monday</td>
-									<td>Closed</td>
+									<td>Open</td>
 								</tr>
 								<tr>
 									<td>Tuesday</td>
-									<td>Closed</td>
+									<td>Open</td>
 								</tr>
 								<tr>
 									<td>Wednesday</td>
-									<td>Closed</td>
+									<td>Open</td>
 								</tr>
 								<tr>
 									<td>Thursday</td>
-									<td>Closed</td>
+									<td>Open</td>
 								</tr>
 								<tr>
 									<td>Friday</td>
-									<td>Closed</td>
+									<td>Open</td>
 								</tr>
 								<tr>
 									<td>Saturday</td>
@@ -162,42 +135,12 @@
 								</tr>
 							</tbody>
 						</table>
+						<a class="nav-link" th:href="@{/reservationOptions}">Check Reservation Times*</a>
 					</div>
 				</div>
 				<div class="col-md-4">
-					<h2>Next Events at Dinning Room 1234</h2>
-					<table class="styled-table1">
-							<tbody>
-								<tr>
-									<td>Monday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Tuesday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Wednesday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Thursday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Friday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Saturday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Sunday</td>
-									<td>Closed</td>
-								</tr>
-							</tbody>
-						</table>
+					<h2 class="">Next Events at Dinning Room 1234</h2>
+					<img class="eventsImg" src="img/ukrainFest.jpg">
 				</div>
 			</div>
 
@@ -212,7 +155,7 @@
 		<div class="footer">
 			<div class="row">
 				<a href="https://www.facebook.com/DiningRoom1234/"><i
-					class="fa fa-facebook"></i></a> <a
+					class="fa fa-facebook-square"></i></a> <a
 					href="https://www.instagram.com/nbccmoncton/"><i
 					class="fa fa-instagram"></i></a> <a
 					href="mailto:MO.Hospitality@nbcc.ca"><i class="fa fa-envelope"></i></a>
