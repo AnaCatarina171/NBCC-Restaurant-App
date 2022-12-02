@@ -1,6 +1,7 @@
 package ca.nbcc.restapp.model;
 
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -35,17 +37,17 @@ public class Dish {
 	@Column(name="DISH_CATEGORY")
 	private DishCategory category;
 	
-	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name="FK_MENU_ID")
-	private Menu menu;
+	//@ManyToOne(cascade = CascadeType.MERGE)
+	//@JoinColumn(name="FK_MENU_ID")
+	@ManyToMany(mappedBy="dishList")
+	private Set<Menu> menu;
 
-	public Dish(String name, String description, DishNationality nationality, DishCategory category, Menu menu) {
+	public Dish(String name, String description, DishNationality nationality, DishCategory category) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.nationality = nationality;
 		this.category = category;
-		this.menu = menu;
 	}
 
 	public Dish() {
@@ -93,11 +95,11 @@ public class Dish {
 		this.category = category;
 	}
 
-	public Menu getMenu() {
+	public Set<Menu> getMenuSet() {
 		return menu;
 	}
 
-	public void setMenu(Menu menu) {
+	public void setMenuSet(Set<Menu> menu) {
 		this.menu = menu;
 	}
 

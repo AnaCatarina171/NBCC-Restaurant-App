@@ -1,0 +1,57 @@
+<div id="booking" class="section">
+	<div class="booking-form">
+
+		<div th:if="${menuToCheck.toDisplay}">
+			<div class="form-header">
+				<h1>
+					Menu <span th:text="${menuToCheck.title}"></span> is already being
+					displayed.
+				</h1>
+				<h1>Do you want to stop displaying it now?</h1>
+			</div>
+			<div class="flex-container">
+				<div class="content-left">
+					<a th:href="@{/stopDisplayingMenu/{mId}(mId = ${menuToCheck.id})}"
+						class="button-6">Stop Displaying</a>
+				</div>
+
+				<div class="content-right">
+					<a th:href="@{/keepDisplayingMenu/{mId}(mId = ${menuToCheck.id})}"
+						class="button-6">Keep Displaying</a>
+				</div>
+			</div>
+		</div>
+		<div th:unless="${menuToCheck.toDisplay}">
+			<div class="form-header">
+				<h1>
+					Are you sure you want to display menu <span
+						th:text="${menuToCheck.title}"></span>?
+				</h1>
+			</div>
+			<div class="flex-container">
+				<div class="content-left">
+					<form th:action="@{/startDisplayingMenu}" method="POST">
+						<input type="text" th:value="${menuToCheck.id}" name="menuId"
+							hidden> <input type="submit" value="Display it."
+							class="button-6">
+					</form>
+				</div>
+
+				<div class="content-right">
+					<form th:action="@{/cancelDisplayMenu}" method="POST">
+						<input type="text" th:value="${menuToCheck.id}" name="menuId"
+							hidden> <input type="submit" value="Cancel."
+							class="button-6">
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<button type="button" class="close" data-dismiss="modal"
+			aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+
+
+</div>
