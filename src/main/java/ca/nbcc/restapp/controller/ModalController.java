@@ -112,4 +112,28 @@ public class ModalController {
 		
     	return "modal-table-floor-plan";
     }
+    
+    @GetMapping("setBreakfast")
+    public String showBreakfastMenusList(Model model) {
+    	List<Menu> breakfastMenus = ms.getAllBreakfastMenu();
+    	model.addAttribute("menus",breakfastMenus);
+    	model.addAttribute("menuCategory", "Breakfast");
+    	return "modal-SetMenu";
+    }
+    
+    @GetMapping("setLunch")
+    public String showLunchMenusList(Model model) {
+    	List<Menu> lunchMenus = ms.getAllLunchMenu();
+    	model.addAttribute("menus",lunchMenus);
+    	model.addAttribute("menuCategory", "Breakfast");
+    	return "modal-SetMenu";
+    }
+    
+    @GetMapping("setEvening")
+    public String showEveningMenusList(Model model) {
+    	List<Menu> eveningMenus = ms.getAllEveningMenu();
+    	model.addAttribute("menus",eveningMenus);
+    	model.addAttribute("menuCategory", "Breakfast");
+    	return "modal-SetMenu";
+    }
 }
