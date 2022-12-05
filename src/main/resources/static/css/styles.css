@@ -218,7 +218,12 @@ body {
 
 .logoAdmin {
 	text-align: center;
-	width: 180px;
+	width: 100px;
+}
+
+.logoAdmin2 {
+	text-align: center;
+	width: 150px;
 }
 
 .navigation {
@@ -458,6 +463,10 @@ img {
 	text-align: center;
 }
 
+.alignRightBtn{
+	text-align: right;
+}
+
 .ulAboutUs {
 	text-align: center;
 	list-style-type: none;
@@ -695,16 +704,16 @@ table tr:last-child td:last-child {
 }
 
 .search-container .flex-space-around {
-	background-color: #cbb1ba;
+	background-color: rgba(117, 87, 57, 1);
 }
 
 .search-form input[type=text], .search-form input[type=number] {
 	padding: 5px;
 	font-size: 1.2em;
-	border: 1px solid #cbb1ba;
+	border: 1px solid rgba(117, 87, 57, 1);
 	float: left;
 	width: 70%;
-	background: #f7f2f3;
+	background: rgba(255, 241, 228, 1);
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
 }
@@ -713,10 +722,10 @@ table tr:last-child td:last-child {
 	float: left;
 	width: 30%;
 	padding: 5px;
-	background: #a27383;
+	background: rgba(157, 121, 86, 1);
 	color: white;
 	font-size: 1.2em;
-	border: 1px solid grey;
+	border: 1px solid rgba(117, 87, 57, 1);
 	border-left: none;
 	cursor: pointer;
 	transition: 0.3s;
@@ -725,7 +734,7 @@ table tr:last-child td:last-child {
 }
 
 .search-form input[type=submit]:hover {
-	background-color: #79515f;
+	background-color: rgba(117, 87, 57, 1);
 }
 
 .search-container-s {
@@ -740,7 +749,7 @@ table tr:last-child td:last-child {
 .order-form input[type=submit] {
 	float: left;
 	padding: 5px;
-	background: #a27383;
+	background: rgba(157, 121, 86, 1);
 	color: white;
 	font-size: 1.1em;
 	border: 1px solid grey;
@@ -750,7 +759,7 @@ table tr:last-child td:last-child {
 }
 
 .order-form input[type=submit]:hover {
-	background-color: #79515f;
+	background-color: rgba(117, 87, 57, 1);
 }
 
 .order-content-header {
@@ -799,7 +808,7 @@ table tr:last-child td:last-child {
 }
 
 .booking-form {
-	position: relative;
+	/*position: relative;*/
 	width: 100%;
 	margin: auto;
 	padding: 40px;
@@ -934,8 +943,8 @@ h4 {
 }
 
 .selectStatus {
-	background-color: rgba(188, 124, 124, 1) !important;
-	border: 2px solid rgba(112, 0, 0, 1) !important;
+	background-color: rgba(201, 133, 65, 1) !important;
+	border: 2px solid rgba(111, 61, 12, 1) !important;
 	cursor: pointer;
 }
 
@@ -988,7 +997,7 @@ h4 {
 
 .booking-form .submit-btn2 {
 	color: #fff;
-	background-color: rgba(125, 42, 42, 1);
+	background-color: rgba(111, 61, 12, 1);
 	cursor: pointer;
 	font-weight: 700;
 	height: 60px;
@@ -1262,13 +1271,14 @@ h4 {
 	top: 0;
 	left: 0;
 	height: 100%;
-	background-color: rgba(131, 88, 88, 1);
-	width: 15%;
+	background-color: #000;
+	width: 13%;
+	min-width: 13em !important;
 	padding: 1rem;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
 }
 
 .admin-page .logo {
@@ -1277,27 +1287,28 @@ h4 {
 
 .admin-page .navigation-item {
 	margin-left: 0;
+	margin-bottom: 0.7em;
 }
 
 .admin-page .user-navigation {
-	border-top: solid 2px #000;
+	border-top: solid 2px #4b4b4b;
 	padding-top: 20px;
 }
 
 .admin-page .main {
-	position: fixed;
-	top: 0;
+	/*position: fixed;
+	top: 0;*/
 	overflow: auto;
-	margin-left: 15%;
-	width: 85%;
-	height: 100%;
+	margin-left: 13%;
+	width: 87%;
+	height: 100vh !important;
 	background-color: rgba(22, 22, 22, 1);
 }
 
 .admin-page .main .top-information {
 	height: 50px;
 	padding: 5px;
-	background-color: rgba(22, 22, 22, 1);
+	background-color: rgba(22, 22, 22, 1);;
 	border-bottom: 1px solid grey;
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 15px;
 }
@@ -1324,16 +1335,22 @@ h4 {
 }
 
 .cart-primary-content {
+	width: 100%;
 	padding: 25px;
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10px;
 }
 
+.no-flex{
+	display: inline-block;
+	text-align: center;
+}
+
 .cart-secondary {
 	background-color: #c0c0c0;
 	color: #000;
-	width: 14em;
+	width: 14em ;
 	padding: 5px;
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 	border-radius: 10px;
@@ -1384,8 +1401,8 @@ h4 {
 
 /* BASIC */
 .loginBody {
-	background: linear-gradient(rgba(0, 0, 0, 0.67), rgba(0, 0, 0, 0.67)),
-		url("../img/nbcc-bulding.jpg");
+	background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+		url("../img/world-food.jpg");
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -1656,7 +1673,9 @@ Simple CSS3 Fade-in Animation
 }
 
 .footerPanel {
+	margin-top: 3em;
 	min-height: 6em;
+	background: #303030;
 }
 
 .footer .row {
@@ -1820,9 +1839,13 @@ Simple CSS3 Fade-in Animation
 	padding: 20px;
 	border-bottom-left-radius: 1rem;
 	border-bottom-right-radius: 1rem;
-	display: flex;
+	/*display: flex;
 	justify-content: center;
-	gap: 0;
+	gap: 0;*/
+}
+
+.height-4{
+	height: 4em;
 }
 
 .form-actions {

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,35 +16,37 @@
 	crossorigin="anonymous"></script>
 <title>RESTO-APP</title>
 </head>
-
 <body>
 	<div class="admin-page">
 		<div class="user-left-panel">
-			<div class="logoAdmin">NBCC 1234 Room</div>
-
-			<div class="user-navigation">
+			<div class="logoAdmin">
+				<img src="img/NBCC-white-simple.png">
+			</div>
+			<div>
+				<div class="logoAdmin2">
+					<img src="img/dinning-logo2.png">
+				</div>
+				<div class="user-navigation">
 				<div class="navigation-item">
 					<a th:href="@{/userPanel}" class="nav-link">Home</a>
 				</div>
-				<br>
 				<div class="navigation-item">
 					<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
 				</div>
-				<br>
 				<div class="navigation-item">
 					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
 				</div>
-				<br>
 				<div class="navigation-item">
 					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
 				</div>
-				<br>
 				<div class="navigation-item">
 					<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
 				</div>
 			</div>
+			</div>
+			<div></div>
 		</div>
-
+		
 		<div class="main">
 			<div class="top-information center">USER INFORMATION</div>
 			<div class="content">
@@ -57,27 +58,18 @@
 				<div class="cart-primary">
 					<div class="cart-primary-title">Past Menus</div>
 					<div class="cart-primary-content">
-
 						<div th:each="menu : ${allMenus}" class="cart-secondary">
-							<div class="cart-secondary-title" th:text="${menu.title}"></div>
-							<div class="cart-secondary-content">
-								<div class="content-left">
-									Served From - To : <br> Total Items: 15 <br> Last
-									Modified: <span th:text="${menu.date}"></span>
 							<div class="cart-secondary-title flex-container-top-right-header">
 								<div>
 									<h3 th:text="${menu.title}"></h3>
 								</div>
 								<div>
-
 									<form th:action="@{/toDeleteMenu}" method="GET">
 										<input type="text" name="menuId" hidden th:value="${menu.id}">
 										<button class="icon-small">
 											<i class="fa-solid fa-trash"></i>
 										</button>
 									</form>
-
-
 								</div>
 							</div>
 							<div class="cart-secondary-content">
@@ -92,7 +84,6 @@
 											data-target="#displayMenu"
 											th:attr="data-object-id=''+${menu.id}+'', data-object-name=''+${menu.id}+'', data-target='#displayMenu'"
 											value="Hide">
-
 										<th:block th:replace="_modals :: modal('displayMenu')">modal</th:block>
 									</div>
 									<div th:unless="${menu.toDisplay}">
@@ -100,31 +91,19 @@
 											data-target="#displayMenu"
 											th:attr="data-object-id=''+${menu.id}+'', data-object-name=''+${menu.id}+'', data-target='#displayMenu'"
 											value="Display">
-
 										<th:block th:replace="_modals :: modal('displayMenu')">modal</th:block>
 									</div>
-
 									<a th:href="@{/recallMenu/{mId}(mId=${menu.id})}"
 										class="button-6">Recall</a>
 								</div>
 							</div>
 						</div>
 					</div>
-
 				</div>
-			</div>
-			<div class="footer footerPanel">
-				<div class="row">
-					<div class="col-md-12">© Copyright 2022. All Rights Reserved.
-						|| Designed By: DevAtlantics - Ana Silva & Jose Silva</div>
-				</div>
-			</div>
-
 				<div class="cart-primary">
 					<div class="cart-primary-title">Displaying Menus</div>
 					<div class="cart-primary-content">
 						<div class="grid-3-columns">
-
 							<div class="col-md-4">
 								<h2>Breakfast Menu</h2>
 								<div th:if="${breakfastMenu} == null">
@@ -165,7 +144,6 @@
 										</tbody>
 									</table>
 								</div>
-
 							</div>
 							<div class="col-md-4 ">
 								<h2>Lunch Menu</h2>
@@ -208,7 +186,6 @@
 											</tbody>
 										</table>
 									</div>
-
 								</div>
 							</div>
 							<div class="col-md-4">
@@ -218,7 +195,6 @@
 									<button class="button-6">Display Menu</button>
 								</div>
 								<div th:unless="${eveningMenu} == null">
-
 									<table class="styled-table1">
 										<tbody>
 											<tr>
@@ -251,54 +227,50 @@
 											</tr>
 										</tbody>
 									</table>
-
 								</div>
 							</div>
 						</div>
-
 					</div>
-
 				</div>
-
-				<!-- 				<div class="modal-container" id="displayMenuModal">
-					<div class="modal-wrapper">
-						<div class="modal-content">
-							<!-- 
-							<h2> Are you sure you want to display the menu <span th:text="${menuToDisplay.title}"></span>?</h2>
-							<form th:action="@{/processDisplayMenu}" method="POST"
-								class="form-container">
-								
-							</form>
-						</div>
-						<div class="modal-footer"></div>
-					</div>
-	ss
-						</div>
-
-						<div class="footer"></div>
-					</div>
+				<!--                <div class="modal-container" id="displayMenuModal">
+                    <div class="modal-wrapper">
+                        <div class="modal-content">
+                            <!-- 
+                            <h2> Are you sure you want to display the menu <span th:text="${menuToDisplay.title}"></span>?</h2>
+                            <form th:action="@{/processDisplayMenu}" method="POST"
+                                class="form-container">
+                            </form>
+                        </div>
+                        <div class="modal-footer"></div>
+                    </div>
+    ss
+                        </div>
+                        <div class="footer"></div>
+                    </div>
 -->
 			</div>
-			<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-			<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-			<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-
-			<script th:inline="javascript">
-				/*<![CDATA[*/
-
-				$('#displayMenu').on(
-						'show.bs.modal',
-						function(event) {
-							var button = $(event.relatedTarget);
-							var menuId = button.data('object-name');
-							console.log(menuId);
-							$.get("/modals/display-menu?menuId=" + menuId,
-									function(data) {
-										$('#displayMenu').find('.modal-body')
-												.html(data);
-									})
-						})
-				/*]]>*/
-			</script>
+			<div class="footer footerPanel">
+				<div class="row">
+					<div class="col-md-12">© Copyright 2022. All Rights Reserved.
+						|| Designed By: DevAtlantics - Ana Silva & Jose Silva</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		$('#displayMenu').on('show.bs.modal', function(event) {
+			var button = $(event.relatedTarget);
+			var menuId = button.data('object-name');
+			console.log(menuId);
+			$.get("/modals/display-menu?menuId=" + menuId, function(data) {
+				$('#displayMenu').find('.modal-body').html(data);
+			})
+		})
+		/*]]>*/
+	</script>
 </body>
 </html>

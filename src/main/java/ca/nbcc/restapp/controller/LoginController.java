@@ -76,7 +76,7 @@ public class LoginController {
 		  
 		  return "login2"; }
 		 
-		return "index";
+		return "redirect:/userPanel";
 	}
 
 	// click a link to LOG IN
@@ -98,7 +98,7 @@ public class LoginController {
 					request.getSession().setAttribute("CURRENT_USER", currentEmp.getUsername());
 
 					model.addAttribute("emp", currentEmp);
-					return "index";
+					return "redirect:/userPanel";
 				}
 			}
 			error = "1";

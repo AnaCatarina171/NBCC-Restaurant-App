@@ -341,17 +341,18 @@ public class ReservationController {
 
 				Date resDate = res.getDate();
 				LocalDate resLocalDate = resDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
+				
 				LocalDate today = LocalDate.now();
-
+				
 				LocalDate monday = today;
 
 				do {
 					monday = monday.plusDays(1);
 				} while (monday.getDayOfWeek() != DayOfWeek.MONDAY);
 
-				if ((resLocalDate.isEqual(today) || resLocalDate.isAfter(today)) && resLocalDate.isBefore(monday)) {
+				if ((resLocalDate.isEqual(today) || (resLocalDate.isAfter(today)) && resLocalDate.isBefore(monday))) {
 					weekReservations.add(res);
+					System.out.println(today);
 				}
 			}
 		}
@@ -401,6 +402,8 @@ public class ReservationController {
 					resDateList.add(r);
 				}
 			}
+			
+			ReservationTimes currentPeriod = rTS.findReservationTByTime(rToEdit.getTime());
 
 			//Adding Tables - Too much code for now (will try to reduce later)
 			RTable t10 = tS.findRTableByNumber((long)10);
@@ -433,72 +436,74 @@ public class ReservationController {
 			int t52ResToday = 0;
 			
 			for (var tR : t10.getReservations()) {
-				if(tR.getDate().equals(rToEdit.getDate())) {
+				if(tR.getDate().equals(rToEdit.getDate()) 
+						&& isSameResPeriod(tR.getTime(), currentPeriod)) {
+					
 					t10ResToday = 1;
 				}
 			}
 			for (var tR : t11.getReservations()) {
-				if(tR.getDate().equals(rToEdit.getDate())) {
+				if(tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
 					t11ResToday = 1;
 				}
 			}
 			for (var tR : t12.getReservations()) {
-				if(tR.getDate().equals(rToEdit.getDate())) {
+				if(tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
 					t12ResToday = 1;
 				}
 			}
 			for (var tR : t40.getReservations()) {
-				if(tR.getDate().equals(rToEdit.getDate())) {
+				if(tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
 					t40ResToday = 1;
 				}
 			}
 			for (var tR : t41.getReservations()) {
-				if(tR.getDate().equals(rToEdit.getDate())) {
+				if(tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
 					t41ResToday = 1;
 				}
 			}
 			for (var tR : t42.getReservations()) {
-				if(tR.getDate().equals(rToEdit.getDate())) {
+				if(tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
 					t42ResToday = 1;
 				}
 			}
 			for (var tR : t43.getReservations()) {
-				if(tR.getDate().equals(rToEdit.getDate())) {
+				if(tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
 					t43ResToday = 1;
 				}
 			}
 			for (var tR : t20.getReservations()) {
-				if(tR.getDate().equals(rToEdit.getDate())) {
+				if(tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
 					t20ResToday = 1;
 				}
 			}
 			for (var tR : t21.getReservations()) {
-				if(tR.getDate().equals(rToEdit.getDate())) {
+				if(tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
 					t21ResToday = 1;
 				}
 			}
 			for (var tR : t22.getReservations()) {
-				if(tR.getDate().equals(rToEdit.getDate())) {
+				if(tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
 					t22ResToday = 1;
 				}
 			}
 			for (var tR : t30.getReservations()) {
-				if(tR.getDate().equals(rToEdit.getDate())) {
+				if(tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
 					t30ResToday = 1;
 				}
 			}
 			for (var tR : t50.getReservations()) {
-				if(tR.getDate().equals(rToEdit.getDate())) {
+				if(tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
 					t50ResToday = 1;
 				}
 			}
 			for (var tR : t51.getReservations()) {
-				if(tR.getDate().equals(rToEdit.getDate())) {
+				if(tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
 					t51ResToday = 1;
 				}
 			}
 			for (var tR : t52.getReservations()) {
-				if(tR.getDate().equals(rToEdit.getDate())) {
+				if(tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
 					t52ResToday = 1;
 				}
 			}
@@ -506,6 +511,7 @@ public class ReservationController {
 			model.addAttribute("statusList", ReservationStatus.values());
 			model.addAttribute("rToEdit", rToEdit);			
 			model.addAttribute("resDateList", resDateList);
+			model.addAttribute("currentPeriod", currentPeriod);
 			
 			model.addAttribute("t10ResToday", t10ResToday);
 			model.addAttribute("t11ResToday", t11ResToday);
@@ -582,7 +588,7 @@ public class ReservationController {
 				+ ". \n\nGo to /DinningRoom123.ca/pendedReservations to analyze this request.";
 
 		// Sending email
-		// sendEmail(subject, message, email);
+		sendEmail(subject, message, email);
 
 		model.addAttribute("addedReservation", addedReservation);
 
@@ -601,7 +607,7 @@ public class ReservationController {
 		return "redirect:/toReservationAdmin";
 	}
 
-	void sendEmail(String subject, String message, String email) {
+	private void sendEmail(String subject, String message, String email) {
 
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setTo(email);
@@ -611,5 +617,15 @@ public class ReservationController {
 
 		javaMailSender.send(msg);
 
+	}
+	
+	private boolean isSameResPeriod(String time, ReservationTimes currentPeriod) throws Exception {
+		
+		ReservationTimes newPeriod = rTS.findReservationTByTime(time);
+		
+		if(currentPeriod.getResGroup().equals(newPeriod.getResGroup()))
+			return true;
+		
+		return false;
 	}
 }

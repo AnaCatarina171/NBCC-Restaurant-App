@@ -45,15 +45,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
 						Reservation </a>
 				</div>
 				<div th:if="${#session != null}" class="navigation-item ">
-					<a th:href="@{/userPanel}" class="nav-link">User Panel</a>
+					<a th:href="@{/userPanel}" class=" button-6">Staff Panel</a>
 				</div>
 			</div>
 
 			<div th:if="${#session == null}" class="">
-				<a th:href="@{/goToLogin}" class="button-6">Sign In</a>
+				<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
 			</div>
 			<div th:if="${#session != null}" class="">
-				<a th:href="@{/goToLogout}" class="button-6">Sign Out</a>
+				<a th:href="@{/goToLogout}" class="button-6 cancelBtn">Sign Out</a>
 			</div>
 		</div>
 		<!-- 

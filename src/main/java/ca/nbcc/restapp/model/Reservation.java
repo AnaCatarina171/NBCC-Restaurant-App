@@ -32,6 +32,7 @@ public class Reservation {
 	private Date date;
 	
 	@Column(name="RES_TIME")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private String time;
 	
 	@Column(name="RES_GUESTS")
