@@ -54,7 +54,7 @@ public class MenuService {
 	}
 	
 	public List<Menu> getAllBreakfastMenu(){
-		return mRepo.findByTypeAndToDisplay("Breakfast", true);
+		return mRepo.findByType("Breakfast");
 	}
 	
 	public Menu getBreakfastMenu() {
@@ -68,7 +68,7 @@ public class MenuService {
 		
 	}
 	public List<Menu> getAllLunchMenu(){
-		return mRepo.findByTypeAndToDisplay("Lunch", true);
+		return mRepo.findByType("Lunch");
 	}
 	
 	public Menu getLunchMenu() {
@@ -81,7 +81,7 @@ public class MenuService {
 	}
 
 	public List<Menu> getAllEveningMenu(){
-		return mRepo.findByTypeAndToDisplay("Evening", true);
+		return mRepo.findByType("Evening");
 	}
 	
 	public Menu getEveningMenu() {
