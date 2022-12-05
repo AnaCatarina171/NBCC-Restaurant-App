@@ -1833,10 +1833,12 @@ Simple CSS3 Fade-in Animation
 
 /* Add Animation */
 
+
 @keyframes animatetop {
 	from {left: -300px;	opacity: 0;}
 	to {left: 0;opacity: 1}
 }
+
 .search {
 	width: 300px;
 	height: 40px;

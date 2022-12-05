@@ -14,12 +14,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 import ca.nbcc.restapp.model.Menu;
 import ca.nbcc.restapp.model.Reservation;
 import ca.nbcc.restapp.service.MenuService;
+
 import ca.nbcc.restapp.model.RTable;
 import ca.nbcc.restapp.model.Reservation;
 import ca.nbcc.restapp.service.RTableService;
+
 import ca.nbcc.restapp.service.ReservationService;
 
 @Controller
@@ -78,6 +81,7 @@ public class ModalController {
     	return "modal-reservation-table";
     }
     
+
     @GetMapping("display-menu")
     public String goToModalMenuDisplay(Model model, @RequestParam("menuId") long menuId) {
     	Menu menuToCheck = ms.getMenuById(menuId);
@@ -87,6 +91,7 @@ public class ModalController {
     	return "modal-menuDisplay";
     }
     
+
     @GetMapping("show-table-res")
     public String goToTableToRes(@RequestParam("table") String table,  Model model) throws Exception {
     	
@@ -136,4 +141,5 @@ public class ModalController {
     	model.addAttribute("menuCategory", "Breakfast");
     	return "modal-SetMenu";
     }
+
 }
