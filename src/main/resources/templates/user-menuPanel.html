@@ -79,6 +79,7 @@
 									Last Modified: <span th:text="${menu.date}"></span>
 								</div>
 								<div class="content-right flex-container-2">
+									<!-- 
 									<div th:if="${menu.toDisplay}">
 										<input type="button" class="button-6" data-toggle="modal"
 											data-target="#displayMenu"
@@ -86,6 +87,7 @@
 											value="Hide">
 										<th:block th:replace="_modals :: modal('displayMenu')">modal</th:block>
 									</div>
+									 
 									<div th:unless="${menu.toDisplay}">
 										<input type="button" class="button-6" data-toggle="modal"
 											data-target="#displayMenu"
@@ -93,22 +95,28 @@
 											value="Display">
 										<th:block th:replace="_modals :: modal('displayMenu')">modal</th:block>
 									</div>
+ 									-->
 									<a th:href="@{/recallMenu/{mId}(mId=${menu.id})}"
-										class="button-6">Recall</a>
+										class="button-6">View/Edit</a>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="cart-primary">
-					<div class="cart-primary-title">Displaying Menus</div>
+					<div class="cart-primary-title">Featured Menus</div>
 					<div class="cart-primary-content">
 						<div class="grid-3-columns">
 							<div class="col-md-4">
 								<h2>Breakfast Menu</h2>
 								<div th:if="${breakfastMenu} == null">
 									<h3>No breakfast menu to display yet.</h3>
-									<button class="button-6">Display Menu</button>
+									<input type="button" class="button-6" data-toggle="modal"
+										data-target="#setBreakfast"
+										th:attr="data-object-id='', data-object-name='', data-target='#setBreakfast'"
+										value="Feature Menu">
+
+									<th:block th:replace="_modals :: modal('setBreakfast')">modal</th:block>
 								</div>
 								<div th:unless="${breakfastMenu} == null">
 									<table class="styled-table1">
@@ -149,40 +157,30 @@
 								<h2>Lunch Menu</h2>
 								<div th:if="${lunchMenu} == null">
 									<h3>No lunch menu to display yet.</h3>
-									<button class="button-6">Display Menu</button>
+									<input type="button" class="button-6" data-toggle="modal"
+										data-target="#setLunch"
+										th:attr="data-object-id='', data-object-name='', data-target='#setLunch'"
+										value="Feature Menu">
+
+									<th:block th:replace="_modals :: modal('setLunch')">modal</th:block>
 								</div>
 								<div th:unless="${lunchMenu} == null">
 									<div class="table-container">
 										<table class="styled-table1">
 											<tbody>
 												<tr>
-													<td>Monday</td>
-													<td>Closed</td>
+													<td>Menu Title</td>
 												</tr>
 												<tr>
-													<td>Tuesday</td>
-													<td>Closed</td>
+													<td th:text="${lunchMenu.title}"></td>
 												</tr>
 												<tr>
-													<td>Wednesday</td>
-													<td>Closed</td>
+													<td>Dish List</td>
 												</tr>
-												<tr>
-													<td>Thursday</td>
-													<td>Closed</td>
-												</tr>
-												<tr>
-													<td>Friday</td>
-													<td>Closed</td>
-												</tr>
-												<tr>
-													<td>Saturday</td>
-													<td>Closed</td>
-												</tr>
-												<tr>
-													<td>Sunday</td>
-													<td>Closed</td>
-												</tr>
+												<tr th:each="dish : ${lunchMenu.getDishList()}">
+													<td th:text="${dish.name}"></td>
+													<td th:text="${dish.Nationality}"></td>
+												</tr>												
 											</tbody>
 										</table>
 									</div>
@@ -192,7 +190,12 @@
 								<h2>Evening Menu</h2>
 								<div th:if="${eveningMenu} == null">
 									<h3>No evening menu to display yet.</h3>
-									<button class="button-6">Display Menu</button>
+									<input type="button" class="button-6" data-toggle="modal"
+										data-target="#setEvening"
+										th:attr="data-object-id='', data-object-name='', data-target='#setEvening'"
+										value="Feature Menu">
+
+									<th:block th:replace="_modals :: modal('setEvening')">modal</th:block>
 								</div>
 								<div th:unless="${eveningMenu} == null">
 									<table class="styled-table1">
@@ -249,28 +252,45 @@
                     </div>
 -->
 			</div>
-			<div class="footer footerPanel">
-				<div class="row">
-					<div class="col-md-12">© Copyright 2022. All Rights Reserved.
-						|| Designed By: DevAtlantics - Ana Silva & Jose Silva</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-	<script th:inline="javascript">
-		/*<![CDATA[*/
-		$('#displayMenu').on('show.bs.modal', function(event) {
-			var button = $(event.relatedTarget);
-			var menuId = button.data('object-name');
-			console.log(menuId);
-			$.get("/modals/display-menu?menuId=" + menuId, function(data) {
-				$('#displayMenu').find('.modal-body').html(data);
-			})
-		})
-		/*]]>*/
-	</script>
+			<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+			<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+			<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+			<script th:inline="javascript">
+				/*<![CDATA[*/
+
+				$('#displayMenu').on(
+						'show.bs.modal',
+						function(event) {
+							var button = $(event.relatedTarget);
+							var menuId = button.data('object-name');
+							console.log(menuId);
+							$.get("/modals/display-menu?menuId=" + menuId,
+									function(data) {
+										$('#displayMenu').find('.modal-body')
+												.html(data);
+									})
+						})
+				$('#setBreakfast').on('show.bs.modal', function(event) {
+					var button = $(event.relatedTarget);
+					$.get("/modals/setBreakfast", function(data) {
+						$('#setBreakfast').find('.modal-body').html(data);
+					})
+				})
+				$('#setLunch').on('show.bs.modal', function(event) {
+					var button = $(event.relatedTarget);
+					$.get("/modals/setLunch", function(data) {
+						$('#setLunch').find('.modal-body').html(data);
+					})
+				})
+				$('#setEvening').on('show.bs.modal', function(event) {
+					var button = $(event.relatedTarget);
+					$.get("/modals/setEvening", function(data) {
+						$('#setEvening').find('.modal-body').html(data);
+					})
+				})
+
+				/*]]>*/
+			</script>
 </body>
 </html>
