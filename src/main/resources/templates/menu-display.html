@@ -42,20 +42,16 @@
 					<a th:href="@{/reservationOptions}" class="nav-link"> Book a
 						Reservation </a>
 				</div>
-				<div th:if="${#session != null}" class="navigation-item">
-					<a th:href="@{/customerReservations}" class="nav-link">Your
-						Reservations</a>
-				</div>
-				<div class="navigation-item ">
-					<a th:href="@{/userPanel}" class="nav-link">User Panel</a>
+				<div th:if="${#session != null}" class="navigation-item ">
+					<a th:href="@{/userPanel}" class=" button-6">Staff Panel</a>
 				</div>
 			</div>
 
 			<div th:if="${#session == null}" class="">
-				<a th:href="@{/goToLogin}" class="button-6">Sign In</a>
+				<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
 			</div>
 			<div th:if="${#session != null}" class="">
-				<a th:href="@{/goToLogout}" class="button-6">Sign Out</a>
+				<a th:href="@{/goToLogout}" class="button-6 cancelBtn">Sign Out</a>
 			</div>
 		</div>
 	</div>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ca.nbcc.restapp.model.Menu;
 import ca.nbcc.restapp.model.Reservation;
+import ca.nbcc.restapp.model.ReservationTimes;
 import ca.nbcc.restapp.service.MenuService;
 
 import ca.nbcc.restapp.model.RTable;
@@ -24,6 +25,7 @@ import ca.nbcc.restapp.model.Reservation;
 import ca.nbcc.restapp.service.RTableService;
 
 import ca.nbcc.restapp.service.ReservationService;
+import ca.nbcc.restapp.service.ReservationTimeService;
 
 @Controller
 @RequestMapping("modals")
@@ -32,13 +34,16 @@ public class ModalController {
 	private ReservationService rS;
 	private MenuService ms;
 	private RTableService tS;
-
+	private ReservationTimeService rTS;
+	
 	@Autowired
-    public ModalController(ReservationService rS, MenuService ms, RTableService tS) {
+    public ModalController(ReservationService rS, MenuService ms, RTableService tS, ReservationTimeService rTS) {
+
 		super();
 		this.rS = rS;
 		this.ms = ms;
 		this.tS = tS;
+		this.rTS = rTS;
 	}
 	
 
@@ -59,7 +64,10 @@ public class ModalController {
     }
     
     @GetMapping("add-table-to-res")
-    public String goToAddTableToRes(@RequestParam("table") String table, @RequestParam("resNumber") Long resNumber,  Model model) throws Exception {
+    public String goToAddTableToRes(@RequestParam("table") String table, @RequestParam("resNumber") Long resNumber, 
+    		@RequestParam("currentPeriod") Long currentPeriod, Model model) throws Exception {
+    	
+    	ReservationTimes currentPeriodObj = rTS.findReservationById(currentPeriod);
     	
     	Integer tableNumber = Integer.parseInt(table);
     	RTable currentTable = tS.findRTableByNumber((long)tableNumber);
@@ -70,10 +78,17 @@ public class ModalController {
     	for (var res : currentTable.getReservations()) {
     		
     		if(res.getDate().equals(reservation.getDate())) {
-    			resOnSameTableSameDay.add(res);
+    			
+    			ReservationTimes newPeriod = rTS.findReservationTByTime(res.getTime());
+    			
+    			if(currentPeriodObj.getResGroup().equals(newPeriod.getResGroup())) {
+    				
+    				resOnSameTableSameDay.add(res);
+    			}
     		}
     	}
     	
+    	model.addAttribute("currentPeriod", currentPeriodObj);
     	model.addAttribute("tableNumber", tableNumber);
 		model.addAttribute("rToEdit", reservation);
 		model.addAttribute("resSameDate", resOnSameTableSameDay);
@@ -93,7 +108,7 @@ public class ModalController {
     
 
     @GetMapping("show-table-res")
-    public String goToTableToRes(@RequestParam("table") String table,  Model model) throws Exception {
+    public String goToTableToRes(@RequestParam("table") String table, Model model) throws Exception {
     	
     	Integer tableNumber = Integer.parseInt(table);
     	RTable currentTable = tS.findRTableByNumber((long)tableNumber);

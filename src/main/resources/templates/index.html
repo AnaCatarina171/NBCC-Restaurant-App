@@ -42,20 +42,16 @@
 					<a th:href="@{/reservationOptions}" class="nav-link"> Book a
 						Reservation </a>
 				</div>
-				<div th:if="${#session != null}" class="navigation-item">
-					<a th:href="@{/customerReservations}" class="nav-link">Your
-						Reservations</a>
-				</div>
-				<div  class="navigation-item ">
-					<a th:href="@{/userPanel}" class="nav-link">User Panel</a>
+				<div th:if="${#session != null}" class="navigation-item ">
+					<a th:href="@{/userPanel}" class=" button-6">Staff Panel</a>
 				</div>
 			</div>
 
 			<div th:if="${#session == null}" class="">
-				<a th:href="@{/goToLogin}" class="button-6">Sign In</a>
+				<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
 			</div>
 			<div th:if="${#session != null}" class="">
-				<a th:href="@{/goToLogout}" class="button-6">Sign Out</a>
+				<a th:href="@{/goToLogout}" class="button-6 cancelBtn">Sign Out</a>
 			</div>
 		</div>
 	</div>
@@ -67,7 +63,7 @@
 		<div class="flex-container margin-top-6 ">
 			<div class="content-left">
 				<div th:if="${#session != null}">
-					<h2>
+					<h2 class="titleSmall">
 						Hi, <span th:text="${#session.getAttribute('CURRENT_USER')}"></span>
 					</h2>
 				</div>
@@ -88,7 +84,7 @@
 			<div class="row margin-top-6">
 				<h2 class="titleTopBorder2"></h2>
 				<div class="col-md-4">
-					<h2 class="">Additional Info</h2>
+					<h2 class="">Additional Information</h2>
 					<div>
 					<ul class="ulHome">
 						<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
@@ -150,7 +146,7 @@
 	</div>
 
 	<footer>
-		<div class="footer">
+		<div class="footer margin-top-5">
 			<div class="row">
 				<a href="https://www.facebook.com/DiningRoom1234/"><i
 					class="fa fa-facebook-square"></i></a> <a
@@ -187,10 +183,11 @@
 			<div class="row">
 				<div class="col-md-12">
 					<ul>
-						<li><a href="#">About Us</a></li>
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Reservations</a></li>
+						<li><a th:href="@{/toAboutUs}">About Us</a></li>
+						<li><a th:href="@{/toCustomerView}">Home</a></li>
+						<li><a th:href="@{/reservationOptions}">Reservations</a></li>
 						<li><a href="#">Privacy Policy</a></li>
+					</ul>
 					</ul>
 				</div>
 			</div>

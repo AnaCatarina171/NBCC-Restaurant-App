@@ -18,44 +18,47 @@
 <body>
 	<div class="admin-page">
 		<div class="user-left-panel">
-			<div class="logoAdmin">NBCC 1234 Room</div>
-
-			<div class="user-navigation">
+			<div class="logoAdmin">
+				<img src="img/NBCC-white-simple.png">
+			</div>
+			<div>
+				<div class="logoAdmin2">
+					<img src="img/dinning-logo2.png">
+				</div>
+				<div class="user-navigation">
 				<div class="navigation-item">
 					<a th:href="@{/userPanel}" class="nav-link">Home</a>
 				</div>
-				<br>
 				<div class="navigation-item">
 					<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
 				</div>
-				<br>
 				<div class="navigation-item">
 					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
 				</div>
-				<br>
 				<div class="navigation-item">
 					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
 				</div>
-				<br>
 				<div class="navigation-item">
 					<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
 				</div>
 			</div>
+			</div>
+			<div></div>
 		</div>
 
 		<div class="main">
 			<div class="top-information center">USER INFORMATION</div>
 			<div class="content">
 				<div class="user-actions-panel row">
-					<div class=" col-md-2">
+					<div class=" col-md-3 alignRightBtn">
 						<a th:href="@{/viewReservations}" class="button-6 btn-res-page">All
 							Reservations</a>
 					</div>
-					<div class=" col-md-2">
+					<div class=" col-md-3 alignRightBtn">
 						<a th:href="@{/todayFloorPlan}" class="button-6 btn-res-page">Today's Floor
 							Plan</a>
 					</div>
-					<div class="col-md-8">
+					<div class="col-md-6">
 						<h1>Reservations Page</h1>
 					</div>
 
@@ -119,8 +122,6 @@
 				</div>
 			</div>
 		</div>
-
-
 	</div>
 </body>
 

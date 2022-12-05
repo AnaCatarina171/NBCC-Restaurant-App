@@ -1,11 +1,15 @@
 <div>
-	<h2>Add Reservation #<span th:text="${rToEdit.id}"></span> to Table #<span
-		th:text="${tableNumber}"></span> ? </h2>
+	<h2>
+		Add Reservation #<span th:text="${rToEdit.id}"></span> to Table #<span
+			th:text="${tableNumber}"></span> ?
+	</h2>
 </div>
 <hr>
 <div>
-	<h3>Reservations at Table <span th:text="${tableNumber}"></span> on <span
-		th:text="${#dates.format(rToEdit.date, 'dd-MMM-yyyy')}"></span> :</h3>
+	<h3>
+		Reservations at Table <span th:text="${tableNumber}"></span> on <span
+			th:text="${#dates.format(rToEdit.date, 'dd-MMM-yyyy')}"></span> :
+	</h3>
 	<table class="styled-table1" th:if="${resSameDate.size != 0}">
 		<tbody>
 			<tr th:each="res : ${resSameDate}">
@@ -14,19 +18,17 @@
 			</tr>
 		</tbody>
 	</table>
-	<div th:if="${resSameDate.size == 0}">
-		No Reservations
-	</div>
+	<div th:if="${resSameDate.size == 0}">No Reservations for <span th:text="${currentPeriod.resGroup}"></span> Period</div>
 </div>
-<div class="modal-footer">
+<div class="modal-footer height-4">
 	<div class="row">
 		<div class="col-md-6">
 			<a class="button-6"
-		th:href="@{/addResTable/{rId}/{tId} (rId = ${rToEdit.id}, tId = ${tableNumber})}">Confirm</a>
+				th:href="@{/addResTable/{rId}/{tId} (rId = ${rToEdit.id}, tId = ${tableNumber})}">Confirm</a>
 		</div>
-	</div>
-	<div class="col-md-6">
-		<button type="button" id="closf" class="button-6 cancelBtn" data-dismiss="modal"
-		aria-label="Close">Cancel</button>
+		<div class="col-md-6">
+			<button type="button" id="closf" class="button-6 cancelBtn"
+				data-dismiss="modal" aria-label="Close">Cancel</button>
+		</div>
 	</div>
 </div>
