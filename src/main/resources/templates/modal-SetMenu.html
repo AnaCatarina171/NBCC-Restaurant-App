@@ -1,22 +1,37 @@
 <div class="section">
-	<h2 class="center">	
-		Choose from the list bellow the desired <span
-			th:text="${menuCategory}"></span> Menu to feature this week.
-	</h2>
-	<table class="styled-table2">
-		<tr>
-			<td>ID </td>
-			<td>Title </td>
-			<td>Category</td>
-			<td>Total Items</td>
-			<td>Action</td>
-		</tr>
-		<tr th:each="menu : ${menus}">
-			<td th:text="${menu.id}"></td>
-			<td th:text="${menu.title}"></td>
-			<td th:text="${menu.type}"></td>
-			<td th:text="${menu.dishList.size()}"></td>
-			<td ><a th:href="@{/toSetMenu/{mId}(mId = ${menu.id})}">Feature Menu</a></td>
-		</tr>
-	</table>
+	<div th:if="${menus.size() == 0}" class="center">
+		<h2>
+			No <span th:text="${menuCategory}"></span> Menus available.
+		</h2>
+		<h3>
+			To feature a <span th:text="${menuCategory}"></span> Menu, create a
+			new one.
+		</h3>
+		<div class="user-action">
+			<a th:href="@{/toAddMenu}" class="button-6">Create New Menu</a>
+		</div>
+	</div>
+	<div th:unless="${menus.size() == 0}" class="center">
+		<h2 class="center">
+			Choose from the list bellow the desired <span
+				th:text="${menuCategory}"></span> Menu to feature this week.
+		</h2>
+		<table class="styled-table2">
+			<tr>
+				<td>ID</td>
+				<td>Title</td>
+				<td>Category</td>
+				<td>Total Items</td>
+				<td>Action</td>
+			</tr>
+			<tr th:each="menu : ${menus}">
+				<td th:text="${menu.id}"></td>
+				<td th:text="${menu.title}"></td>
+				<td th:text="${menu.type}"></td>
+				<td th:text="${menu.dishList.size()}"></td>
+				<td><a th:href="@{/toSetMenu/{mId}(mId = ${menu.id})}">Feature
+						Menu</a></td>
+			</tr>
+		</table>
+	</div>
 </div>
