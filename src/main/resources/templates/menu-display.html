@@ -56,7 +56,7 @@
 		</div>
 	</div>
 
-<div class="titleBackground titleBackgroundCooker">
+	<div class="titleBackground titleBackgroundCooker">
 		<h1 class="firstPageTitle">Menu</h1>
 	</div>
 	<div class="main  medium-width">
@@ -67,111 +67,82 @@
 			<div class="row margin-top-5">
 				<div class="col-md-4">
 					<h2>Breakfast Menu</h2>
-					<table class="styled-table1">
-							<tbody>
-								<tr>
-									<td>Monday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Tuesday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Wednesday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Thursday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Friday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Saturday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Sunday</td>
-									<td>Closed</td>
-								</tr>
-							</tbody>
-						</table>
+					<div th:if="${breakfastMenu} == null">
+						<h3>No breakfast menu to display yet.</h3>
+					</div>
+					<div th:unless="${breakfastMenu} == null">
+						<div class="table-container">
+							<table class="styled-table1">
+								<tbody>
+									<tr>
+										<td>Menu Title</td>
+									</tr>
+									<tr>
+										<td th:text="${breakfastMenu.title}"></td>
+									</tr>
+									<tr>
+										<td>Dish List</td>
+									</tr>
+									<tr th:each="dish : ${breakfastMenu.getDishList()}">
+										<td th:text="${dish.name}"></td>
+										<td th:text="${dish.Nationality}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 				<div class="col-md-4 ">
 					<h2>Lunch Menu</h2>
-
-					<div class="table-container">
-						<table class="styled-table1">
-							<tbody>
-								<tr>
-									<td>Monday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Tuesday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Wednesday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Thursday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Friday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Saturday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Sunday</td>
-									<td>Closed</td>
-								</tr>
-							</tbody>
-						</table>
+					<div th:if="${lunchMenu} == null">
+						<h3>No evening menu to display yet.</h3>
+					</div>
+					<div th:unless="${lunchMenu} == null">
+						<div class="table-container">
+							<table class="styled-table1">
+								<tbody>
+									<tr>
+										<td>Menu Title</td>
+									</tr>
+									<tr>
+										<td th:text="${lunchMenu.title}"></td>
+									</tr>
+									<tr>
+										<td>Dish List</td>
+									</tr>
+									<tr th:each="dish : ${lunchMenu.getDishList()}">
+										<td th:text="${dish.name}"></td>
+										<td th:text="${dish.Nationality}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<h2>Evening Menu</h2>
-					<table class="styled-table1">
+					<div th:if="${eveningMenu} == null">
+						<h3>No evening menu to display yet.</h3>
+					</div>
+					<div th:unless="${eveningMenu} == null">
+						<table class="styled-table1">
 							<tbody>
 								<tr>
-									<td>Monday</td>
-									<td>Closed</td>
+									<td>Menu Title</td>
 								</tr>
 								<tr>
-									<td>Tuesday</td>
-									<td>Closed</td>
+									<td th:text="${eveningMenu.title}"></td>
 								</tr>
 								<tr>
-									<td>Wednesday</td>
-									<td>Closed</td>
+									<td>Dish List</td>
 								</tr>
-								<tr>
-									<td>Thursday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Friday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Saturday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Sunday</td>
-									<td>Closed</td>
+								<tr th:each="dish : ${eveningMenu.getDishList()}">
+									<td th:text="${dish.name}"></td>
+									<td th:text="${dish.Nationality}"></td>
 								</tr>
 							</tbody>
 						</table>
+					</div>
 				</div>
 			</div>
 

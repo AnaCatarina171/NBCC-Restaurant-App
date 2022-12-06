@@ -9,9 +9,9 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap"
 	rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
-<link rel="stylesheet" href="css/modal.css">
-<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/modal.css">
+<link rel="stylesheet" href="../css/bootstrap.css">
 <script src="https://kit.fontawesome.com/cbb0aad349.js"
 	crossorigin="anonymous"></script>
 <title>RESTO-APP</title>
@@ -56,54 +56,6 @@
 					</div>
 				</div>
 				<div class="cart-primary">
-					<div class="cart-primary-title">Past Menus</div>
-					<div class="cart-primary-content">
-						<div th:each="menu : ${allMenus}" class="cart-secondary">
-							<div class="cart-secondary-title flex-container-top-right-header">
-								<div>
-									<h3 th:text="${menu.title}"></h3>
-								</div>
-								<div>
-									<form th:action="@{/toDeleteMenu}" method="GET">
-										<input type="text" name="menuId" hidden th:value="${menu.id}">
-										<button class="icon-small">
-											<i class="fa-solid fa-trash"></i>
-										</button>
-									</form>
-								</div>
-							</div>
-							<div class="cart-secondary-content">
-								<div class="content-left">
-									Category: <span th:text="${menu.type}"></span> <br> Total
-									Items: <span th:text="${menu.dishList.size()}"></span> <br>
-									Last Modified: <span th:text="${menu.date}"></span>
-								</div>
-								<div class="content-right flex-container-2">
-									<!-- 
-									<div th:if="${menu.toDisplay}">
-										<input type="button" class="button-6" data-toggle="modal"
-											data-target="#displayMenu"
-											th:attr="data-object-id=''+${menu.id}+'', data-object-name=''+${menu.id}+'', data-target='#displayMenu'"
-											value="Hide">
-										<th:block th:replace="_modals :: modal('displayMenu')">modal</th:block>
-									</div>
-									 
-									<div th:unless="${menu.toDisplay}">
-										<input type="button" class="button-6" data-toggle="modal"
-											data-target="#displayMenu"
-											th:attr="data-object-id=''+${menu.id}+'', data-object-name=''+${menu.id}+'', data-target='#displayMenu'"
-											value="Display">
-										<th:block th:replace="_modals :: modal('displayMenu')">modal</th:block>
-									</div>
- 									-->
-									<a th:href="@{/recallMenu/{mId}(mId=${menu.id})}"
-										class="button-6">View/Edit</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="cart-primary">
 					<div class="cart-primary-title">Featured Menus</div>
 					<div class="cart-primary-content">
 						<div class="grid-3-columns">
@@ -119,38 +71,31 @@
 									<th:block th:replace="_modals :: modal('setBreakfast')">modal</th:block>
 								</div>
 								<div th:unless="${breakfastMenu} == null">
-									<table class="styled-table1">
-										<tbody>
-											<tr>
-												<td>Monday</td>
-												<td>Closed</td>
-											</tr>
-											<tr>
-												<td>Tuesday</td>
-												<td>Closed</td>
-											</tr>
-											<tr>
-												<td>Wednesday</td>
-												<td>Closed</td>
-											</tr>
-											<tr>
-												<td>Thursday</td>
-												<td>Closed</td>
-											</tr>
-											<tr>
-												<td>Friday</td>
-												<td>Closed</td>
-											</tr>
-											<tr>
-												<td>Saturday</td>
-												<td>Closed</td>
-											</tr>
-											<tr>
-												<td>Sunday</td>
-												<td>Closed</td>
-											</tr>
-										</tbody>
-									</table>
+									<div class="table-container">
+										<table class="styled-table1">
+											<tbody>
+												<tr>
+													<td>Menu Title</td>
+												</tr>
+												<tr>
+													<td th:text="${breakfastMenu.title}"></td>
+												</tr>
+												<tr>
+													<td>Dish List</td>
+												</tr>
+												<tr th:each="dish : ${breakfastMenu.getDishList()}">
+													<td th:text="${dish.name}"></td>
+													<td th:text="${dish.Nationality}"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<input type="button" class="button-6" data-toggle="modal"
+										data-target="#setBreakfast"
+										th:attr="data-object-id='', data-object-name='', data-target='#setBreakfast'"
+										value="Change Featured Menu">
+
+									<th:block th:replace="_modals :: modal('setBreakfast')">modal</th:block>
 								</div>
 							</div>
 							<div class="col-md-4 ">
@@ -180,10 +125,16 @@
 												<tr th:each="dish : ${lunchMenu.getDishList()}">
 													<td th:text="${dish.name}"></td>
 													<td th:text="${dish.Nationality}"></td>
-												</tr>												
+												</tr>
 											</tbody>
 										</table>
 									</div>
+									<input type="button" class="button-6" data-toggle="modal"
+										data-target="#setLunch"
+										th:attr="data-object-id='', data-object-name='', data-target='#setLunch'"
+										value="Change Featured Menu">
+
+									<th:block th:replace="_modals :: modal('setLunch')">modal</th:block>
 								</div>
 							</div>
 							<div class="col-md-4">
@@ -201,96 +152,147 @@
 									<table class="styled-table1">
 										<tbody>
 											<tr>
-												<td>Monday</td>
-												<td>Closed</td>
+												<td>Menu Title</td>
 											</tr>
 											<tr>
-												<td>Tuesday</td>
-												<td>Closed</td>
+												<td th:text="${eveningMenu.title}"></td>
 											</tr>
 											<tr>
-												<td>Wednesday</td>
-												<td>Closed</td>
+												<td>Dish List</td>
 											</tr>
-											<tr>
-												<td>Thursday</td>
-												<td>Closed</td>
-											</tr>
-											<tr>
-												<td>Friday</td>
-												<td>Closed</td>
-											</tr>
-											<tr>
-												<td>Saturday</td>
-												<td>Closed</td>
-											</tr>
-											<tr>
-												<td>Sunday</td>
-												<td>Closed</td>
+											<tr th:each="dish : ${eveningMenu.getDishList()}">
+												<td th:text="${dish.name}"></td>
+												<td th:text="${dish.Nationality}"></td>
 											</tr>
 										</tbody>
 									</table>
+									<input type="button" class="button-6" data-toggle="modal"
+										data-target="#setEvening"
+										th:attr="data-object-id='', data-object-name='', data-target='#setEvening'"
+										value="Change Featured Menu">
+
+									<th:block th:replace="_modals :: modal('setEvening')">modal</th:block>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!--                <div class="modal-container" id="displayMenuModal">
-                    <div class="modal-wrapper">
-                        <div class="modal-content">
-                            <!-- 
-                            <h2> Are you sure you want to display the menu <span th:text="${menuToDisplay.title}"></span>?</h2>
-                            <form th:action="@{/processDisplayMenu}" method="POST"
-                                class="form-container">
-                            </form>
-                        </div>
-                        <div class="modal-footer"></div>
-                    </div>
-    ss
-                        </div>
-                        <div class="footer"></div>
-                    </div>
--->
+
+
+				<div class="cart-primary">
+					<div class="cart-primary-title">Past Menus</div>
+					<div class="cart-primary-content">
+
+						<div th:each="menu : ${allMenus}" class="cart-secondary">
+							<div class="cart-secondary-title flex-container-top-right-header">
+								<div>
+									<h3 th:text="${menu.title}"></h3>
+								</div>
+								<div>
+
+									<form th:action="@{/toDeleteMenu}" method="GET">
+										<input type="text" name="menuId" hidden th:value="${menu.id}">
+										<button class="icon-small">
+											<i class="fa-solid fa-trash"></i>
+										</button>
+									</form>
+
+
+								</div>
+							</div>
+							<div class="cart-secondary-content">
+								<div class="content-left">
+									Category: <span th:text="${menu.type}"></span> <br> Total
+									Items: <span th:text="${menu.dishList.size()}"></span> <br>
+									Last Modified: <span th:text="${menu.date}"></span>
+								</div>
+								<div class="content-right flex-container-2">
+									<!-- 
+									<div th:if="${menu.toDisplay}">
+										<input type="button" class="button-6" data-toggle="modal"
+											data-target="#displayMenu"
+											th:attr="data-object-id=''+${menu.id}+'', data-object-name=''+${menu.id}+'', data-target='#displayMenu'"
+											value="Hide">
+
+										<th:block th:replace="_modals :: modal('displayMenu')">modal</th:block>
+									</div>
+									 
+									<div th:unless="${menu.toDisplay}">
+										<input type="button" class="button-6" data-toggle="modal"
+											data-target="#displayMenu"
+											th:attr="data-object-id=''+${menu.id}+'', data-object-name=''+${menu.id}+'', data-target='#displayMenu'"
+											value="Display">
+
+										<th:block th:replace="_modals :: modal('displayMenu')">modal</th:block>
+									</div>
+ 									-->
+									<a th:href="@{/recallMenu/{mId}(mId=${menu.id})}"
+										class="button-6">View/Edit</a>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
 			</div>
-			<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-			<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-			<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+		</div>
 
-			<script th:inline="javascript">
-				/*<![CDATA[*/
 
-				$('#displayMenu').on(
-						'show.bs.modal',
-						function(event) {
-							var button = $(event.relatedTarget);
-							var menuId = button.data('object-name');
-							console.log(menuId);
-							$.get("/modals/display-menu?menuId=" + menuId,
-									function(data) {
-										$('#displayMenu').find('.modal-body')
-												.html(data);
-									})
-						})
-				$('#setBreakfast').on('show.bs.modal', function(event) {
-					var button = $(event.relatedTarget);
-					$.get("/modals/setBreakfast", function(data) {
-						$('#setBreakfast').find('.modal-body').html(data);
-					})
-				})
-				$('#setLunch').on('show.bs.modal', function(event) {
-					var button = $(event.relatedTarget);
-					$.get("/modals/setLunch", function(data) {
-						$('#setLunch').find('.modal-body').html(data);
-					})
-				})
-				$('#setEvening').on('show.bs.modal', function(event) {
-					var button = $(event.relatedTarget);
-					$.get("/modals/setEvening", function(data) {
-						$('#setEvening').find('.modal-body').html(data);
-					})
-				})
+		<!-- 				<div class="modal-container" id="displayMenuModal">
+					<div class="modal-wrapper">
+						<div class="modal-content">
+							<!-- 
+							<h2> Are you sure you want to display the menu <span th:text="${menuToDisplay.title}"></span>?</h2>
+							<form th:action="@{/processDisplayMenu}" method="POST"
+								class="form-container">
+								
+							</form>
+						</div>
+						<div class="modal-footer"></div>
+					</div>
+	ss
+						</div>
 
-				/*]]>*/
-			</script>
+						<div class="footer"></div>
+					</div>
+
+-->
+	</div>
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+
+		$('#displayMenu').on('show.bs.modal', function(event) {
+			var button = $(event.relatedTarget);
+			var menuId = button.data('object-name');
+			console.log(menuId);
+			$.get("/modals/display-menu?menuId=" + menuId, function(data) {
+				$('#displayMenu').find('.modal-body').html(data);
+			})
+		})
+		$('#setBreakfast').on('show.bs.modal', function(event) {
+			var button = $(event.relatedTarget);
+			$.get("/modals/setBreakfast", function(data) {
+				$('#setBreakfast').find('.modal-body').html(data);
+			})
+		})
+		$('#setLunch').on('show.bs.modal', function(event) {
+			var button = $(event.relatedTarget);
+			$.get("/modals/setLunch", function(data) {
+				$('#setLunch').find('.modal-body').html(data);
+			})
+		})
+		$('#setEvening').on('show.bs.modal', function(event) {
+			var button = $(event.relatedTarget);
+			$.get("/modals/setEvening", function(data) {
+				$('#setEvening').find('.modal-body').html(data);
+			})
+		})
+
+		/*]]>*/
+	</script>
 </body>
 </html>

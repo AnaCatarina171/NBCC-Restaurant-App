@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import ca.nbcc.restapp.model.Menu;
 import ca.nbcc.restapp.repo.MenuJpaRepo;
 
-
 @Service
 public class MenuService {
 
@@ -29,19 +28,18 @@ public class MenuService {
 	}
 
 	public Menu getLastMenu() {
-		List<Menu> allMenus = mRepo.findAll();
-		
-		if(allMenus.size() == 0) {
+		List<Menu> lastMenuList = mRepo.findTopByOrderByIdDesc();
+
+		if(lastMenuList.size() == 1) {
+			return lastMenuList.get(0);
+		}else {
 			return null;
 		}
-		return allMenus.get(allMenus.size() - 1);
-
 	}
 
 	public List<Menu> getAllMenus() {
 		return mRepo.findAll();
 	}
-	
 
 	public void deleteMenu(long id) {
 		// To delete a menu I got to delete all the dishes that it contains
@@ -52,44 +50,64 @@ public class MenuService {
 		// TODO Auto-generated method stub
 		return mRepo.findById(mId).get();
 	}
-	
-	public List<Menu> getAllBreakfastMenu(){
+
+	public List<Menu> getAllBreakfastMenu() {
 		return mRepo.findByType("Breakfast");
 	}
-	
+
 	public Menu getBreakfastMenu() {
 		List<Menu> breakfastMenu = mRepo.findByTypeAndToDisplay("Breakfast", true);
-		
-		if(breakfastMenu.size() == 1) {
-			return breakfastMenu.get(0); 
-		}else {
+//		System.out.println(breakfastMenu.toString());
+		if (breakfastMenu.size() == 1) {
+			return breakfastMenu.get(0);
+		} else {
 			return null;
 		}
-		
+
 	}
-	public List<Menu> getAllLunchMenu(){
+
+	public List<Menu> getAllLunchMenu() {
 		return mRepo.findByType("Lunch");
 	}
-	
+
 	public Menu getLunchMenu() {
 		List<Menu> lunchMenu = mRepo.findByTypeAndToDisplay("Lunch", true);
-		if(lunchMenu.size() == 1) {
-			return lunchMenu.get(0); 
-		}else {
+		if (lunchMenu.size() == 1) {
+			return lunchMenu.get(0);
+		} else {
 			return null;
 		}
 	}
 
-	public List<Menu> getAllEveningMenu(){
+	public List<Menu> getAllEveningMenu() {
 		return mRepo.findByType("Evening");
 	}
-	
+
 	public Menu getEveningMenu() {
 		List<Menu> eveningMenu = mRepo.findByTypeAndToDisplay("Evening", true);
-		if(eveningMenu.size() == 1) {
-			return eveningMenu.get(0); 
-		}else {
+		if (eveningMenu.size() == 1) {
+			return eveningMenu.get(0);
+		} else {
 			return null;
+		}
+	}
+
+	public void featureMenu(Menu menuToFeature) {
+		stopFeaturingOtherMenus(menuToFeature);
+		menuToFeature.setToDisplay(true);
+		this.saveMenu(menuToFeature);
+	}
+
+	private void stopFeaturingOtherMenus(Menu menuToFeature) {
+		List<Menu> allMenus = this.getAllMenus();
+		String menuType = menuToFeature.getType();
+		for (Menu menu : allMenus) {
+			if (menu.getType() != null) {
+				if (menu.getType().equals(menuType) && menu.getToDisplay()) {
+					menu.setToDisplay(false);
+					this.saveMenu(menu);
+				}
+			}
 		}
 	}
 }
