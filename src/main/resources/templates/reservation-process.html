@@ -49,7 +49,7 @@
 			<div></div>
 		</div>
 
-		<div class="main">
+		<div class="main" th:if="${#session != null}">
 			<div class="top-information center">USER INFORMATION</div>
 			<div class="content">
 				<div class="container">
@@ -69,7 +69,8 @@
 								<form th:action="@{/updateReservation}" method="POST"
 									th:object="${rToEdit}">
 									<input type="text" th:field="*{id}" hidden> <input
-										type="text" th:field="*{table}" hidden>
+										type="text" th:field="*{table}" hidden> <input
+										type="date" th:field="*{date}" hidden>
 									<div class="row">
 										<div class="col-md-3"></div>
 										<div class="col-md-2">
@@ -140,8 +141,9 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<input class="form-control" id="datefield" type='date'
-													th:attr="min=${minDate}" th:field="*{date}" readonly>
+												<input class="form-control" id="datefield" 
+													th:attr="min=${minDate}" th:value="${#dates.format(rToEdit.date, 'EEE, dd MMM yyyy')}" readonly>
+													
 												<span class="form-label">Date</span>
 											</div>
 										</div>
@@ -293,7 +295,9 @@
 								<div class="cart-primary-content no-flex">
 									<div class="row">
 										<div class="col-md-12">
-											<h3><span th:text="${currentPeriod.resGroup}"></span> Reservations</h3>
+											<h3>------------------------------------------ &nbsp; 
+											<span th:text="${currentPeriod.resGroup}"></span> Reservations 
+											&nbsp; ------------------------------------------</h3>
 										</div>
 									</div>
 									<div class="row">
@@ -469,6 +473,9 @@
 				</div>
 			</div>
 		</div>
+		<div th:if="${#session == null}" class="">
+				<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
+			</div>
 	</div>
 
 	<!-- Modal Delete Res -->
