@@ -26,34 +26,34 @@
 					<img src="img/dinning-logo2.png">
 				</div>
 				<div class="user-navigation">
-				<div class="navigation-item">
-					<a th:href="@{/userPanel}" class="nav-link">Home</a>
+					<div class="navigation-item">
+						<a th:href="@{/userPanel}" class="nav-link">Home</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
+					</div>
 				</div>
-				<div class="navigation-item">
-					<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
-				</div>
-				<div class="navigation-item">
-					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
-				</div>
-				<div class="navigation-item">
-					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
-				</div>
-				<div class="navigation-item">
-					<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
-				</div>
-			</div>
 			</div>
 			<div></div>
 		</div>
 
-		<div class="main">
+		<div class="main" th:if="${#session != null}">
 			<div class="top-information center">USER INFORMATION</div>
 			<div class="content">
 				<div class="row">
 					<div class="col-md-3">
 						<h2>Reservations List</h2>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<div class="right-content-header">
 							<div class="search-container">
 								<form th:action="@{/viewReservations}" method="GET"
@@ -65,7 +65,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<form th:action="@{/filterReservations}" method="POST"
 							class="order-form">
 							<div class="orderBy order-content-header">
@@ -86,14 +86,12 @@
 
 								<div class="item">
 									<div class="radio" th:if="${orderBySelected == 'oldest'}">
-										<input id="oldest" name="orderBy" type="radio"
-											value="oldest" checked> <label for="oldest"
-											class="radio-label">Oldest</label>
+										<input id="oldest" name="orderBy" type="radio" value="oldest"
+											checked> <label for="oldest" class="radio-label">Oldest</label>
 									</div>
 									<div class="radio" th:unless="${orderBySelected == 'oldest'}">
-										<input id="oldest" name="orderBy" type="radio"
-											value="oldest"> <label for="oldest"
-											class="radio-label">Oldest</label>
+										<input id="oldest" name="orderBy" type="radio" value="oldest">
+										<label for="oldest" class="radio-label">Oldest</label>
 									</div>
 								</div>
 								<div class="">
@@ -102,22 +100,44 @@
 							</div>
 						</form>
 					</div>
+					<div class="col-md-3">
+						
+							<form th:action="@{/filterReservations}" method="POST"
+								class="order-form">
+								<div class="order-content-header">
+								<div class="form-group">
+									<select class="form-control selectStatus" name="status">
+										<option value="0">All Types</option>
+										<option th:each="status : ${statusList}" th:value="${status}"
+											th:text="${status}"></option>
+									</select><span class="select-arrow"></span>
+								</div>
+								<input type="submit" class="button-31 addElement " value="Apply">
+							</div>
+							</form>
+						
+					</div>
 				</div>
 
 
 				<div class="cart-primary">
 
 					<div class="cart-primary-content">
-						<div class="cart-secondary" th:each="res : ${reservations}">
+						<div th:if="${reservations.size == 0}">
+							No Reservations
+						</div>
+						<div class="cart-secondary width-15" th:each="res : ${reservations}">
 							<div class="cart-secondary-title">
 								<strong>Reservation #<span th:text="${res.id}"></span></strong>
 							</div>
 							<div class="cart-secondary-content">
 								<div class="content-left">
-									<span th:text="${#dates.format(res.date, 'EEE, d MMM yyyy')}"></span> <br> Time: <span
-										th:text="${res.time}"></span> <br> Guest #: <span
-										th:text="${res.guests}"></span><div th:if="${res.table != null}"> Table : <span
-										th:text="${res.table.number}"></span></div>
+									<span th:text="${#dates.format(res.date, 'EEE, d MMM yyyy')}"></span>
+									<br> Time: <span th:text="${res.time}"></span> <br>
+									Guest #: <span th:text="${res.guests}"></span>
+									<div th:if="${res.table != null}">
+										Table : <span th:text="${res.table.number}"></span>
+									</div>
 								</div>
 								<div class="content-right">
 									<a th:href="@{/processReservation/{rId} (rId = ${res.id})}"
@@ -154,13 +174,15 @@
 									<div class="item">
 										<div class="radio"
 											th:if="${orderBySelectedP == null || orderBySelectedP == 'newest'}">
-											<input id="newest" name="orderByP" type="radio" value="newest"
-												checked> <label for="newest" class="radio-label">Newest</label>
+											<input id="newest" name="orderByP" type="radio"
+												value="newest" checked> <label for="newest"
+												class="radio-label">Newest</label>
 										</div>
 										<div class="radio"
 											th:unless="${orderBySelectedP == null || orderBySelectedP == 'newest'}">
-											<input id="newest" name="orderByP" type="radio" value="newest">
-											<label for="newest" class="radio-label">Newest</label>
+											<input id="newest" name="orderByP" type="radio"
+												value="newest"> <label for="newest"
+												class="radio-label">Newest</label>
 										</div>
 									</div>
 
@@ -170,8 +192,7 @@
 												value="oldest" checked> <label for="oldest"
 												class="radio-label">Oldest</label>
 										</div>
-										<div class="radio"
-											th:unless="${orderBySelectedP == 'oldest'}">
+										<div class="radio" th:unless="${orderBySelectedP == 'oldest'}">
 											<input id="oldest" name="orderByP" type="radio"
 												value="oldest"> <label for="oldest"
 												class="radio-label">Oldest</label>
@@ -186,16 +207,21 @@
 						</div>
 					</div>
 					<div class="cart-primary-content">
-						<div class="cart-secondary" th:each="res : ${pastReservations}">
+						<div th:if="${pastReservations.size == 0}">
+							No Reservations
+						</div>
+						<div class="cart-secondary width-15" th:each="res : ${pastReservations}">
 							<div class="cart-secondary-title">
 								<strong>Reservation #<span th:text="${res.id}"></span></strong>
 							</div>
 							<div class="cart-secondary-content">
 								<div class="content-left">
-									<span th:text="${#dates.format(res.date, 'EEE, d MMM yyyy')}"></span> <br> Time: <span
-										th:text="${res.time}"></span> <br> Guest #: <span
-										th:text="${res.guests}"></span> <br> <div th:if="${res.table != null}"> Table : <span
-										th:text="${res.table.number}"></span></div>
+									<span th:text="${#dates.format(res.date, 'EEE, d MMM yyyy')}"></span>
+									<br> Time: <span th:text="${res.time}"></span> <br>
+									Guest #: <span th:text="${res.guests}"></span> <br>
+									<div th:if="${res.table != null}">
+										Table : <span th:text="${res.table.number}"></span>
+									</div>
 								</div>
 								<div class="content-right">
 									<a th:href="@{/processReservation/{rId} (rId = ${res.id})}"
@@ -214,6 +240,9 @@
 				</div>
 			</div>
 		</div>
+		<div th:if="${#session == null}" class="">
+				<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
+			</div>
 
 
 	</div>

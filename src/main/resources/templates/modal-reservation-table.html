@@ -8,7 +8,8 @@
 <div>
 	<h3>
 		Reservations at Table <span th:text="${tableNumber}"></span> on <span
-			th:text="${#dates.format(rToEdit.date, 'dd-MMM-yyyy')}"></span> :
+			th:text="${#dates.format(rToEdit.date, 'dd-MMM-yyyy')}"></span> , <span
+			th:text="${currentPeriod.resGroup}"></span> Period:
 	</h3>
 	<table class="styled-table1" th:if="${resSameDate.size != 0}">
 		<tbody>

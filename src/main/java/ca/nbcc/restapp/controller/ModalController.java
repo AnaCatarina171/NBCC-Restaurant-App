@@ -44,8 +44,6 @@ public class ModalController {
 		this.tS = tS;
 		this.rTS = rTS;
 	}
-	
-
 
 	@GetMapping("new-reservation")
     public String goToModal(@RequestParam("reservationTime") String resTime, Model model) {
@@ -107,13 +105,15 @@ public class ModalController {
     
 
     @GetMapping("show-table-res")
-    public String goToTableToRes(@RequestParam("table") String table, Model model) throws Exception {
+    public String goToTableToRes(@RequestParam("table") String table, @RequestParam("date") String date, Model model) throws Exception {
     	
     	Integer tableNumber = Integer.parseInt(table);
     	RTable currentTable = tS.findRTableByNumber((long)tableNumber);
     	
     	SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd");
-    	String today = sdt.format(new Date());
+    	
+    	Date currentDate = sdt.parse(date);
+    	String dateS = sdt.format(currentDate);
     	
     	List<Reservation> resOnSameTableSameDay = new ArrayList<>();
     	
@@ -121,11 +121,12 @@ public class ModalController {
 
     		String resDate = sdt.format(res.getDate());
     		
-    		if(resDate.equals(today)) {
+    		if(resDate.equals(dateS)) {
     			resOnSameTableSameDay.add(res);
     		}
     	}
     	
+    	model.addAttribute("currentDate", currentDate);
     	model.addAttribute("tableNumber", tableNumber);
 		model.addAttribute("resSameDate", resOnSameTableSameDay);
 		
