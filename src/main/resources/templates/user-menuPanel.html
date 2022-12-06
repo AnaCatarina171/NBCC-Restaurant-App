@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,35 +16,37 @@
 	crossorigin="anonymous"></script>
 <title>RESTO-APP</title>
 </head>
-
 <body>
 	<div class="admin-page">
 		<div class="user-left-panel">
-			<div class="logoAdmin">NBCC 1234 Room</div>
-
-			<div class="user-navigation">
+			<div class="logoAdmin">
+				<img src="img/NBCC-white-simple.png">
+			</div>
+			<div>
+				<div class="logoAdmin2">
+					<img src="img/dinning-logo2.png">
+				</div>
+				<div class="user-navigation">
 				<div class="navigation-item">
 					<a th:href="@{/userPanel}" class="nav-link">Home</a>
 				</div>
-				<br>
 				<div class="navigation-item">
 					<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
 				</div>
-				<br>
 				<div class="navigation-item">
 					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
 				</div>
-				<br>
 				<div class="navigation-item">
 					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
 				</div>
-				<br>
 				<div class="navigation-item">
 					<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
 				</div>
 			</div>
+			</div>
+			<div></div>
 		</div>
-
+		
 		<div class="main">
 			<div class="top-information center">USER INFORMATION</div>
 			<div class="content">
@@ -185,22 +186,18 @@
 				<div class="cart-primary">
 					<div class="cart-primary-title">Past Menus</div>
 					<div class="cart-primary-content">
-
 						<div th:each="menu : ${allMenus}" class="cart-secondary">
 							<div class="cart-secondary-title flex-container-top-right-header">
 								<div>
 									<h3 th:text="${menu.title}"></h3>
 								</div>
 								<div>
-
 									<form th:action="@{/toDeleteMenu}" method="GET">
 										<input type="text" name="menuId" hidden th:value="${menu.id}">
 										<button class="icon-small">
 											<i class="fa-solid fa-trash"></i>
 										</button>
 									</form>
-
-
 								</div>
 							</div>
 							<div class="cart-secondary-content">
@@ -216,7 +213,6 @@
 											data-target="#displayMenu"
 											th:attr="data-object-id=''+${menu.id}+'', data-object-name=''+${menu.id}+'', data-target='#displayMenu'"
 											value="Hide">
-
 										<th:block th:replace="_modals :: modal('displayMenu')">modal</th:block>
 									</div>
 									 
@@ -225,7 +221,6 @@
 											data-target="#displayMenu"
 											th:attr="data-object-id=''+${menu.id}+'', data-object-name=''+${menu.id}+'', data-target='#displayMenu'"
 											value="Display">
-
 										<th:block th:replace="_modals :: modal('displayMenu')">modal</th:block>
 									</div>
  									-->
@@ -235,7 +230,6 @@
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>

@@ -33,6 +33,20 @@ public class ReservationTimeService {
 		return null;
 	}
 	
+	public ReservationTimes findReservationTByTime(String rMID_LONG) throws Exception{
+		
+		if(rR.findByTime(rMID_LONG) != null) {
+			
+			return rR.findByTime(rMID_LONG);
+		}
+		else if(rR.findByTime(rMID_LONG) == null) {
+			
+			throw new Exception("Reservation Time not found: ID " + rMID_LONG);
+		}
+		
+		return null;
+	}
+	
 	public List<ReservationTimes> getAllReservationTimes(){
 		return rR.findAll();
 	}

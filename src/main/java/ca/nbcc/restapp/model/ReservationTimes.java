@@ -20,7 +20,7 @@ public class ReservationTimes {
 	@Column(name = "RES_TIME_ID", unique = true)
 	private Long id;
 	
-	@Column(name="RES_T_TIME")
+	@Column(name="RES_T_TIME", unique=true)
 	private String time;
 	
 	@Column(name="RES_T_GROUP")
