@@ -145,7 +145,7 @@ public class ModalController {
     public String showLunchMenusList(Model model) {
     	List<Menu> lunchMenus = ms.getAllLunchMenu();
     	model.addAttribute("menus",lunchMenus);
-    	model.addAttribute("menuCategory", "Breakfast");
+    	model.addAttribute("menuCategory", "Lunch");
     	return "modal-SetMenu";
     }
     
@@ -153,7 +153,7 @@ public class ModalController {
     public String showEveningMenusList(Model model) {
     	List<Menu> eveningMenus = ms.getAllEveningMenu();
     	model.addAttribute("menus",eveningMenus);
-    	model.addAttribute("menuCategory", "Breakfast");
+    	model.addAttribute("menuCategory", "Evening");
     	return "modal-SetMenu";
     }
 
