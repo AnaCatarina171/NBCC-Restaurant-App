@@ -52,6 +52,11 @@ public class ReservationService {
 		return rR.findByDate(d);
 	}
 	
+	public List<Reservation> getByDate(Date d){
+		//return rR.findAll();
+		return rR.findByDate(d);
+	}
+	
 	public List<Reservation> orderByDate(){
 		return rR.findByOrderByDate();
 	}

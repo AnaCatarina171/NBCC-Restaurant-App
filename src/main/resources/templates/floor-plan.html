@@ -43,6 +43,9 @@
 						<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
 					</div>
 				</div>
+						<div th:if="${#session == null}" class="">
+				<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
+			</div>
 			</div>
 			<div></div>
 		</div>
