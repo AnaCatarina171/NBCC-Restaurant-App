@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ca.nbcc.restapp.model.Menu;
 import ca.nbcc.restapp.model.Reservation;
+import ca.nbcc.restapp.model.ReservationStatus;
 import ca.nbcc.restapp.model.ReservationTimes;
 import ca.nbcc.restapp.service.MenuService;
 
@@ -88,6 +89,7 @@ public class ModalController {
     	model.addAttribute("currentPeriod", currentPeriodObj);
     	model.addAttribute("tableNumber", tableNumber);
 		model.addAttribute("rToEdit", reservation);
+		model.addAttribute("confirmed", ReservationStatus.CONFIRMED);
 		model.addAttribute("resSameDate", resOnSameTableSameDay);
 		
     	return "modal-reservation-table";

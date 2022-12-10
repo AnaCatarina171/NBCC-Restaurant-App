@@ -39,9 +39,12 @@ public class ReservationService {
 		return null;
 	}
 	
-	public List<Reservation> getAllReservation(){
-		//return rR.findAll();
+	public List<Reservation> getAllCurrentOrFutureReservation(){
 		return rR.findByOrderByDate();
+	}
+	
+	public List<Reservation> getAllReservation(){
+		return rR.findAll();
 	}
 	
 	public List<Reservation> getByDate(Date d){

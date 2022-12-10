@@ -10,7 +10,9 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap"
 	rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="../css/styles.css">
+<link type="text/css" rel="stylesheet" href="../css/modal.css" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.css" />
 <title>RESTO-APP</title>
 </head>
 
@@ -25,25 +27,22 @@
 					<img src="img/dinning-logo2.png">
 				</div>
 				<div class="user-navigation">
-				<div class="navigation-item">
-					<a th:href="@{/userPanel}" class="nav-link">Home</a>
+					<div class="navigation-item">
+						<a th:href="@{/userPanel}" class="nav-link">Home</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/todayFloorPlan}" class="nav-link">FloorPlan</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
+					</div>
 				</div>
-				<div class="navigation-item">
-					<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
-				</div>
-				<div class="navigation-item">
-					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
-				</div>
-				<div class="navigation-item">
-					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
-				</div>
-				<div class="navigation-item">
-					<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
-				</div>
-						<div th:if="${#session == null}" class="">
-				<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
-			</div>
-			</div>
 			</div>
 			<div></div>
 		</div>
@@ -51,65 +50,260 @@
 		<div class="main" th:if="${#session != null}">
 			<div class="top-information center">USER INFORMATION</div>
 			<div class="content">
+				<div class="container">
+					<h1>
+						Reservations For - 
+						<span th:text="${#dates.format(selectedDate, 'EEE, dd MMM yyyy')}"></span>
+						<br> 
+					</h1>
+					<form th:action="@{/todayFloorPlan}" method="GET"
+						class="order-form">
+						<div class="order-content-header">
+							<div class="form-group">
+								<input type="date" name="date" class="form-control selectStatus"
+									placeholder="dd-mm-yyyy">
+							</div>
+							<input type="submit" class="button-31 addElement " value="Apply">
+						</div>
+					</form>
+					<div class="row">
+						<div class="col-md-4 margin-top-5">
+							<div class="cart-primary">
+								<div class="cart-primary-title cart-primary-title2">Breakfast Reservations</div>
+								<div class="cart-primary-content">
 
-				<div class="floor-plan-one-grid">
-					<div class="item item-1">
-						<a class="table-button" href="#">40</a>
+									<div th:if="${breakfastReservations.size == 0}">No
+										Reservations</div>
+									<div class="cart-secondary"
+										th:each="res : ${breakfastReservations}">
+										<div class="cart-secondary-title">
+											<strong>Reservation #<span th:text="${res.id}"></span></strong>
+										</div>
+										<div class="cart-secondary-content">
+											<div class="content-left">
+												<span
+													th:text="${#dates.format(res.date, 'EEE, dd MMM yyyy')}"></span>
+												<br> Time: <span th:text="${res.time}"></span> <br>
+												Guest #: <span th:text="${res.guests}"></span>
+												<div th:if="${res.table != null}">
+													Table : <span th:text="${res.table.number}"></span>
+												</div>
+											</div>
+											<div class="content-right">
+												<a th:href="@{/processReservation/{rId} (rId = ${res.id})}"
+													class="button-6">Details</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="cart-primary">
+								<div class="cart-primary-title cart-primary-title2">Lunch Reservations</div>
+								<div class="cart-primary-content">
+
+									<div th:if="${lunchReservations.size == 0}">No
+										Reservations</div>
+									<div class="cart-secondary"
+										th:each="res : ${lunchReservations}">
+										<div class="cart-secondary-title">
+											<strong>Reservation #<span th:text="${res.id}"></span></strong>
+										</div>
+										<div class="cart-secondary-content">
+											<div class="content-left">
+												<span
+													th:text="${#dates.format(res.date, 'EEE, dd MMM yyyy')}"></span>
+												<br> Time: <span th:text="${res.time}"></span> <br>
+												Guest #: <span th:text="${res.guests}"></span>
+												<div th:if="${res.table != null}">
+													Table : <span th:text="${res.table.number}"></span>
+												</div>
+											</div>
+											<div class="content-right">
+												<a th:href="@{/processReservation/{rId} (rId = ${res.id})}"
+													class="button-6">Details</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="cart-primary">
+								<div class="cart-primary-title cart-primary-title2">Night Reservations</div>
+								<div class="cart-primary-content">
+
+									<div th:if="${nightReservations.size == 0}">No
+										Reservations</div>
+									<div class="cart-secondary"
+										th:each="res : ${nightReservations}">
+										<div class="cart-secondary-title">
+											<strong>Reservation #<span th:text="${res.id}"></span></strong>
+										</div>
+										<div class="cart-secondary-content">
+											<div class="content-left">
+												<span
+													th:text="${#dates.format(res.date, 'EEE, dd MMM yyyy')}"></span>
+												<br> Time: <span th:text="${res.time}"></span> <br>
+												Guest #: <span th:text="${res.guests}"></span>
+												<div th:if="${res.table != null}">
+													Table : <span th:text="${res.table.number}"></span>
+												</div>
+											</div>
+											<div class="content-right">
+												<a th:href="@{/processReservation/{rId} (rId = ${res.id})}"
+													class="button-6">Details</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-8 margin-top-5">
+							<div class="cart-primary">
+								<div class="cart-primary-title">Floor Plan</div>
+								<div class="cart-primary-content">
+									<div class="floor-plan-one-grid">
+										<div class="item item-1">
+											<a href="#showTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+40+'', data-object-name=''+40+'', data-target='#showTableToRes'"
+												class="mymodalonline" onclick="return false;"> <span
+												th:if="${t40ResToday == 1}"
+												style="color: rgba(255, 149, 149, 1);">40</span> <span
+												th:if="${t40ResToday == 0}">40</span>
+											</a>
+										</div>
+										<div class="item item-2">
+											<a href="#showTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+12+'', data-object-name=''+12+'', data-target='#showTableToRes'"
+												class="mymodalonline" onclick="return false;"> <span
+												th:if="${t12ResToday == 1}"
+												style="color: rgba(255, 149, 149, 1);">12</span> <span
+												th:if="${t12ResToday == 0}">12</span>
+											</a>
+										</div>
+										<div class="item item-3">
+											<a href="#showTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+11+'', data-object-name=''+11+'', data-target='#showTableToRes'"
+												class="mymodalonline" onclick="return false;"> <span
+												th:if="${t11ResToday == 1}"
+												style="color: rgba(255, 149, 149, 1);">11</span> <span
+												th:if="${t11ResToday == 0}">11</span>
+											</a>
+										</div>
+										<div class="item item-4">
+											<a href="#showTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+10+'', data-object-name=''+10+'', data-target='#showTableToRes'"
+												class="mymodalonline" onclick="return false;"> <span
+												th:if="${t10ResToday == 1}"
+												style="color: rgba(255, 149, 149, 1);">10</span> <span
+												th:if="${t10ResToday == 0}">10</span>
+											</a>
+										</div>
+										<div class="item item-door"></div>
+										<div class="item item-5">
+											<a href="#showTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+41+'', data-object-name=''+41+'', data-target='#showTableToRes'"
+												class="mymodalonline" onclick="return false;"> <span
+												th:if="${t41ResToday == 1}"
+												style="color: rgba(255, 149, 149, 1);">41</span> <span
+												th:if="${t41ResToday == 0}">41</span>
+											</a>
+										</div>
+										<div class="item item-6"></div>
+										<div class="item item-7">
+											<a href="#showTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+22+'', data-object-name=''+22+'', data-target='#showTableToRes'"
+												class="mymodalonline" onclick="return false;"> <span
+												th:if="${t22ResToday == 1}"
+												style="color: rgba(255, 149, 149, 1);">22</span> <span
+												th:if="${t22ResToday == 0}">22</span>
+											</a>
+										</div>
+										<div class="item item-8">
+											<a href="#showTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+21+'', data-object-name=''+21+'', data-target='#showTableToRes'"
+												class="mymodalonline" onclick="return false;"> <span
+												th:if="${t21ResToday == 1}"
+												style="color: rgba(255, 149, 149, 1);">21</span> <span
+												th:if="${t21ResToday == 0}">21</span>
+											</a>
+										</div>
+										<div class="item item-9"></div>
+										<div class="item item-10">
+											<a href="#showTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+20+'', data-object-name=''+20+'', data-target='#showTableToRes'"
+												class="mymodalonline" onclick="return false;"> <span
+												th:if="${t20ResToday == 1}"
+												style="color: rgba(255, 149, 149, 1);">20</span> <span
+												th:if="${t20ResToday == 0}">20</span>
+											</a>
+										</div>
+										<div class="item item-11">
+											<a href="#showTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+50+'', data-object-name=''+50+'', data-target='#showTableToRes'"
+												class="mymodalonline" onclick="return false;"> <span
+												th:if="${t50ResToday == 1}"
+												style="color: rgba(255, 149, 149, 1);">50</span> <span
+												th:if="${t50ResToday == 0}">50</span>
+											</a>
+										</div>
+										<div class="item item-12">
+											<a href="#showTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+42+'', data-object-name=''+42+'', data-target='#showTableToRes'"
+												class="mymodalonline" onclick="return false;"> <span
+												th:if="${t42ResToday == 1}"
+												style="color: rgba(255, 149, 149, 1);">42</span> <span
+												th:if="${t42ResToday == 0}">42</span>
+											</a>
+										</div>
+										<div class="item item-13"></div>
+										<div class="item item-14">
+											<a href="#showTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+51+'', data-object-name=''+51+'', data-target='#showTableToRes'"
+												class="mymodalonline" onclick="return false;"> <span
+												th:if="${t51ResToday == 1}"
+												style="color: rgba(255, 149, 149, 1);">51</span> <span
+												th:if="${t51ResToday == 0}">51</span>
+											</a>
+										</div>
+										<div class="item item-15">
+											<a href="#showTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+43+'', data-object-name=''+43+'', data-target='#showTableToRes'"
+												class="mymodalonline" onclick="return false;"> <span
+												th:if="${t43ResToday == 1}"
+												style="color: rgba(255, 149, 149, 1);">43</span> <span
+												th:if="${t43ResToday == 0}">43</span>
+											</a>
+										</div>
+										<div class="item item-16">
+											<a href="#showTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+30+'', data-object-name=''+30+'', data-target='#showTableToRes'"
+												class="mymodalonline" onclick="return false;"> <span
+												th:if="${t30ResToday == 1}"
+												style="color: rgba(255, 149, 149, 1);">30</span> <span
+												th:if="${t30ResToday == 0}">30</span>
+											</a>
+										</div>
+										<div class="item item-17">
+											<a href="#showTableToRes" data-toggle="modal"
+												th:attr="data-object-id=''+52+'', data-object-name=''+52+'', data-target='#showTableToRes'"
+												class="mymodalonline" onclick="return false;"> <span
+												th:if="${t52ResToday == 1}"
+												style="color: rgba(255, 149, 149, 1);">52</span> <span
+												th:if="${t52ResToday == 0}">52</span>
+											</a>
+										</div>
+										<div class="item item-18"></div>
+										<div class="item item-19"></div>
+										<div class="item item-20"></div>
+										<div class="item item-21"></div>
+										<div class="item item-22"></div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="item item-2">
-						<a class="table-button" href="#">12</a>
-					</div>
-					<div class="item item-3">
-						<a class="table-button" href="#">11</a>
-					</div>
-					<div class="item item-4">
-						<a class="table-button" href="#">10</a>
-					</div>
-					<div class="item item-door">
-					</div>
-					<div class="item item-5">
-						<a class="table-button" href="#">41</a>
-					</div>
-					<div class="item item-6">
-					</div>
-					<div class="item item-7">
-						<a class="table-button" href="#">22</a>
-					</div>
-					<div class="item item-8">
-						<a class="table-button" href="#">21</a>
-					</div>
-					<div class="item item-9">
-					</div>
-					<div class="item item-10">
-						<a class="table-button" href="#">20</a>
-					</div>
-					<div class="item item-11">
-						<a class="table-button" href="#">50</a>
-					</div>
-					<div class="item item-12">
-						<a class="table-button" href="#">42</a>
-					</div>
-					<div class="item item-13">
-					</div>
-					<div class="item item-14">
-						<a class="table-button" href="#">51</a>
-					</div>
-					<div class="item item-15">
-						<a class="table-button" href="#">43</a>
-					</div>
-					<div class="item item-16">
-						<a class="table-button" href="#">30</a>
-					</div>
-					<div class="item item-17">
-						<a class="table-button" href="#">52</a>
-					</div>
-					<div class="item item-18"></div>
-					<div class="item item-19"></div>
-					<div class="item item-20"></div>
-					<div class="item item-21"></div>
-					<div class="item item-22"></div>
 				</div>
-
 			</div>
 
 			<div class="footer footerPanel">
@@ -119,7 +313,46 @@
 				</div>
 			</div>
 		</div>
+		<div th:if="${#session == null}" class="">
+				<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
+			</div>
 	</div>
+
+	<div id="showTableToRes" class="modal fade text-center">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!-- 
+					<div class="modal-header">
+					<div class="row">
+						<div class="col-md-12">
+							<button type="button" id="closf" class="close" data-dismiss="modal"
+						aria-hidden="true">x</button>
+						</div>
+					</div>
+				</div>
+				 -->
+				<div class="modal-body"></div>
+			</div>
+		</div>
+	</div>
+
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+
+		$('#showTableToRes').on('show.bs.modal', function(event) {
+			var date = [[${selectedDate}]];
+			var button = $(event.relatedTarget);
+			var table = button.data('object-name');
+			$.get("/modals/show-table-res?table=" + table + "&date=" + date, function(data) {
+				$('#showTableToRes').find('.modal-body').html(data);
+			})
+		})
+		/*]]>*/
+	</script>
 </body>
 
 </html>

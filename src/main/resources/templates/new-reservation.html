@@ -37,31 +37,17 @@
 						</select> <span class="select-arrow"></span> <span class="form-label">Guests</span>
 					</div>
 				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<select class="form-control" th:field="*{adults}" required>
-							<option value="0" selected hidden>Adults</option>
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-							<option value="6">6</option>
-						</select> <span class="select-arrow"></span> <span class="form-label">Adults</span>
-					</div>
-				</div>
-				<div class="col-md-3">
+				<div class="col-md-6">
 					<div class="form-group">
 						<select class="form-control" th:field="*{kids}" required>
 							<option value="0" selected hidden>Kids</option>
-							<option value="-1">0</option>
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
 							<option value="4">4</option>
 							<option value="5">5</option>
 							<option value="6">6</option>
-						</select> <span class="select-arrow"></span> <span class="form-label">Kids</span>
+						</select> <span class="select-arrow"></span> <span class="form-label">Kids ?</span>
 					</div>
 				</div>
 			</div>
@@ -70,7 +56,6 @@
 					<div class="form-group">
 						<select class="form-control" th:field="*{vegetarian}" required>
 							<option value="0" selected hidden>How many?</option>
-							<option value="-1">0</option>
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -85,7 +70,6 @@
 					<div class="form-group">
 						<select class="form-control" th:field="*{vegan}" required>
 							<option value="0" selected hidden>How many?</option>
-							<option value="-1">0</option>
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
