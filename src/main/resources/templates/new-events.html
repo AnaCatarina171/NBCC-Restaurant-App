@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>RESTO-APP</title>
+</head>
+<body>
+
+	<div class="header sticky">
+		<div class="flex-container-top-header">
+			<div class="flex-container-top-right-header">
+				<div class="logo2">
+					<img src="img/dinning-logo2.png">
+				</div>
+				<div class="divider">|</div>
+				<div class="logo">
+					<img src="img/NBCC-white-simple.png">
+				</div>
+			</div>
+			<div class="flex-container-top-links-header">
+				<div class="navigation-item ">
+					<a th:href="@{/toAboutUs}" class="nav-link"> About Us </a>
+				</div>
+				<div class="navigation-item ">
+					<a th:href="@{/toCustomerView}" class="nav-link"> Home </a>
+				</div>
+				<div class="navigation-item ">
+					<a th:href="@{/customerMenuDisplay}" class="nav-link "> Menu </a>
+				</div>
+				<div class="navigation-item ">
+					<a th:href="@{/reservationOptions}" class="nav-link"> Book a
+						Reservation </a>
+				</div>
+				<div th:if="${#session != null}" class="navigation-item ">
+					<a th:href="@{/userPanel}" class=" button-6">Staff Panel</a>
+				</div>
+			</div>
+
+			<div th:if="${#session == null}" class="">
+				<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
+			</div>
+			<div th:if="${#session != null}" class="">
+				<a th:href="@{/goToLogout}" class="button-6 cancelBtn">Sign Out</a>
+			</div>
+		</div>
+	</div>
+
+<div class="titleBackground titleBackgroundCooker">
+		<h1 class="firstPageTitle">Home</h1>
+	</div>
+	<div class="main  medium-width">
+		<div class="flex-container margin-top-6 ">
+			<div class="content-left">
+				<div th:if="${#session != null}">
+					<h2 class="titleSmall">
+						Hi, <span th:text="${#session.getAttribute('CURRENT_USER')}"></span>
+					</h2>
+				</div>
+				<h2>Come experience cuisines from around the world as our
+					students learn new cooking techniques. Each week features a banquet
+					style 3 course meal highlighting the cuisine of a different country
+					or region.</h2>
+				<br> <br> <a th:href="@{/reservationOptions}"
+					class="button-6">Book a Reservation</a>
+			</div>
+			<div class="content-right">
+				<div class="image-container">
+					<img src="img/nbccHospitality.jpg">
+				</div>
+			</div>
+		</div>
+		<div class="center-container">
+			<div class="row margin-top-6">
+				<h2 class="titleTopBorder2"></h2>
+				<div class="col-md-4">
+					<h2 class="">Additional Information</h2>
+					<div>
+					<ul class="ulHome">
+						<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+						<li>Sed ut perspiciatis unde omnis iste natus error </li>
+						<li>At vero eos et accusamus et iusto odio dignissimos</li>
+						<li> Aut illo voluptatem hic consectetur alias</li>
+					</ul>
+					</div>
+				</div>
+				<div class="col-md-4 ">
+					<h2 class="">Business Hours</h2>
+					<div class="table-container">
+						<table class="styled-table1">
+							<tbody>
+								<tr>
+									<td>Monday</td>
+									<td>Open</td>
+								</tr>
+								<tr>
+									<td>Tuesday</td>
+									<td>Open</td>
+								</tr>
+								<tr>
+									<td>Wednesday</td>
+									<td>Open</td>
+								</tr>
+								<tr>
+									<td>Thursday</td>
+									<td>Open</td>
+								</tr>
+								<tr>
+									<td>Friday</td>
+									<td>Open</td>
+								</tr>
+								<tr>
+									<td>Saturday</td>
+									<td>Closed</td>
+								</tr>
+								<tr>
+									<td>Sunday</td>
+									<td>Closed</td>
+								</tr>
+							</tbody>
+						</table>
+						<a class="nav-link" th:href="@{/reservationOptions}">Check Reservation Times*</a>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<h2 class="">Next Events at Dinning Room 1234</h2>
+					<img class="eventsImg" src="img/ukrainFest.jpg">
+				</div>
+			</div>
+
+		</div>
+		<div class="center-container">
+			<h4></h4>
+
+		</div>
+	</div>
+
+	<footer>
+		<div class="footer margin-top-5">
+			<div class="row">
+				<a href="https://www.facebook.com/DiningRoom1234/"><i
+					class="fa fa-facebook-square"></i></a> <a
+					href="https://www.instagram.com/nbccmoncton/"><i
+					class="fa fa-instagram"></i></a> <a
+					href="mailto:MO.Hospitality@nbcc.ca"><i class="fa fa-envelope"></i></a>
+			</div>
+
+			<div class="row">
+				<div class="col-xl-3 col-md-3 "></div>
+				<div class="col-xl-4 col-md-4 ">
+					<div class="single-cta">
+						<i class="fa fa-map-marker"></i>
+						<div class="cta-text">
+							<h4>Find us</h4>
+							<span>1234 Mountain Road, Moncton,</span> <br> <span>
+								NB, Canada, New Brunswick</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-md-3 ">
+					<div class="single-cta">
+						<i class="fa fa-phone"></i>
+						<div class="cta-text">
+							<h4>Contact Us</h4>
+							<span>+1 (506) 999-9999<br>MO.Hospitality@nbcc.ca
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-2 col-md-2 "></div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<ul>
+						<li><a th:href="@{/toAboutUs}">About Us</a></li>
+						<li><a th:href="@{/toCustomerView}">Home</a></li>
+						<li><a th:href="@{/reservationOptions}">Reservations</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+					</ul>
+					</ul>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">© Copyright 2022. All Rights Reserved.
+					|| Designed By: DevAtlantics - Ana Silva & Jose Silva</div>
+			</div>
+		</div>
+	</footer>
+</body>
+
+</html>

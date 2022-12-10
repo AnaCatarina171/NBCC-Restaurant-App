@@ -129,15 +129,19 @@ public class ReservationController {
 		selectedDateS = sdt.format(selectedDate);
 
 		for (var r : todayReservations) {
+    
+			// Getting only confirmed reservations
+			if (r.getStatus().equals(ReservationStatus.CONFIRMED)) {
 
-			ReservationTimes newPeriod = rTS.findReservationTByTime(r.getTime());
+				ReservationTimes newPeriod = rTS.findReservationTByTime(r.getTime());
 
-			if (newPeriod.getResGroup().equals(ReservationTimeGroup.BREAKFAST)) {
-				breakfastReservations.add(r);
-			} else if (newPeriod.getResGroup().equals(ReservationTimeGroup.LUNCH)) {
-				lunchReservations.add(r);
-			} else if (newPeriod.getResGroup().equals(ReservationTimeGroup.NIGHT)) {
-				nightReservations.add(r);
+				if (newPeriod.getResGroup().equals(ReservationTimeGroup.BREAKFAST)) {
+					breakfastReservations.add(r);
+				} else if (newPeriod.getResGroup().equals(ReservationTimeGroup.LUNCH)) {
+					lunchReservations.add(r);
+				} else if (newPeriod.getResGroup().equals(ReservationTimeGroup.NIGHT)) {
+					nightReservations.add(r);
+				}
 			}
 		}
 
@@ -293,7 +297,7 @@ public class ReservationController {
 			@RequestParam(value = "orderByP", required = false) String orderByP,
 			@RequestParam(value = "status", required = false) String status) {
 
-		List<Reservation> allReservations = rS.getAllReservation();
+		List<Reservation> allReservations = rS.getAllCurrentOrFutureReservation();
 		List<Reservation> pastReservations = rS.pastReservations();
 
 		if (orderBy != null) {
@@ -310,10 +314,11 @@ public class ReservationController {
 				pastReservations = rS.pastReservationsDesc();
 			}
 		}
-		if (!status.equals("0") && status != null) {
+    
+		if (status != null && !status.equals("0")) {
 			ReservationStatus rStatus = ReservationStatus.valueOf(status);
 
-			for (var r : rS.getAllReservation()) {
+			for (var r : rS.getAllCurrentOrFutureReservation()) {
 				if (!r.getStatus().equals(rStatus)) {
 					allReservations.remove(r);
 				}
@@ -333,7 +338,7 @@ public class ReservationController {
 	public String goToReservations(Model model, String rId, String pastRId) throws Exception {
 
 		try {
-			List<Reservation> allReservations = rS.getAllReservation();
+			List<Reservation> allReservations = rS.getAllCurrentOrFutureReservation();
 			List<Reservation> pastReservations = rS.pastReservations();
 
 			if (rId != null && rId != "" && !rId.isEmpty()) {
@@ -344,7 +349,7 @@ public class ReservationController {
 				try {
 					allReservations.add(rS.findReservationById(rLongId));
 				} catch (Exception ex) {
-					allReservations = rS.getAllReservation();
+					allReservations = rS.getAllCurrentOrFutureReservation();
 				}
 			}
 
@@ -375,16 +380,16 @@ public class ReservationController {
 	@GetMapping("toReservationAdmin")
 	public String toReservationPanel(Model model) {
 
-		List<Reservation> allReservations = rS.getAllReservation();
+		List<Reservation> allReservations = rS.getAllCurrentOrFutureReservation();
 		List<Reservation> pendingReservations = new ArrayList<>();
 		List<Reservation> weekReservations = new ArrayList<>();
 
 		for (var res : allReservations) {
 
-			if (res.getStatus() == ReservationStatus.PENDING) {
+			if (res.getStatus().equals(ReservationStatus.PENDING)) {
 				pendingReservations.add(res);
 			}
-			if (res.getStatus() == ReservationStatus.CONFIRMED) {
+			if (res.getStatus().equals(ReservationStatus.CONFIRMED)) {
 
 				Date resDate = res.getDate();
 				LocalDate resLocalDate = resDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -399,7 +404,6 @@ public class ReservationController {
 
 				if ((resLocalDate.isEqual(today) || (resLocalDate.isAfter(today)) && resLocalDate.isBefore(monday))) {
 					weekReservations.add(res);
-					System.out.println(today);
 				}
 			}
 		}
@@ -443,11 +447,14 @@ public class ReservationController {
 		try {
 			Reservation rToEdit = rS.findReservationById(rId);
 
-			// Getting reservations with same date as current reservation
+			// Getting confirmed reservations with same date as current reservation
 			for (var r : rS.getAllReservation()) {
 
-				if (r.getDate().equals(rToEdit.getDate()) && !r.equals(rToEdit)) {
-					resDateList.add(r);
+					if (r.getDate().equals(rToEdit.getDate()) && !r.equals(rToEdit)) {
+
+						if (r.getStatus().equals(ReservationStatus.CONFIRMED)) {
+						resDateList.add(r);
+					}
 				}
 			}
 
@@ -585,6 +592,10 @@ public class ReservationController {
 	@PostMapping("/updateReservation")
 	public String processUpdateRes(Reservation rToEdit) {
 
+		if (!rToEdit.getStatus().equals(ReservationStatus.CONFIRMED)) {
+			rToEdit.setTable(null);
+		}
+
 		rS.updateReservation(rToEdit);
 
 		// Formatting the reservation date
@@ -593,34 +604,57 @@ public class ReservationController {
 		String formatDate = simpleDateFormat.format(rToEdit.getDate());
 
 		// Sending email to Customer
-		if (rToEdit.getStatus().equals(ReservationStatus.CONFIRMED)) {
+		/*
+		 * if (rToEdit.getStatus().equals(ReservationStatus.CONFIRMED)) {
+		 * 
+		 * String customerSubject = "Reservation Accepted - Dining Room 1234 "; String
+		 * customerMessage = "Your reservation #" + rToEdit.getId() +
+		 * " at Dining Room 1234 was confirmed! \n" + "We are waiting to see you on " +
+		 * formatDate + " !" +
+		 * "\n\n\n\n------------------------------ Reservation Info ------------------------------"
+		 * + "\n\n				Reservation #" + rToEdit.getId() +
+		 * "\n				Number of Guests: " + rToEdit.getGuests() +
+		 * "\n				Date: " + formatDate + " - " + rToEdit.getTime() +
+		 * "\n				Customer Name: " + rToEdit.getFirstName() + " " +
+		 * rToEdit.getLastName(); String customerEmail = rToEdit.getEmail();
+		 * sendEmail(customerSubject, customerMessage, customerEmail);
+		 * 
+		 * } else if (rToEdit.getStatus().equals(ReservationStatus.DENIED)) {
+		 * 
+		 * String customerSubject = "Reservation Denied - Dining Room 1234"; String
+		 * customerMessage = "Unfortunately, due to the high volume of reservations on "
+		 * + formatDate + " , your reservation #" + rToEdit.getId() +
+		 * " was denied. \n\n" +
+		 * "Try again for another date, or send us an email at: MO.Hospitality@nbcc.ca \n\n"
+		 * + "We apologize for the inconvenience, and we hope to see you soon!" +
+		 * "\n\n\n\n------------------------------ Reservation Info ------------------------------"
+		 * + "\n\n				Reservation #" + rToEdit.getId() +
+		 * "\n				Number of Guests: " + rToEdit.getGuests() +
+		 * "\n				Date: " + formatDate + " - " + rToEdit.getTime() +
+		 * "\n				Customer Name: " + rToEdit.getFirstName() + " " +
+		 * rToEdit.getLastName(); String customerEmail = rToEdit.getEmail();
+		 * sendEmail(customerSubject, customerMessage, customerEmail); }
+		 */
 
-			String customerSubject = "Reservation Accepted - Dining Room 1234 ";
-			String customerMessage = "Your reservation #" + rToEdit.getId() + " at Dining Room 1234 was confirmed! \n"
-					+ "We are waiting to see you on " + formatDate + " !"
-					+ "\n\n\n\n------------------------------ Reservation Info ------------------------------"
-					+ "\n\n				Reservation #" + rToEdit.getId() + "\n				Number of Guests: "
-					+ rToEdit.getGuests() + "\n				Date: " + formatDate + " - " + rToEdit.getTime()
-					+ "\n				Customer Name: " + rToEdit.getFirstName() + " " + rToEdit.getLastName();
-			String customerEmail = rToEdit.getEmail();
-			sendEmail(customerSubject, customerMessage, customerEmail);
+		return "redirect:/processReservation/" + rToEdit.getId();
+	}
 
-		} else if (rToEdit.getStatus().equals(ReservationStatus.DENIED)) {
+	@GetMapping("/deleteResTable/{rId}")
+	public String deleteResTable(Model model, @PathVariable("rId") long rId) {
 
-			String customerSubject = "Reservation Denied - Dining Room 1234";
-			String customerMessage = "Unfortunately, due to the high volume of reservations on " 
-					+ formatDate + " , your reservation #" + rToEdit.getId() + " was denied. \n\n"
-					+ "Try again for another date, or send us an email at: MO.Hospitality@nbcc.ca \n\n"
-					+ "We apologize for the inconvenience, and we hope to see you soon!"
-					+ "\n\n\n\n------------------------------ Reservation Info ------------------------------"
-					+ "\n\n				Reservation #" + rToEdit.getId() + "\n				Number of Guests: "
-					+ rToEdit.getGuests() + "\n				Date: " + formatDate + " - " + rToEdit.getTime()
-					+ "\n				Customer Name: " + rToEdit.getFirstName() + " " + rToEdit.getLastName();
-			String customerEmail = rToEdit.getEmail();
-			sendEmail(customerSubject, customerMessage, customerEmail);
+		try {
+			Reservation currentRes = rS.findReservationById(rId);
+
+			currentRes.setTable(null);
+
+			rS.updateReservation(currentRes);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
 		}
 
-		return "redirect:/toReservationAdmin";
+		return "redirect:/processReservation/" + rId;
 	}
 
 	@PostMapping("/addNewReservation")
@@ -681,7 +715,7 @@ public class ReservationController {
 				+ reservationToAdd.getTime() + "\n				Customer Name: " + reservationToAdd.getFirstName() + " "
 				+ reservationToAdd.getLastName();
 		String customerEmail = reservationToAdd.getEmail();
-		sendEmail(customerSubject, customerMessage, customerEmail);
+		// sendEmail(customerSubject, customerMessage, customerEmail);
 
 		model.addAttribute("addedReservation", addedReservation);
 
