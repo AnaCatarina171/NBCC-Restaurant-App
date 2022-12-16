@@ -27,22 +27,28 @@
 					<img src="img/dinning-logo2.png">
 				</div>
 				<div class="user-navigation">
-				<div class="navigation-item">
-					<a th:href="@{/userPanel}" class="nav-link">Home</a>
+					<div class="navigation-item">
+						<a th:href="@{/userPanel}" class="nav-link">Home</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/todayFloorPlan}" class="nav-link">Floor Plan</a>
+					</div>
+					<div class="navigation-item"> 
+						<a th:href="@{/eventsPage}" class="nav-link">Events</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
+					</div>
+					<div th:if="${#session == null}" class="">
+						<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
+					</div>
 				</div>
-				<div class="navigation-item">
-					<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
-				</div>
-				<div class="navigation-item">
-					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
-				</div>
-				<div class="navigation-item">
-					<a th:href="@{/todayFloorPlan}" class="nav-link">FloorPlan</a>
-				</div>
-				<div class="navigation-item">
-					<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
-				</div>
-			</div>
 			</div>
 			<div></div>
 		</div>

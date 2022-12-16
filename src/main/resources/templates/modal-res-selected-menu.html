@@ -1,0 +1,29 @@
+<div class="row">
+	<div class="col-md-12">
+	<div th:if="${currentMenu} == null">
+		<h4>No menu to display yet.</h4>
+	</div>
+	<div th:unless="${currentMenu} == null">
+		<h2><span th:text="${currentMenu.type}"></span> Menu</h2>
+		<div class="table-container">
+			<table class="styled-table1">
+				<tbody>
+					<tr>
+						<td>Menu Title</td>
+					</tr>
+					<tr>
+						<td th:text="${currentMenu.title}"></td>
+					</tr>
+					<tr>
+						<td>Dish List</td>
+					</tr>
+					<tr th:each="dish : ${currentMenu.getDishList()}">
+						<td th:text="${dish.name}"></td>
+						<td th:text="${dish.Nationality}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</div>

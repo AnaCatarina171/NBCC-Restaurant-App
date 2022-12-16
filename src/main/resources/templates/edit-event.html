@@ -10,8 +10,8 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap"
 	rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
-<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/bootstrap.css">
 <title>RESTO-APP</title>
 </head>
 
@@ -19,11 +19,11 @@
 	<div class="admin-page">
 		<div class="user-left-panel">
 			<div class="logoAdmin">
-				<img src="img/NBCC-white-simple.png">
+				<img src="../img/NBCC-white-simple.png">
 			</div>
 			<div>
 				<div class="logoAdmin2">
-					<img src="img/dinning-logo2.png">
+					<img src="../img/dinning-logo2.png">
 				</div>
 				<div class="user-navigation">
 					<div class="navigation-item">
@@ -58,12 +58,12 @@
 					<div class="container">
 						<div class="row">
 							<div class="center-container">
-								<h1>Adding New Event</h1>
+								<h1>Event: <span th:text="${eventToEdit.title}"></span></h1>
 								<form method="post" class="booking-form booking-form-s"
-									th:action="@{/processAddEvent}" th:object="${eventToAdd}"
+									th:action="@{/processEditEvent}" th:object="${eventToEdit}"
 									enctype="multipart/form-data">
-									<input type="text" th:field="*{imageUrl}" hidden> <br>
 									<input type="text" th:field="*{id}" hidden> <br>
+									<input type="text" th:field="*{imageUrl}" hidden>
 									<div>
 										<div class="form-group">
 											<input type="text" class="form-control" th:field="*{title}"><span
@@ -75,14 +75,14 @@
 										</div>
 										<div class="form-group">
 											<h2>Display Event for Guests?</h2>
-											<div th:if="${eventToAdd.isDisplayed}">
+											<div th:if="${eventToEdit.isDisplayed}">
 												<input id="notDisplayed" type="radio" name="isDisplayed"
 													value="false"> <label for="notDisplayed"
 													class="radio-label">No</label> <input id="displayed"
 													type="radio" name="isDisplayed" value="true" checked>
 												<label for="displayed" class="radio-label">Yes</label>
 											</div>
-											<div th:if="${!eventToAdd.isDisplayed}">
+											<div th:if="${!eventToEdit.isDisplayed}">
 												<input id="notDisplayed" type="radio" name="isDisplayed"
 													value="false" checked> <label for="notDisplayed"
 													class="radio-label">No</label> <input id="displayed"
@@ -91,7 +91,10 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<h2>Upload Event Image</h2>
+											<h2>Current Event Image: <span th:text="*{imageUrl}"></span></h2>
+											 <br>
+											<img th:src="@{${'/uploads/' + eventToEdit.imageUrl}}" width="200" />
+											<h2>Upload New Image</h2>
 											<div class="form-group">
 												<input type="file" name="image" accept="image/*"
 													class="">
@@ -99,19 +102,9 @@
 										</div>
 										<button type="submit" class="submit-btn">Submit
 											Event</button>
+										<a th:href="@{/deleteEvent/{eId} (eId = ${eventToEdit.id})}" class="deleteBtn">Delete Event</a>
 									</div>
 								</form>
-								<!-- 
-									<form method="post" th:action="@{/uploadEventImage}"
-									enctype="multipart/form-data">
-									<div class="form-group">
-										<input type="file" name="image" accept="image/*"
-											class="form-control-file">
-									</div>
-									<button type="submit" class="btn btn-primary">Upload
-										image</button>
-									</form>
-								 -->
 
 								<span th:if="${msg != null}" th:text="${msg}"></span>
 							</div>

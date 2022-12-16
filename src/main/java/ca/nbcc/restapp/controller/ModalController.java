@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ca.nbcc.restapp.model.Menu;
 import ca.nbcc.restapp.model.Reservation;
 import ca.nbcc.restapp.model.ReservationStatus;
+import ca.nbcc.restapp.model.ReservationTimeGroup;
 import ca.nbcc.restapp.model.ReservationTimes;
 import ca.nbcc.restapp.service.MenuService;
 
@@ -63,9 +64,9 @@ public class ModalController {
     
     @GetMapping("add-table-to-res")
     public String goToAddTableToRes(@RequestParam("table") String table, @RequestParam("resNumber") Long resNumber, 
-    		@RequestParam("currentPeriod") Long currentPeriod, Model model) throws Exception {
+    		@RequestParam("currentPeriod") String currentPeriod, Model model) throws Exception {
     	
-    	ReservationTimes currentPeriodObj = rTS.findReservationById(currentPeriod);
+    	ReservationTimeGroup currentPeriodR = null;
     	
     	Integer tableNumber = Integer.parseInt(table);
     	RTable currentTable = tS.findRTableByNumber((long)tableNumber);
@@ -73,20 +74,25 @@ public class ModalController {
     	Reservation reservation = rS.findReservationById(resNumber);
     	List<Reservation> resOnSameTableSameDay = new ArrayList<>();
     	
+    	if(!currentPeriod.equals("0") && !currentPeriod.equals("null") && currentPeriod != null) {
+			
+			currentPeriodR = ReservationTimeGroup.valueOf(currentPeriod);
+		}
+    	
     	for (var res : currentTable.getReservations()) {
     		
     		if(res.getDate().equals(reservation.getDate())) {
     			
     			ReservationTimes newPeriod = rTS.findReservationTByTime(res.getTime());
     			
-    			if(currentPeriodObj.getResGroup().equals(newPeriod.getResGroup())) {
+    			if(currentPeriodR.equals(newPeriod.getResGroup())) {
     				
     				resOnSameTableSameDay.add(res);
     			}
     		}
     	}
     	
-    	model.addAttribute("currentPeriod", currentPeriodObj);
+    	model.addAttribute("currentPeriod", currentPeriodR);
     	model.addAttribute("tableNumber", tableNumber);
 		model.addAttribute("rToEdit", reservation);
 		model.addAttribute("confirmed", ReservationStatus.CONFIRMED);
@@ -107,7 +113,10 @@ public class ModalController {
     
 
     @GetMapping("show-table-res")
-    public String goToTableToRes(@RequestParam("table") String table, @RequestParam("date") String date, Model model) throws Exception {
+    public String goToTableToRes(@RequestParam("table") String table, @RequestParam("date") String date,  
+    		@RequestParam("currentPeriod") String currentPeriod, Model model) throws Exception {
+    	
+    	ReservationTimeGroup currentPeriodR = null;
     	
     	Integer tableNumber = Integer.parseInt(table);
     	RTable currentTable = tS.findRTableByNumber((long)tableNumber);
@@ -119,15 +128,28 @@ public class ModalController {
     	
     	List<Reservation> resOnSameTableSameDay = new ArrayList<>();
     	
+    	if(!currentPeriod.equals("0") && !currentPeriod.equals("null") && currentPeriod != null) {
+			
+			currentPeriodR = ReservationTimeGroup.valueOf(currentPeriod);
+		}
+    	
     	for (var res : currentTable.getReservations()) {
 
     		String resDate = sdt.format(res.getDate());
     		
+    		ReservationTimes resPeriod = rTS.findReservationTByTime(res.getTime());
+    		
     		if(resDate.equals(dateS)) {
-    			resOnSameTableSameDay.add(res);
+    			if(currentPeriodR == null) {
+    				resOnSameTableSameDay.add(res);
+    			}
+    			else if(resPeriod.getResGroup().equals(currentPeriodR)) {
+    				resOnSameTableSameDay.add(res);
+    			}
     		}
     	}
     	
+    	model.addAttribute("currentPeriod", currentPeriodR);
     	model.addAttribute("currentDate", currentDate);
     	model.addAttribute("tableNumber", tableNumber);
 		model.addAttribute("resSameDate", resOnSameTableSameDay);
@@ -159,4 +181,20 @@ public class ModalController {
     	return "modal-SetMenu";
     }
 
+    @GetMapping("show-res-selected-menu")
+    public String showResSelectedMenu(Model model,  @RequestParam("currentPeriod") String currentPeriod) {
+    	
+    	Menu currentMenu = null;
+    	
+    	if(currentPeriod.equals("breakfast")) {
+    		currentMenu = ms.getBreakfastMenu();
+    	} else if (currentPeriod.equals("lunch")) {
+    		currentMenu = ms.getLunchMenu();
+    	} else if (currentPeriod.equals("night")) {
+    		currentMenu = ms.getEveningMenu();
+    	}
+
+    	model.addAttribute("currentMenu", currentMenu);
+    	return "modal-res-selected-menu";
+    }
 }

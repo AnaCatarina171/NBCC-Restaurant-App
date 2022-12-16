@@ -23,6 +23,9 @@ public class ReservationTimes {
 	@Column(name="RES_T_TIME", unique=true)
 	private String time;
 	
+	/*@Column(name="RES_T_TIME_D", unique=true)
+	private double timeD;*/
+	
 	@Column(name="RES_T_GROUP")
 	private ReservationTimeGroup resGroup;
 

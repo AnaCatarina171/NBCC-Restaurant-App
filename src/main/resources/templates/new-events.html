@@ -42,6 +42,9 @@
 					<a th:href="@{/reservationOptions}" class="nav-link"> Book a
 						Reservation </a>
 				</div>
+				<div class="navigation-item ">
+					<a th:href="@{/guestsEventsPage}" class="nav-link"> Next Events </a>
+				</div>
 				<div th:if="${#session != null}" class="navigation-item ">
 					<a th:href="@{/userPanel}" class=" button-6">Staff Panel</a>
 				</div>
@@ -56,92 +59,22 @@
 		</div>
 	</div>
 
-<div class="titleBackground titleBackgroundCooker">
-		<h1 class="firstPageTitle">Home</h1>
+	<div class="titleBackground titleBackgroundCooker">
+		<h1 class="firstPageTitle">Next Events</h1>
 	</div>
 	<div class="main  medium-width">
-		<div class="flex-container margin-top-6 ">
-			<div class="content-left">
-				<div th:if="${#session != null}">
-					<h2 class="titleSmall">
-						Hi, <span th:text="${#session.getAttribute('CURRENT_USER')}"></span>
-					</h2>
-				</div>
-				<h2>Come experience cuisines from around the world as our
-					students learn new cooking techniques. Each week features a banquet
-					style 3 course meal highlighting the cuisine of a different country
-					or region.</h2>
-				<br> <br> <a th:href="@{/reservationOptions}"
-					class="button-6">Book a Reservation</a>
-			</div>
-			<div class="content-right">
-				<div class="image-container">
-					<img src="img/nbccHospitality.jpg">
-				</div>
-			</div>
-		</div>
 		<div class="center-container">
-			<div class="row margin-top-6">
-				<h2 class="titleTopBorder2"></h2>
-				<div class="col-md-4">
-					<h2 class="">Additional Information</h2>
-					<div>
-					<ul class="ulHome">
-						<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-						<li>Sed ut perspiciatis unde omnis iste natus error </li>
-						<li>At vero eos et accusamus et iusto odio dignissimos</li>
-						<li> Aut illo voluptatem hic consectetur alias</li>
-					</ul>
-					</div>
-				</div>
-				<div class="col-md-4 ">
-					<h2 class="">Business Hours</h2>
-					<div class="table-container">
-						<table class="styled-table1">
-							<tbody>
-								<tr>
-									<td>Monday</td>
-									<td>Open</td>
-								</tr>
-								<tr>
-									<td>Tuesday</td>
-									<td>Open</td>
-								</tr>
-								<tr>
-									<td>Wednesday</td>
-									<td>Open</td>
-								</tr>
-								<tr>
-									<td>Thursday</td>
-									<td>Open</td>
-								</tr>
-								<tr>
-									<td>Friday</td>
-									<td>Open</td>
-								</tr>
-								<tr>
-									<td>Saturday</td>
-									<td>Closed</td>
-								</tr>
-								<tr>
-									<td>Sunday</td>
-									<td>Closed</td>
-								</tr>
-							</tbody>
-						</table>
-						<a class="nav-link" th:href="@{/reservationOptions}">Check Reservation Times*</a>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<h2 class="">Next Events at Dinning Room 1234</h2>
-					<img class="eventsImg" src="img/ukrainFest.jpg">
+			<h2 class="titleTopBorder margin-top-6">Next Events At Dining
+				Room 1234</h2>
+
+			<div>
+				<div class="eventsContainer" th:each="ev : ${displayedEvents}">
+					<h1 th:text="${ev.title}"></h1>
+					<p th:text="${ev.description}"></p>
+					<img th:src="@{${'/uploads/' + ev.imageUrl}}" width="500" />
 				</div>
 			</div>
-
-		</div>
-		<div class="center-container">
-			<h4></h4>
-
+			
 		</div>
 	</div>
 

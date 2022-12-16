@@ -39,7 +39,7 @@ body {
 	height: fit-content;
 	position: sticky;
 	top: 0;
-	/*z-index: -1;*/
+	z-index: 99;
 }
 
 .firstPageTitle {
@@ -768,7 +768,14 @@ table tr:last-child td:last-child {
 	gap: 1em;
 	display: flex;
 	flex-direction: row;
+	justify-items: center !important;
 	align-items: center;
+}
+
+.centralize{
+	margin: auto;
+	margin-bottom: 1em;
+	width: fit-content;
 }
 
 .order-content-header .form-control {
@@ -863,7 +870,7 @@ h4 {
 	font-weight: 700;
 	font-size: 20px;
 	margin-bottom: 20px;
-	color: #fff;
+	/*color: #fff;*/
 }
 
 .booking-form .form-group {
@@ -907,15 +914,19 @@ h4 {
 	box-shadow: 0px 0px 0px 2px rgba(186, 154, 123, 1);
 }
 
-.booking-form input.form-control {
+.booking-form input.form-control, .booking-form textarea.form-control {
 	padding-top: 16px;
+}
+
+.booking-form textarea.form-control {
+	padding-top: 30px;
 }
 
 .booking-form input.form-control:invalid {
 	color: rgba(255, 255, 255, 0.5);
 }
 
-.booking-form input.form-control+.form-label {
+.booking-form input.form-control+.form-label, .booking-form textarea.form-control+.form-label {
 	opacity: 1;
 	top: 10px;
 }
@@ -1009,7 +1020,7 @@ h4 {
 
 .booking-form .submit-btn {
 	color: #fff;
-	background-color: rgba(186, 154, 123, 1);
+	background-color: rgba(158, 126, 95, 1);
 	cursor: pointer;
 	font-weight: 700;
 	height: 60px;
@@ -1049,6 +1060,73 @@ h4 {
 	height: 65px;
 }
 /** End Booking Form **/
+
+/** Events **/
+
+.eventsContainer{
+	width: 80%;
+	margin: 5em auto 6em auto;
+	padding-top: 3em;
+	border-top: 1px dashed #fff;
+}
+
+.eventsContainer:first-child{
+	padding-top: 0;
+	border-top: none;
+}
+
+input[type="file"]{
+	text-align:center;
+}
+
+input::file-selector-button {
+    align-items: center;
+	background-color: #FFFFFF;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: .25rem;
+	box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+	box-sizing: border-box;
+	color: rgba(0, 0, 0, 0.85);
+	cursor: pointer;
+	display: inline-flex;
+	font-family: system-ui, -apple-system, system-ui, "Helvetica Neue",
+		Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	font-weight: 600;
+	justify-content: center;
+	line-height: 1.25;
+	margin: 0 1em 0 0;
+	min-height: 3rem;
+	padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+	/*position: relative;*/
+	text-decoration: none !important;
+	transition: all 250ms;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	vertical-align: baseline;
+	width: auto;
+}
+
+input::file-selector-button:hover, input::file-selector-button:focus {
+	border-color: rgba(0, 0, 0, 0.15);
+	box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+	color: #A08679;
+}
+
+input::file-selector-button:hover {
+	transform: translateY(-1px);
+}
+
+input::file-selector-button:active {
+	background-color: #F0F0F1;
+	border-color: rgba(0, 0, 0, 0.15);
+	box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+	color: #A08679;
+	transform: translateY(0);
+}
+
+/* End Events */
 
 /* Grid Floor Plan */
 .floor-plan-one-grid {
@@ -1877,6 +1955,7 @@ Simple CSS3 Fade-in Animation
 	border-top: solid 1px #e0e0e0;
 	position: relative;
 	background-color: #fefefe;
+	color: #000;
 	padding: 20px;
 	border-bottom-left-radius: 1rem;
 	border-bottom-right-radius: 1rem;

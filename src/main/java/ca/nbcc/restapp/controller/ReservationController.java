@@ -6,12 +6,19 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
@@ -105,10 +112,15 @@ public class ReservationController {
 	}
 
 	@GetMapping("todayFloorPlan")
-	public String todayResFloorPlan(Model model, @RequestParam(value = "date", required = false) String date)
+	public String todayResFloorPlan(Model model, @RequestParam(value = "date", required = false) String date,
+			@RequestParam(value = "currentPeriod", required = false) String currentPeriod,
+			@RequestParam("bPage") Optional<Integer> bPage, @RequestParam("bSize") Optional<Integer> bSize,
+			@RequestParam("lPage") Optional<Integer> lPage, @RequestParam("lSize") Optional<Integer> lSize,
+			@RequestParam("nPage") Optional<Integer> nPage, @RequestParam("nSize") Optional<Integer> nSize)
 			throws Exception {
 
 		SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdt2 = new SimpleDateFormat("EE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
 		String selectedDateS = null;
 
 		Date selectedDate = new Date();
@@ -119,9 +131,14 @@ public class ReservationController {
 		List<Reservation> lunchReservations = new ArrayList<>();
 		List<Reservation> nightReservations = new ArrayList<>();
 
-		if (date != null && date != "") {
+		ReservationTimeGroup currentPeriodR = null;
 
-			selectedDate = sdt.parse(date);
+		if (date != null && date != "") {
+			if (date.contains("AST")) {
+				selectedDate = sdt2.parse(date);
+			} else {
+				selectedDate = sdt.parse(date);
+			}
 
 			todayReservations = rS.getByDate(selectedDate);
 		}
@@ -146,145 +163,68 @@ public class ReservationController {
 
 		}
 
+		if (currentPeriod != null) {
+			if (!currentPeriod.equals("0"))
+				currentPeriodR = ReservationTimeGroup.valueOf(currentPeriod);
+		}
+
+		// Breakfast Res Pagination
+		int bCurrentPage = bPage.orElse(1);
+		int bPageSize = bSize.orElse(6);
+
+		Page<Reservation> bResPage = rS.findPaginated(PageRequest.of(bCurrentPage - 1, bPageSize), breakfastReservations);
+
+		model.addAttribute("bResPage", bResPage);
+
+		int bTotalPages = bResPage.getTotalPages();
+		if (bTotalPages > 0) {
+			List<Integer> bPageNumbers = IntStream.rangeClosed(1, bTotalPages).boxed().collect(Collectors.toList());
+			model.addAttribute("bPageNumbers", bPageNumbers);
+		}
+		//
+
+		// Lunch Res Pagination
+		int lCurrentPage = lPage.orElse(1);
+		int lPageSize = lSize.orElse(6);
+
+		Page<Reservation> lResPage = rS.findPaginated(PageRequest.of(lCurrentPage - 1, lPageSize), lunchReservations);
+
+		model.addAttribute("lResPage", lResPage);
+
+		int lTotalPages = lResPage.getTotalPages();
+		if (lTotalPages > 0) {
+			List<Integer> lPageNumbers = IntStream.rangeClosed(1, lTotalPages).boxed().collect(Collectors.toList());
+			model.addAttribute("lPageNumbers", lPageNumbers);
+		}
+		//
+
+		// Night Res Pagination
+		int nCurrentPage = nPage.orElse(1);
+		int nPageSize = nSize.orElse(6);
+
+		Page<Reservation> nResPage = rS.findPaginated(PageRequest.of(nCurrentPage - 1, nPageSize), nightReservations);
+
+		model.addAttribute("nResPage", nResPage);
+
+		int nTotalPages = nResPage.getTotalPages();
+		if (nTotalPages > 0) {
+			List<Integer> nPageNumbers = IntStream.rangeClosed(1, nTotalPages).boxed().collect(Collectors.toList());
+			model.addAttribute("nPageNumbers", nPageNumbers);
+		}
+		//
+
 		try {
 
-			// Adding Tables To Floor Plan - Too much code for now (will try to reduce
-			// later)
-			RTable t10 = tS.findRTableByNumber((long) 10);
-			int t10ResToday = 0;
-			RTable t11 = tS.findRTableByNumber((long) 11);
-			int t11ResToday = 0;
-			RTable t12 = tS.findRTableByNumber((long) 12);
-			int t12ResToday = 0;
-			RTable t40 = tS.findRTableByNumber((long) 40);
-			int t40ResToday = 0;
-			RTable t41 = tS.findRTableByNumber((long) 41);
-			int t41ResToday = 0;
-			RTable t42 = tS.findRTableByNumber((long) 42);
-			int t42ResToday = 0;
-			RTable t43 = tS.findRTableByNumber((long) 43);
-			int t43ResToday = 0;
-			RTable t20 = tS.findRTableByNumber((long) 20);
-			int t20ResToday = 0;
-			RTable t21 = tS.findRTableByNumber((long) 21);
-			int t21ResToday = 0;
-			RTable t22 = tS.findRTableByNumber((long) 22);
-			int t22ResToday = 0;
-			RTable t30 = tS.findRTableByNumber((long) 30);
-			int t30ResToday = 0;
-			RTable t50 = tS.findRTableByNumber((long) 50);
-			int t50ResToday = 0;
-			RTable t51 = tS.findRTableByNumber((long) 51);
-			int t51ResToday = 0;
-			RTable t52 = tS.findRTableByNumber((long) 52);
-			int t52ResToday = 0;
+			findingTablesReservations(model, sdt, selectedDateS, currentPeriodR);
 
-			for (var tR : t10.getReservations()) {
-				String resDate = sdt.format(tR.getDate());
-				if (resDate.equals(selectedDateS)) {
-					t10ResToday = 1;
-				}
-			}
-			for (var tR : t11.getReservations()) {
-				String resDate = sdt.format(tR.getDate());
-				if (resDate.equals(selectedDateS)) {
-					t11ResToday = 1;
-				}
-			}
-			for (var tR : t12.getReservations()) {
-				String resDate = sdt.format(tR.getDate());
-				if (resDate.equals(selectedDateS)) {
-					t12ResToday = 1;
-				}
-			}
-			for (var tR : t40.getReservations()) {
-				String resDate = sdt.format(tR.getDate());
-				if (resDate.equals(selectedDateS)) {
-					t40ResToday = 1;
-				}
-			}
-			for (var tR : t41.getReservations()) {
-				String resDate = sdt.format(tR.getDate());
-				if (resDate.equals(selectedDateS)) {
-					t41ResToday = 1;
-				}
-			}
-			for (var tR : t42.getReservations()) {
-				String resDate = sdt.format(tR.getDate());
-				if (resDate.equals(selectedDateS)) {
-					t42ResToday = 1;
-				}
-			}
-			for (var tR : t43.getReservations()) {
-				String resDate = sdt.format(tR.getDate());
-				if (resDate.equals(selectedDateS)) {
-					t43ResToday = 1;
-				}
-			}
-			for (var tR : t20.getReservations()) {
-				String resDate = sdt.format(tR.getDate());
-				if (resDate.equals(selectedDateS)) {
-					t20ResToday = 1;
-				}
-			}
-			for (var tR : t21.getReservations()) {
-				String resDate = sdt.format(tR.getDate());
-				if (resDate.equals(selectedDateS)) {
-					t21ResToday = 1;
-				}
-			}
-			for (var tR : t22.getReservations()) {
-				String resDate = sdt.format(tR.getDate());
-				if (resDate.equals(selectedDateS)) {
-					t22ResToday = 1;
-				}
-			}
-			for (var tR : t30.getReservations()) {
-				String resDate = sdt.format(tR.getDate());
-				if (resDate.equals(selectedDateS)) {
-					t30ResToday = 1;
-				}
-			}
-			for (var tR : t50.getReservations()) {
-				String resDate = sdt.format(tR.getDate());
-				if (resDate.equals(selectedDateS)) {
-					t50ResToday = 1;
-				}
-			}
-			for (var tR : t51.getReservations()) {
-				String resDate = sdt.format(tR.getDate());
-				if (resDate.equals(selectedDateS)) {
-					t51ResToday = 1;
-				}
-			}
-			for (var tR : t52.getReservations()) {
-				String resDate = sdt.format(tR.getDate());
-				if (resDate.equals(selectedDateS)) {
-					t52ResToday = 1;
-				}
-			}
-
-			// model.addAttribute("todayReservations", todayReservations);
 			model.addAttribute("breakfastReservations", breakfastReservations);
 			model.addAttribute("lunchReservations", lunchReservations);
 			model.addAttribute("nightReservations", nightReservations);
 
 			model.addAttribute("selectedDate", selectedDate);
 
-			model.addAttribute("t10ResToday", t10ResToday);
-			model.addAttribute("t11ResToday", t11ResToday);
-			model.addAttribute("t12ResToday", t12ResToday);
-			model.addAttribute("t40ResToday", t40ResToday);
-			model.addAttribute("t41ResToday", t41ResToday);
-			model.addAttribute("t42ResToday", t42ResToday);
-			model.addAttribute("t43ResToday", t43ResToday);
-			model.addAttribute("t20ResToday", t20ResToday);
-			model.addAttribute("t21ResToday", t21ResToday);
-			model.addAttribute("t22ResToday", t22ResToday);
-			model.addAttribute("t30ResToday", t30ResToday);
-			model.addAttribute("t50ResToday", t50ResToday);
-			model.addAttribute("t51ResToday", t51ResToday);
-			model.addAttribute("t52ResToday", t52ResToday);
+			model.addAttribute("allPeriods", ReservationTimeGroup.values());
+			model.addAttribute("currentPeriod", currentPeriod);
 
 			return "reservation-floor-plan";
 		} catch (Exception e) {
@@ -293,51 +233,16 @@ public class ReservationController {
 		}
 	}
 
-	@PostMapping("/filterReservations")
-	public String orderReservations(Model model, @RequestParam(value = "orderBy", required = false) String orderBy,
-			@RequestParam(value = "orderByP", required = false) String orderByP,
-			@RequestParam(value = "status", required = false) String status) {
-
-		List<Reservation> allReservations = rS.getAllCurrentOrFutureReservation();
-		List<Reservation> pastReservations = rS.pastReservations();
-
-		if (orderBy != null) {
-			if (orderBy.equals("newest")) {
-				allReservations = rS.orderByDate();
-			} else if (orderBy.equals("oldest")) {
-				allReservations = rS.orderByDateDesc();
-			}
-		}
-		if (orderByP != null) {
-			if (orderByP.equals("newest")) {
-				pastReservations = rS.pastReservations();
-			} else if (orderByP.equals("oldest")) {
-				pastReservations = rS.pastReservationsDesc();
-			}
-		}
-		if (status != null && !status.equals("0")) {
-			ReservationStatus rStatus = ReservationStatus.valueOf(status);
-
-			for (var r : rS.getAllCurrentOrFutureReservation()) {
-				if (!r.getStatus().equals(rStatus)) {
-					allReservations.remove(r);
-				}
-			}
-		}
-
-		model.addAttribute("pastReservations", pastReservations);
-		model.addAttribute("reservations", allReservations);
-		model.addAttribute("orderBySelected", orderBy);
-		model.addAttribute("orderBySelectedP", orderByP);
-		model.addAttribute("statusList", ReservationStatus.values());
-
-		return "reservations-display";
-	}
-
 	@GetMapping("/viewReservations")
-	public String goToReservations(Model model, String rId, String pastRId) throws Exception {
+	public String goToReservations(Model model, String rId, String pastRId,
+			@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size,
+			@RequestParam("pPage") Optional<Integer> pPage, @RequestParam("pSize") Optional<Integer> pSize,
+			@RequestParam(value = "orderBy", required = false) String orderBy,
+			@RequestParam(value = "orderByP", required = false) String orderByP,
+			@RequestParam(value = "status", required = false) String status) throws Exception {
 
 		try {
+
 			List<Reservation> allReservations = rS.getAllCurrentOrFutureReservation();
 			List<Reservation> pastReservations = rS.pastReservations();
 
@@ -365,6 +270,63 @@ public class ReservationController {
 				}
 			}
 
+			if (orderBy != null) {
+				if (orderBy.equals("newest")) {
+					allReservations = rS.orderByDate();
+				} else if (orderBy.equals("oldest")) {
+					allReservations = rS.orderByDateDesc();
+				}
+			}
+			if (orderByP != null) {
+				if (orderByP.equals("newest")) {
+					pastReservations = rS.pastReservations();
+				} else if (orderByP.equals("oldest")) {
+					pastReservations = rS.pastReservationsDesc();
+				}
+			}
+			if (status != null && !status.equals("0")) {
+				ReservationStatus rStatus = ReservationStatus.valueOf(status);
+
+				for (var r : rS.getAllCurrentOrFutureReservation()) {
+					if (!r.getStatus().equals(rStatus)) {
+						allReservations.remove(r);
+					}
+				}
+			}
+
+			// Current-Future Res Pagination
+			int currentPage = page.orElse(1);
+			int pageSize = size.orElse(12);
+
+			Page<Reservation> resPage = rS.findPaginated(PageRequest.of(currentPage - 1, pageSize), allReservations);
+
+			model.addAttribute("resPage", resPage);
+
+			int totalPages = resPage.getTotalPages();
+			if (totalPages > 0) {
+				List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+				model.addAttribute("pageNumbers", pageNumbers);
+			}
+			//
+
+			// Past Res Pagination
+			int pCurrentPage = pPage.orElse(1);
+			int pPageSize = pSize.orElse(12);
+
+			Page<Reservation> pResPage = rS.findPaginated(PageRequest.of(pCurrentPage - 1, pPageSize),
+					pastReservations);
+
+			model.addAttribute("pResPage", pResPage);
+
+			int pTotalPages = pResPage.getTotalPages();
+			if (pTotalPages > 0) {
+				List<Integer> pPageNumbers = IntStream.rangeClosed(1, pTotalPages).boxed().collect(Collectors.toList());
+				model.addAttribute("pPageNumbers", pPageNumbers);
+			}
+			//
+
+			model.addAttribute("orderBySelected", orderBy);
+			model.addAttribute("orderBySelectedP", orderByP);
 			model.addAttribute("pastReservations", pastReservations);
 			model.addAttribute("reservations", allReservations);
 			model.addAttribute("statusList", ReservationStatus.values());
@@ -439,148 +401,45 @@ public class ReservationController {
 	}
 
 	@GetMapping("/processReservation/{rId}")
-	public String processNewReservation(Model model, @PathVariable("rId") long rId) {
+	public String processNewReservation(Model model, @PathVariable("rId") long rId,
+			@RequestParam(value = "currentPeriod", required = false) String currentPeriod) {
 
 		// Store reservations with same date as current reservation
 		List<Reservation> resDateList = new ArrayList<>();
 
+		SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd");
+		String currentResDateS = null;
+
 		try {
 			Reservation rToEdit = rS.findReservationById(rId);
+
+			currentResDateS = sdt.format(rToEdit.getDate());
 
 			// Getting confirmed reservations with same date as current reservation
 			for (var r : rS.getAllReservation()) {
 
-					if (r.getDate().equals(rToEdit.getDate()) && !r.equals(rToEdit)) {
+				if (r.getDate().equals(rToEdit.getDate()) && !r.equals(rToEdit)) {
 
-						if (r.getStatus().equals(ReservationStatus.CONFIRMED)) {
+					if (r.getStatus().equals(ReservationStatus.CONFIRMED)) {
 						resDateList.add(r);
 					}
 				}
 			}
 
-			ReservationTimes currentPeriod = rTS.findReservationTByTime(rToEdit.getTime());
+			ReservationTimeGroup currentPeriodR = rTS.findReservationTByTime(rToEdit.getTime()).getResGroup();
 
-			// Adding Tables - Too much code for now (will try to reduce later)
-			RTable t10 = tS.findRTableByNumber((long) 10);
-			int t10ResToday = 0;
-			RTable t11 = tS.findRTableByNumber((long) 11);
-			int t11ResToday = 0;
-			RTable t12 = tS.findRTableByNumber((long) 12);
-			int t12ResToday = 0;
-			RTable t40 = tS.findRTableByNumber((long) 40);
-			int t40ResToday = 0;
-			RTable t41 = tS.findRTableByNumber((long) 41);
-			int t41ResToday = 0;
-			RTable t42 = tS.findRTableByNumber((long) 42);
-			int t42ResToday = 0;
-			RTable t43 = tS.findRTableByNumber((long) 43);
-			int t43ResToday = 0;
-			RTable t20 = tS.findRTableByNumber((long) 20);
-			int t20ResToday = 0;
-			RTable t21 = tS.findRTableByNumber((long) 21);
-			int t21ResToday = 0;
-			RTable t22 = tS.findRTableByNumber((long) 22);
-			int t22ResToday = 0;
-			RTable t30 = tS.findRTableByNumber((long) 30);
-			int t30ResToday = 0;
-			RTable t50 = tS.findRTableByNumber((long) 50);
-			int t50ResToday = 0;
-			RTable t51 = tS.findRTableByNumber((long) 51);
-			int t51ResToday = 0;
-			RTable t52 = tS.findRTableByNumber((long) 52);
-			int t52ResToday = 0;
+			if (currentPeriod != null) {
+				if (!currentPeriod.equals("0"))
+					currentPeriodR = ReservationTimeGroup.valueOf(currentPeriod);
+			}
 
-			for (var tR : t10.getReservations()) {
-				if (tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
-
-					t10ResToday = 1;
-				}
-			}
-			for (var tR : t11.getReservations()) {
-				if (tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
-					t11ResToday = 1;
-				}
-			}
-			for (var tR : t12.getReservations()) {
-				if (tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
-					t12ResToday = 1;
-				}
-			}
-			for (var tR : t40.getReservations()) {
-				if (tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
-					t40ResToday = 1;
-				}
-			}
-			for (var tR : t41.getReservations()) {
-				if (tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
-					t41ResToday = 1;
-				}
-			}
-			for (var tR : t42.getReservations()) {
-				if (tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
-					t42ResToday = 1;
-				}
-			}
-			for (var tR : t43.getReservations()) {
-				if (tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
-					t43ResToday = 1;
-				}
-			}
-			for (var tR : t20.getReservations()) {
-				if (tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
-					t20ResToday = 1;
-				}
-			}
-			for (var tR : t21.getReservations()) {
-				if (tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
-					t21ResToday = 1;
-				}
-			}
-			for (var tR : t22.getReservations()) {
-				if (tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
-					t22ResToday = 1;
-				}
-			}
-			for (var tR : t30.getReservations()) {
-				if (tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
-					t30ResToday = 1;
-				}
-			}
-			for (var tR : t50.getReservations()) {
-				if (tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
-					t50ResToday = 1;
-				}
-			}
-			for (var tR : t51.getReservations()) {
-				if (tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
-					t51ResToday = 1;
-				}
-			}
-			for (var tR : t52.getReservations()) {
-				if (tR.getDate().equals(rToEdit.getDate()) && isSameResPeriod(tR.getTime(), currentPeriod)) {
-					t52ResToday = 1;
-				}
-			}
+			findingTablesReservations(model, sdt, currentResDateS, currentPeriodR);
 
 			model.addAttribute("statusList", ReservationStatus.values());
+			model.addAttribute("allPeriods", ReservationTimeGroup.values());
 			model.addAttribute("rToEdit", rToEdit);
 			model.addAttribute("resDateList", resDateList);
-			model.addAttribute("currentPeriod", currentPeriod);
-
-			model.addAttribute("t10ResToday", t10ResToday);
-			model.addAttribute("t11ResToday", t11ResToday);
-			model.addAttribute("t12ResToday", t12ResToday);
-			model.addAttribute("t40ResToday", t40ResToday);
-			model.addAttribute("t41ResToday", t41ResToday);
-			model.addAttribute("t42ResToday", t42ResToday);
-			model.addAttribute("t43ResToday", t43ResToday);
-			model.addAttribute("t20ResToday", t20ResToday);
-			model.addAttribute("t21ResToday", t21ResToday);
-			model.addAttribute("t22ResToday", t22ResToday);
-			model.addAttribute("t30ResToday", t30ResToday);
-			model.addAttribute("t50ResToday", t50ResToday);
-			model.addAttribute("t51ResToday", t51ResToday);
-			model.addAttribute("t52ResToday", t52ResToday);
+			model.addAttribute("currentPeriodR", currentPeriodR);
 
 			return "reservation-process";
 		} catch (Exception e) {
@@ -680,11 +539,20 @@ public class ReservationController {
 		return "Reservation Time for " + rT.getTime() + " successfully added.";
 	}
 
+	public void deleteResTimes(Long id) {
+
+		rTS.deleteReservation(id);
+	}
+
+	public List<ReservationTimes> getAllReservationTimes() {
+
+		return rTS.getAllReservationTimes();
+	}
+
 	@PostMapping("processAddReservation")
 	public String processAddReservation(Model model, @ModelAttribute("reservationToAdd") Reservation reservationToAdd,
 			RedirectAttributes ra) {
 
-		System.out.println("test");
 		// Setting status to pending
 		reservationToAdd.setStatus(ReservationStatus.PENDING);
 
@@ -733,6 +601,22 @@ public class ReservationController {
 
 		return "redirect:/toReservationAdmin";
 	}
+	
+	private List<Object> createCustomizedPagination(Optional<Integer> page, Optional<Integer> size, List<Reservation> resList){
+		
+		int currentPage = page.orElse(1);
+		int pageSize = size.orElse(6);
+		List<Integer> pageNumbers = new ArrayList<>();
+
+		Page<Reservation> resPage = rS.findPaginated(PageRequest.of(currentPage - 1, pageSize), resList);
+
+		int totalPages = resPage.getTotalPages();
+		if (totalPages > 0) {
+			pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+		}
+		
+		return Arrays.asList(resPage, pageNumbers);
+	}
 
 	private void sendEmail(String subject, String message, String email) {
 
@@ -746,13 +630,221 @@ public class ReservationController {
 
 	}
 
-	private boolean isSameResPeriod(String time, ReservationTimes currentPeriod) throws Exception {
+	private boolean isSameResPeriod(String time, ReservationTimeGroup currentPeriod) throws Exception {
 
 		ReservationTimes newPeriod = rTS.findReservationTByTime(time);
 
-		if (currentPeriod.getResGroup().equals(newPeriod.getResGroup()))
+		if (currentPeriod.equals(newPeriod.getResGroup()))
 			return true;
 
 		return false;
+	}
+
+	/**
+	 * Goes through all the tables on the database, checking whether the table has
+	 * reservations for the same date as the selectedDateS param, and, if the
+	 * currentPeriodR is different than null, it also checks if those reservations
+	 * matches this period (Breakfast, Lunch or Night)
+	 * 
+	 * @param model
+	 * @param sdt
+	 * @param selectedDateS
+	 * @param currentPeriodR
+	 */
+	private void findingTablesReservations(Model model, SimpleDateFormat sdt, String selectedDateS,
+			ReservationTimeGroup currentPeriodR) {
+
+		try {
+
+			// Adding Tables To Floor Plan - Too much code for now (will try to reduce
+			// later)
+			RTable t10 = tS.findRTableByNumber((long) 10);
+			int t10ResToday = 0;
+			RTable t11 = tS.findRTableByNumber((long) 11);
+			int t11ResToday = 0;
+			RTable t12 = tS.findRTableByNumber((long) 12);
+			int t12ResToday = 0;
+			RTable t40 = tS.findRTableByNumber((long) 40);
+			int t40ResToday = 0;
+			RTable t41 = tS.findRTableByNumber((long) 41);
+			int t41ResToday = 0;
+			RTable t42 = tS.findRTableByNumber((long) 42);
+			int t42ResToday = 0;
+			RTable t43 = tS.findRTableByNumber((long) 43);
+			int t43ResToday = 0;
+			RTable t20 = tS.findRTableByNumber((long) 20);
+			int t20ResToday = 0;
+			RTable t21 = tS.findRTableByNumber((long) 21);
+			int t21ResToday = 0;
+			RTable t22 = tS.findRTableByNumber((long) 22);
+			int t22ResToday = 0;
+			RTable t30 = tS.findRTableByNumber((long) 30);
+			int t30ResToday = 0;
+			RTable t50 = tS.findRTableByNumber((long) 50);
+			int t50ResToday = 0;
+			RTable t51 = tS.findRTableByNumber((long) 51);
+			int t51ResToday = 0;
+			RTable t52 = tS.findRTableByNumber((long) 52);
+			int t52ResToday = 0;
+
+			for (var tR : t10.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(selectedDateS)) {
+					if (currentPeriodR == null) {
+						t10ResToday = 1;
+					} else if (isSameResPeriod(tR.getTime(), currentPeriodR)) {
+						t10ResToday = 1;
+					}
+				}
+			}
+			for (var tR : t11.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(selectedDateS)) {
+					if (currentPeriodR == null) {
+						t11ResToday = 1;
+					} else if (isSameResPeriod(tR.getTime(), currentPeriodR)) {
+						t11ResToday = 1;
+					}
+				}
+			}
+			for (var tR : t12.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(selectedDateS)) {
+					if (currentPeriodR == null) {
+						t12ResToday = 1;
+					} else if (isSameResPeriod(tR.getTime(), currentPeriodR)) {
+						t12ResToday = 1;
+					}
+				}
+			}
+			for (var tR : t40.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(selectedDateS)) {
+					if (currentPeriodR == null) {
+						t40ResToday = 1;
+					} else if (isSameResPeriod(tR.getTime(), currentPeriodR)) {
+						t40ResToday = 1;
+					}
+				}
+			}
+			for (var tR : t41.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(selectedDateS)) {
+					if (currentPeriodR == null) {
+						t41ResToday = 1;
+					} else if (isSameResPeriod(tR.getTime(), currentPeriodR)) {
+						t41ResToday = 1;
+					}
+				}
+			}
+			for (var tR : t42.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(selectedDateS)) {
+					if (currentPeriodR == null) {
+						t42ResToday = 1;
+					} else if (isSameResPeriod(tR.getTime(), currentPeriodR)) {
+						t42ResToday = 1;
+					}
+				}
+			}
+			for (var tR : t43.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(selectedDateS)) {
+					if (currentPeriodR == null) {
+						t43ResToday = 1;
+					} else if (isSameResPeriod(tR.getTime(), currentPeriodR)) {
+						t43ResToday = 1;
+					}
+				}
+			}
+			for (var tR : t20.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(selectedDateS)) {
+					if (currentPeriodR == null) {
+						t20ResToday = 1;
+					} else if (isSameResPeriod(tR.getTime(), currentPeriodR)) {
+						t20ResToday = 1;
+					}
+				}
+			}
+			for (var tR : t21.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(selectedDateS)) {
+					if (currentPeriodR == null) {
+						t21ResToday = 1;
+					} else if (isSameResPeriod(tR.getTime(), currentPeriodR)) {
+						t21ResToday = 1;
+					}
+				}
+			}
+			for (var tR : t22.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(selectedDateS)) {
+					if (currentPeriodR == null) {
+						t22ResToday = 1;
+					} else if (isSameResPeriod(tR.getTime(), currentPeriodR)) {
+						t22ResToday = 1;
+					}
+				}
+			}
+			for (var tR : t30.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(selectedDateS)) {
+					if (currentPeriodR == null) {
+						t30ResToday = 1;
+					} else if (isSameResPeriod(tR.getTime(), currentPeriodR)) {
+						t30ResToday = 1;
+					}
+				}
+			}
+			for (var tR : t50.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(selectedDateS)) {
+					if (currentPeriodR == null) {
+						t50ResToday = 1;
+					} else if (isSameResPeriod(tR.getTime(), currentPeriodR)) {
+						t50ResToday = 1;
+					}
+				}
+			}
+			for (var tR : t51.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(selectedDateS)) {
+					if (currentPeriodR == null) {
+						t51ResToday = 1;
+					} else if (isSameResPeriod(tR.getTime(), currentPeriodR)) {
+						t51ResToday = 1;
+					}
+				}
+			}
+			for (var tR : t52.getReservations()) {
+				String resDate = sdt.format(tR.getDate());
+				if (resDate.equals(selectedDateS)) {
+					if (currentPeriodR == null) {
+						t52ResToday = 1;
+					} else if (isSameResPeriod(tR.getTime(), currentPeriodR)) {
+						t52ResToday = 1;
+					}
+				}
+			}
+
+			model.addAttribute("t10ResToday", t10ResToday);
+			model.addAttribute("t11ResToday", t11ResToday);
+			model.addAttribute("t12ResToday", t12ResToday);
+			model.addAttribute("t40ResToday", t40ResToday);
+			model.addAttribute("t41ResToday", t41ResToday);
+			model.addAttribute("t42ResToday", t42ResToday);
+			model.addAttribute("t43ResToday", t43ResToday);
+			model.addAttribute("t20ResToday", t20ResToday);
+			model.addAttribute("t21ResToday", t21ResToday);
+			model.addAttribute("t22ResToday", t22ResToday);
+			model.addAttribute("t30ResToday", t30ResToday);
+			model.addAttribute("t50ResToday", t50ResToday);
+			model.addAttribute("t51ResToday", t51ResToday);
+			model.addAttribute("t52ResToday", t52ResToday);
+		} catch (Exception ex) {
+
+			String errorMessage = ex.getMessage();
+		}
 	}
 }

@@ -56,71 +56,67 @@
 			<div class="top-information center">USER INFORMATION</div>
 			<div class="content">
 				<div class="user-actions-panel row">
-					<div class=" col-md-3 alignRightBtn">
-						<a th:href="@{/viewReservations}" class="button-6 btn-res-page">All
-							Reservations</a>
+					<div class=" col-md-2 alignRightBtn">
+						<a th:href="@{/addNewEvent}" class="button-6 btn-res-page">Add
+							New Event</a>
 					</div>
-					<div class=" col-md-3 alignRightBtn">
-						<a th:href="@{/todayFloorPlan}" class="button-6 btn-res-page">Today's Floor
-							Plan</a>
-					</div>
-					<div class="col-md-6">
-						<h1>Reservations Page</h1>
+					<div class="col-md-10">
+						<h1>Events Page</h1>
 					</div>
 
 				</div>
 				<div class="cart-primary">
-					<div class="cart-primary-title cartTitleAttetion">Pending
-						Reservations</div>
-					<div th:unless="${pendingReservations.size == 0}"
-						class="cart-primary-content">
-						<div class="cart-secondary" th:each="res : ${pendingReservations}">
+					<div class="cart-primary-title cart-primary-title2">Events
+						List</div>
+					<div th:if="${allEvents.size == 0}" class="cart-primary-content">No
+						Events</div>
+					<div th:if="${allEvents.size != 0}" class="cart-primary-content">
+						<div class="cart-secondary width-15" th:each="ev : ${allEvents}">
 							<div class="cart-secondary-title">
-								Reservation #<span th:text="${res.id}"></span>
+								<strong><span th:text="${ev.title}"></span> </strong>
 							</div>
 							<div class="cart-secondary-content">
 								<div class="content-left">
-									<span th:text="${#dates.format(res.date, 'dd-MMM-yyyy')}"></span>
-									<br> Time: <span th:text="${res.time}"></span> <br>
-									Guest #: <span th:text="${res.guests}"></span>
+									Description: 
+									<br>
+									<span th:text="${ev.description}"></span>
 								</div>
 								<div class="content-right">
-									<a th:href="@{/processReservation/{rId} (rId = ${res.id})}"
-										class="button-6 btnAttention">Process</a>
+									<a th:href="@{/toEditEvent/{eId} (eId = ${ev.id})}"
+										class="button-6">Open</a> <br> <img
+										th:src="@{${'uploads/' + ev.imageUrl}}" width="50" style="margin-top: 1em;"/>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div th:if="${pendingReservations.size == 0}"
-						class="cart-primary-content">No Pending Reservations</div>
 				</div>
 
 				<div class="cart-primary">
-					<div class="cart-primary-title">Reservations For This Week</div>
-					<div th:unless="${weekReservations.size == 0}"
+					<div class="cart-primary-title cart-primary-title2">Events
+						Being Displayed</div>
+					<div th:if="${displayedEvents.size != 0}"
 						class="cart-primary-content">
-						<div class="cart-secondary" th:each="res : ${weekReservations}">
+						<div class="cart-secondary width-15"
+							th:each="ev : ${displayedEvents}">
 							<div class="cart-secondary-title">
-								Reservation <span th:text="${res.id}"></span>
+								<strong><span th:text="${ev.title}"></span> </strong>
 							</div>
 							<div class="cart-secondary-content">
 								<div class="content-left">
-									<span th:text="${#dates.format(res.date, 'dd-MMM-yyyy')}"></span>
-									<br> Time: <span th:text="${res.time}"></span> <br>
-									Guest #: <span th:text="${res.guests}"></span>
+									Description: 
+									<br>
+									<span th:text="${ev.description}"></span>
 								</div>
 								<div class="content-right">
-									<a th:href="@{/processReservation/{rId} (rId = ${res.id})}"
-										class="button-6">Details</a>
+									<a th:href="@{/toEditEvent/{eId} (eId = ${ev.id})}"
+										class="button-6">Open</a> <br> <img
+										th:src="@{${'uploads/' + ev.imageUrl}}" width="50" style="margin-top: 1em;"/>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div th:if="${weekReservations.size == 0}"
-						class="cart-primary-content">No Reservations For This Week</div>
 				</div>
 			</div>
-
 			<div class="footer footerPanel">
 				<div class="row">
 					<div class="col-md-12">© Copyright 2022. All Rights Reserved.
@@ -128,9 +124,6 @@
 				</div>
 			</div>
 		</div>
-		<div th:if="${#session == null}" class="">
-				<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
-			</div>
 	</div>
 </body>
 

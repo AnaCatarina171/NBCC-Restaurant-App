@@ -1,5 +1,5 @@
 <div>
-	<h3>Reservations at Table <span th:text="${tableNumber}"></span> on <span
+	<h3><span th:if="${currentPeriod != null}" th:text="${currentPeriod}"></span> Reservations at Table <span th:text="${tableNumber}"></span> on <span
 		th:text="${#dates.format(currentDate, 'EEE, dd MMM yyyy')}"></span> :</h3>
 	<table class="styled-table1" th:if="${resSameDate.size != 0}">
 		<tbody>
@@ -10,7 +10,7 @@
 		</tbody>
 	</table>
 	<div th:if="${resSameDate.size == 0}">
-		No Reservations
+		No <span th:if="${currentPeriod != null}" th:text="${currentPeriod}"></span> Reservations 
 	</div>
 </div>
 <div class="modal-footer height-4">

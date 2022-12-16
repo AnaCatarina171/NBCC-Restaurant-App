@@ -47,6 +47,10 @@
 					<a th:href="@{/reservationOptions}" class="nav-link"> Book a
 						Reservation </a>
 				</div>
+				<div class="navigation-item ">
+					<a th:href="@{/guestsEventsPage}" class="nav-link"> Next Events
+					</a>
+				</div>
 				<!-- 
 				<div th:if="${#session != null}" class="navigation-item">
 					<a th:href="@{/yourReservations}" class="nav-link">Your
@@ -106,8 +110,11 @@
 
 				<div class="table-container col-md-4 static-position">
 					<div>
-						<a th:href="@{/addNewReservation}" class="button-6">Breakfast
-							Menu</a>
+						<input type="button" class="button-6" data-toggle="modal"
+							data-target="#currentMenuModal"
+							th:attr="data-object-id=''+breakfast+'', data-object-name=''+'breakfast'+'', data-target='#currentMenuModal'"
+							value="Breakfast Menu">
+						<th:block th:replace="_modals :: modal('currentMenuModal')">modal</th:block>
 					</div>
 					<table class="styled-table1">
 						<thead class="theadStyle">
@@ -132,7 +139,11 @@
 
 				<div class="table-container  col-md-4 static-position">
 					<div>
-						<a th:href="@{/addNewReservation}" class="button-6">Lunch Menu</a>
+						<input type="button" class="button-6" data-toggle="modal"
+							data-target="#currentMenuModal"
+							th:attr="data-object-id=''+lunch+'', data-object-name=''+'lunch'+'', data-target='#currentMenuModal'"
+							value="Lunch Menu">
+						<th:block th:replace="_modals :: modal('currentMenuModal')">modal</th:block>
 					</div>
 					<table class="styled-table1">
 						<thead class="theadStyle">
@@ -157,7 +168,11 @@
 
 				<div class="table-container  col-md-4 static-position">
 					<div>
-						<a th:href="@{/addNewReservation}" class="button-6">Night Menu</a>
+						<input type="button" class="button-6" data-toggle="modal"
+							data-target="#currentMenuModal"
+							th:attr="data-object-id=''+night+'', data-object-name=''+'night'+'', data-target='#currentMenuModal'"
+							value="Night Menu">
+						<th:block th:replace="_modals :: modal('currentMenuModal')">modal</th:block>
 					</div>
 					<table class="styled-table1">
 						<thead class="theadStyle">
@@ -184,9 +199,9 @@
 				<h2 class="col-md-12 titleTopBorder margin-bottom-3">Cafeteria
 					Display</h2>
 			</div>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="image-floor-container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="image-floor-container">
 						<div class="floor-plan-one-grid">
 							<div class="item item-1">
 								<a class="table-button" href="#">40</a>
@@ -241,10 +256,10 @@
 							<div class="item item-22"></div>
 						</div>
 					</div>
-					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
 	<footer>
 		<div class="footer">
@@ -319,6 +334,17 @@
 					$.get("/modals/new-reservation?reservationTime="
 							+ reservationTime, function(data) {
 						$('#addReservation').find('.modal-body').html(data);
+					})
+				})
+				
+		$('#currentMenuModal').on(
+				'show.bs.modal',
+				function(event) {
+					var button = $(event.relatedTarget);
+					var currentPeriod = button.data('object-name');
+					$.get("/modals/show-res-selected-menu?currentPeriod="
+							+ currentPeriod, function(data) {
+						$('#currentMenuModal').find('.modal-body').html(data);
 					})
 				})
 		/*]]>*/

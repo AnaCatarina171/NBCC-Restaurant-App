@@ -39,10 +39,16 @@
 						<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
 					</div>
 					<div class="navigation-item">
-						<a th:href="@{/todayFloorPlan}" class="nav-link">FloorPlan</a>
+						<a th:href="@{/todayFloorPlan}" class="nav-link">Floor Plan</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/eventsPage}" class="nav-link">Events</a>
 					</div>
 					<div class="navigation-item">
 						<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
+					</div>
+					<div th:if="${#session == null}" class="">
+						<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
 					</div>
 				</div>
 			</div>
@@ -99,7 +105,10 @@
 												</div>
 											</div>
 										</div>
-										<div class="col-md-2"><a th:href="@{/deleteResTable/{rId} (rId = ${rToEdit.id})}" style="text-decoration: none;"><span class="close-css"></span></a></div>
+										<div class="col-md-2">
+											<a th:href="@{/deleteResTable/{rId} (rId = ${rToEdit.id})}"
+												style="text-decoration: none;"><span class="close-css"></span></a>
+										</div>
 									</div>
 									<div th:if="${rToEdit.table == null}" class="row">
 										<div class="col-md-12">
@@ -141,10 +150,10 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<input class="form-control" id="datefield" 
-													th:attr="min=${minDate}" th:value="${#dates.format(rToEdit.date, 'EEE, dd MMM yyyy')}" readonly>
-													
-												<span class="form-label">Date</span>
+												<input class="form-control" id="datefield"
+													th:attr="min=${minDate}"
+													th:value="${#dates.format(rToEdit.date, 'EEE, dd MMM yyyy')}"
+													readonly> <span class="form-label">Date</span>
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -282,11 +291,29 @@
 								<div class="cart-primary-title margin-top-5">Floor Plan -
 									Select a table to place reservation</div>
 								<div class="cart-primary-content no-flex">
+									<form th:action="@{/processReservation/{rId} (rId = ${rToEdit.id})}" method="GET"
+										class="order-form">
+										<div class="order-content-header centralize">
+											<div>Choose a period:</div>
+											<div class="form-group">
+												<select class="form-control selectStatus"
+													name="currentPeriod">
+													<option value="0" hidden>-- Select One --</option>
+													<option th:each="aP : ${allPeriods}" th:value="${aP}"
+														th:text="${aP}"></option>
+												</select><span class="select-arrow"></span>
+											</div>
+											<input type="submit" class="button-31 addElement "
+												value="Apply">
+										</div>
+									</form>
 									<div class="row">
 										<div class="col-md-12">
-											<h3>------------------------------------------ &nbsp; 
-											<span th:text="${currentPeriod.resGroup}"></span> Reservations 
-											&nbsp; ------------------------------------------</h3>
+											<h3>
+												------------------------------------------ &nbsp; <span
+													th:text="${currentPeriodR}"></span> Reservations &nbsp;
+												------------------------------------------
+											</h3>
 										</div>
 									</div>
 									<div class="row">
@@ -437,9 +464,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="margin-top-5">
-			
-			</div>
+			<div class="margin-top-5"></div>
 			<div class="footer footerPanel">
 				<div class="row">
 					<div class="col-md-12">© Copyright 2022. All Rights Reserved.
@@ -465,8 +490,8 @@
 			</div>
 		</div>
 		<div th:if="${#session == null}" class="">
-				<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
-			</div>
+			<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
+		</div>
 	</div>
 
 	<!-- Modal Delete Res -->
@@ -512,7 +537,7 @@
 
 	    $('#addTableToRes').on('show.bs.modal', function (event) {
 	    	var resNumber = [[${rToEdit.id}]];
-	    	var currentPeriod = [[${currentPeriod.id}]];
+	    	var currentPeriod = [[${currentPeriodR}]];
 	    	var button = $(event.relatedTarget);
 	        var table = button.data('object-name');
 	        $.get("/modals/add-table-to-res?table=" + table + "&resNumber=" + resNumber 

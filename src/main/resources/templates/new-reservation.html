@@ -40,7 +40,7 @@
 				<div class="col-md-6">
 					<div class="form-group">
 						<select class="form-control" th:field="*{kids}" required>
-							<option value="0" selected hidden>Kids</option>
+							<option value="0" selected>Kids</option>
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -55,7 +55,7 @@
 				<div class="col-md-4">
 					<div class="form-group">
 						<select class="form-control" th:field="*{vegetarian}" required>
-							<option value="0" selected hidden>How many?</option>
+							<option value="0" selected>How many?</option>
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -69,7 +69,7 @@
 				<div class="col-md-4">
 					<div class="form-group">
 						<select class="form-control" th:field="*{vegan}" required>
-							<option value="0" selected hidden>How many?</option>
+							<option value="0" selected>How many?</option>
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -99,7 +99,11 @@
 					</div>
 				</div>
 			</div>
-
+			<div class="row">
+				<div class="col-md-12" style="color: rgba(227, 227, 227, 0.8)">
+					* For Kids, Vegetarian and Vegan sections, don't choose any option if it doesn't apply to you
+				</div>
+			</div>
 			<hr style="border-top: 1px solid rgba(218, 218, 218, 1);">
 			<div>
 				<h4>Personal Information</h4>

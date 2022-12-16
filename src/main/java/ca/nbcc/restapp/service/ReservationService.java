@@ -1,9 +1,19 @@
 package ca.nbcc.restapp.service;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import ca.nbcc.restapp.model.Reservation;
@@ -84,4 +94,23 @@ public class ReservationService {
 			
 		rR.deleteById(rMID_LONG);
 	}
+	
+	public Page<Reservation> findPaginated(Pageable pageable, List<Reservation> resList) {
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<Reservation> list;
+
+        if (resList.size() < startItem) {
+            list = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, resList.size());
+            list = resList.subList(startItem, toIndex);
+        }
+
+        Page<Reservation> resPage
+          = new PageImpl<Reservation>(list, PageRequest.of(currentPage, pageSize), resList.size());
+
+        return resPage;
+    }
 }
