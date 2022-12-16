@@ -20,29 +20,45 @@ public class Event {
 	@Column(name = "EVENT_ID", unique = true)
 	private Long id;
 	
+	@Column(name="EVENT_TITLE", unique = true)
+	private String title;
+	
 	@Column(name="EVENT_DESCRIPTION")
 	private String description;
 	
 	@Column(name="EVENT_IMAGE_URL")
 	private String imageUrl;
+	
+	@Column(name="EVENT_ISDISPLAYED")
+	private boolean isDisplayed;
 
 	public Event() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Event(String description, String imageUrl) {
+	public Event(String title, String description, String imageUrl, boolean isDisplayed) {
 		super();
+		this.title = title;
 		this.description = description;
 		this.imageUrl = imageUrl;
+		this.isDisplayed = isDisplayed;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getDescription() {
@@ -59,6 +75,14 @@ public class Event {
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+
+	public boolean isDisplayed() {
+		return isDisplayed;
+	}
+
+	public void setDisplayed(boolean isDisplayed) {
+		this.isDisplayed = isDisplayed;
 	}
 
 	@Override

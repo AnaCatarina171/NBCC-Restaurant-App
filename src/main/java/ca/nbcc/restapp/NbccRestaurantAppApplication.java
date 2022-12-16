@@ -69,9 +69,9 @@ public class NbccRestaurantAppApplication{
 		//		new DishService(dishRepo), new EmployeeService(eRepo), new MenuService(mRepo), new ProductService(pRepo))
 
 		
-		/*ReservationController resTestController = new ReservationController(new ReservationService(resRepo), new ReservationTimeService(resTRepo), null);
+		//ReservationController resTestController = new ReservationController(new ReservationService(resRepo), new ReservationTimeService(resTRepo), null);
 		
-		TestController tC = new TestController(new RTableService(tableRepo));
+		/*TestController tC = new TestController(new RTableService(tableRepo));
 
 		for(var t : tC.showTables()) {
 			

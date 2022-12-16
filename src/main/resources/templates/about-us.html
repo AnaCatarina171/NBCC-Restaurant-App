@@ -44,6 +44,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
 					<a th:href="@{/reservationOptions}" class="nav-link"> Book a
 						Reservation </a>
 				</div>
+				<div class="navigation-item ">
+					<a th:href="@{/guestsEventsPage}" class="nav-link"> Next Events </a>
+				</div>
 				<div th:if="${#session != null}" class="navigation-item ">
 					<a th:href="@{/userPanel}" class=" button-6">Staff Panel</a>
 				</div>

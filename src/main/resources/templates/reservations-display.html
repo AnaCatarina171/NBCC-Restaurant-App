@@ -36,10 +36,16 @@
 						<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
 					</div>
 					<div class="navigation-item">
-						<a th:href="@{/todayFloorPlan}" class="nav-link">FloorPlan</a>
+						<a th:href="@{/todayFloorPlan}" class="nav-link">Floor Plan</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/eventsPage}" class="nav-link">Events</a>
 					</div>
 					<div class="navigation-item">
 						<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
+					</div>
+					<div th:if="${#session == null}" class="">
+						<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
 					</div>
 				</div>
 			</div>
@@ -66,7 +72,7 @@
 						</div>
 					</div>
 					<div class="col-md-3">
-						<form th:action="@{/filterReservations}" method="POST"
+						<form th:action="@{/viewReservations}" method="GET"
 							class="order-form">
 							<div class="orderBy order-content-header">
 								<div class="orderBy-title">Order by:</div>
@@ -101,10 +107,10 @@
 						</form>
 					</div>
 					<div class="col-md-3">
-						
-							<form th:action="@{/filterReservations}" method="POST"
-								class="order-form">
-								<div class="order-content-header">
+
+						<form th:action="@{/viewReservations}" method="GET"
+							class="order-form">
+							<div class="order-content-header">
 								<div class="form-group">
 									<select class="form-control selectStatus" name="status">
 										<option value="0">All Types</option>
@@ -114,8 +120,8 @@
 								</div>
 								<input type="submit" class="button-31 addElement " value="Apply">
 							</div>
-							</form>
-						
+						</form>
+
 					</div>
 				</div>
 
@@ -123,10 +129,9 @@
 				<div class="cart-primary">
 
 					<div class="cart-primary-content">
-						<div th:if="${reservations.size == 0}">
-							No Reservations
-						</div>
-						<div class="cart-secondary width-15" th:each="res : ${reservations}">
+						<div th:if="${reservations.size == 0}">No Reservations</div>
+						<div class="cart-secondary width-15"
+							th:each="res : ${resPage.content}">
 							<div class="cart-secondary-title">
 								<strong>Reservation #<span th:text="${res.id}"></span></strong>
 							</div>
@@ -145,6 +150,21 @@
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="pagination">
+					<div th:if="${resPage.totalPages > 0}" 
+						th:each="pageNumber : ${pageNumbers}">
+						<a
+							th:if="${orderBySelected != null}"
+							th:href="@{/viewReservations(size=${resPage.size}, page=${pageNumber}, orderByP=${orderBySelected})}"
+							th:text=${pageNumber}
+							th:class="${pageNumber==resPage.number + 1} ? active"></a>
+						<a
+							th:if="${orderBySelected == null}"
+							th:href="@{/viewReservations(size=${resPage.size}, page=${pageNumber})}"
+							th:text=${pageNumber}
+							th:class="${pageNumber==resPage.number + 1} ? active"></a>
+					</div>
 					</div>
 				</div>
 
@@ -166,7 +186,7 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<form th:action="@{/filterReservations}" method="POST"
+							<form th:action="@{/viewReservations}" method="GET"
 								class="order-form">
 								<div class="orderBy order-content-header">
 									<div class="orderBy-title">Order by:</div>
@@ -207,10 +227,9 @@
 						</div>
 					</div>
 					<div class="cart-primary-content">
-						<div th:if="${pastReservations.size == 0}">
-							No Reservations
-						</div>
-						<div class="cart-secondary width-15" th:each="res : ${pastReservations}">
+						<div th:if="${pastReservations.size == 0}">No Reservations</div>
+						<div class="cart-secondary width-15"
+							th:each="res : ${pResPage.content}">
 							<div class="cart-secondary-title">
 								<strong>Reservation #<span th:text="${res.id}"></span></strong>
 							</div>
@@ -230,6 +249,22 @@
 							</div>
 						</div>
 					</div>
+					<div class="pagination">
+					<div th:if="${pResPage.totalPages > 0}" 
+						th:each="pageNumber : ${pPageNumbers}">
+						<a
+							th:if="${orderBySelectedP != null}"
+							th:href="@{/viewReservations(pSize=${pResPage.size}, pPage=${pageNumber}, orderByP=${orderBySelectedP})}"
+							th:text=${pageNumber}
+							th:class="${pageNumber==pResPage.number + 1} ? active"></a>
+						<a
+							th:if="${orderBySelectedP == null}"
+							th:href="@{/viewReservations(pSize=${pResPage.size}, pPage=${pageNumber})}"
+							th:text=${pageNumber}
+							th:class="${pageNumber==pResPage.number + 1} ? active"></a>
+					</div>
+					</div>
+					
 				</div>
 			</div>
 
@@ -241,8 +276,8 @@
 			</div>
 		</div>
 		<div th:if="${#session == null}" class="">
-				<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
-			</div>
+			<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
+		</div>
 
 
 	</div>
