@@ -1,6 +1,8 @@
 package ca.nbcc.restapp.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -20,7 +22,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="MENU_Table")
+@Table(name = "MENU_Table")
 public class Menu {
 
 	@Id
@@ -28,32 +30,29 @@ public class Menu {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MENU_SEQ_GEN")
 	@Column(name = "MENU_ID", unique = true)
 	private Long id;
-	
-	@Column(name="MENU_TITLE")
+
+	@Column(name = "MENU_TITLE")
 	private String title;
-	
-	@Column(name="MENU_DESCRIPTION")
+
+	@Column(name = "MENU_DESCRIPTION")
 	private String description;
-	
-	@Column(name="MENU_TYPE")
+
+	@Column(name = "MENU_TYPE")
 	private String type;
-	
-	@Column(name="MENU_DATE")
+
+	@Column(name = "MENU_DATE")
 	private LocalDate date;
-	
-	@Column(name="MENU_TODISPLAY")
-	private Boolean toDisplay; 
-	
-	//@OneToMany(mappedBy="menu", cascade = CascadeType.ALL, orphanRemoval = true)
+
+	@Column(name = "MENU_TODISPLAY")
+	private Boolean toDisplay;
+
+	// @OneToMany(mappedBy="menu", cascade = CascadeType.ALL, orphanRemoval = true)
 	@ManyToMany
-	@JoinTable(
-			name="menu_dishes",
-			joinColumns = @JoinColumn(name = "menu_id"), 
-			inverseJoinColumns = @JoinColumn(name = "dish_id"))
-	private Set<Dish> dishList;
-	
+	@JoinTable(name = "menu_dishes", joinColumns = @JoinColumn(name = "menu_id"), inverseJoinColumns = @JoinColumn(name = "dish_id"))
+	private List<Dish> dishList;
+
 	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name="FK_REST_ID")
+	@JoinColumn(name = "FK_REST_ID")
 	private Restaurant restaurant;
 
 	public Menu() {
@@ -101,7 +100,7 @@ public class Menu {
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
-	
+
 	public String getType() {
 		return type;
 	}
@@ -116,7 +115,7 @@ public class Menu {
 
 	public void setRestaurant(Restaurant restaurant) {
 		this.restaurant = restaurant;
-	}	
+	}
 
 	public Boolean getToDisplay() {
 		return toDisplay;
@@ -125,13 +124,62 @@ public class Menu {
 	public void setToDisplay(Boolean toDisplay) {
 		this.toDisplay = toDisplay;
 	}
-	
-	public Set<Dish> getDishList() {
+
+	public List<Dish> getDishList() {
+		Collections.sort(dishList);
 		return dishList;
 	}
 
-	public void setDishList(Set<Dish> dishList) {
+	public void setDishList(List<Dish> dishList) {
 		this.dishList = dishList;
+	}
+
+	public List<Dish> getAppList() {
+		List<Dish> appList = new ArrayList<>();
+
+		for (Dish dish : this.getDishList()) {
+			if (dish.getCategory() == DishCategory.Appetizer) {
+				appList.add(dish);
+			}
+		}
+
+		return appList;
+	}
+
+	public List<Dish> getEntreeList() {
+		List<Dish> entreeList = new ArrayList<>();
+
+		for (Dish dish : this.getDishList()) {
+			if (dish.getCategory() == DishCategory.Entree) {
+				entreeList.add(dish);
+			}
+		}
+
+		return entreeList;
+	}
+
+	public List<Dish> getDessertList() {
+		List<Dish> dessertList = new ArrayList<>();
+
+		for (Dish dish : this.getDishList()) {
+			if (dish.getCategory() == DishCategory.Dessert) {
+				dessertList.add(dish);
+			}
+		}
+
+		return dessertList;
+	}
+
+	public List<Dish> getDrinkList() {
+		List<Dish> drinkList = new ArrayList<>();
+
+		for (Dish dish : this.getDishList()) {
+			if (dish.getCategory() == DishCategory.Drink) {
+				drinkList.add(dish);
+			}
+		}
+
+		return drinkList;
 	}
 
 	@Override
@@ -159,6 +207,4 @@ public class Menu {
 				+ date + ", toDisplay=" + toDisplay + ", dishList=" + dishList + ", restaurant=" + restaurant + "]";
 	}
 
-	
-	
 }

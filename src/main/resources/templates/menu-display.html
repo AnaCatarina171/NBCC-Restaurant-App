@@ -67,84 +67,182 @@
 			<h3>What Do We Offer?</h3>
 			<h2>Every week we feature a unique banquet style 3 course meal
 				inspired in different nationalities and cultures.</h2>
-			<div class="row margin-top-5">
-				<div class="col-md-4">
+			<div class="grid-menu-container">
+				<div class="grid-menu">
 					<h2>Breakfast Menu</h2>
 					<div th:if="${breakfastMenu} == null">
 						<h3>No breakfast menu to display yet.</h3>
 					</div>
 					<div th:unless="${breakfastMenu} == null">
-						<div class="table-container">
-							<table class="styled-table1">
-								<tbody>
-									<tr>
-										<td>Menu Title</td>
-									</tr>
-									<tr>
-										<td th:text="${breakfastMenu.title}"></td>
-									</tr>
-									<tr>
-										<td>Dish List</td>
-									</tr>
-									<tr th:each="dish : ${breakfastMenu.getDishList()}">
-										<td th:text="${dish.name}"></td>
-										<td th:text="${dish.Nationality}"></td>
-									</tr>
-								</tbody>
-							</table>
+						<div class="menu-display-container">
+							<div class="menu-title center">
+								<h2 th:text="${breakfastMenu.title}"></h2>
+							</div>
+							<div class="menu-details">
+								<div class="menu-section-template" th:if="${breakfastMenu.getAppList().size()} > 0 ">
+									<div class="menu-section-title">Appetizer</div>
+									<div class="menu-section-content">
+										<div th:each="dish : ${breakfastMenu.getAppList()}"
+											class="menu-section-dish">
+											<div th:text="${dish.name}" class="menu-dish-title"></div>
+											<div th:text="${dish.description}"
+												class="menu-dish-description"></div>
+										</div>
+									</div>
+								</div>
+								<div class="menu-section-template" th:if="${breakfastMenu.getEntreeList().size()} > 0 ">
+									<div class="menu-section-title">Entree</div>
+									<div class="menu-section-content">
+										<div th:each="dish : ${breakfastMenu.getEntreeList()}"
+											class="menu-section-dish">
+											<div th:text="${dish.name}" class="menu-dish-title"></div>
+											<div th:text="${dish.description}"
+												class="menu-dish-description"></div>
+										</div>
+									</div>
+								</div>
+								<div class="menu-section-template" th:if="${breakfastMenu.getDessertList().size()} > 0 ">
+									<div class="menu-section-title">Dessert</div>
+									<div class="menu-section-content">
+										<div th:each="dish : ${breakfastMenu.getDessertList()}"
+											class="menu-section-dish">
+											<div th:text="${dish.name}" class="menu-dish-title"></div>
+											<div th:text="${dish.description}"
+												class="menu-dish-description"></div>
+										</div>
+									</div>
+								</div>
+								<div class="menu-section-template" th:if="${breakfastMenu.getDrinkList().size()} > 0 ">
+									<div class="menu-section-title">Drink</div>
+									<div class="menu-section-content">
+										<div th:each="dish : ${breakfastMenu.getDrinkList()}"
+											class="menu-section-dish">
+											<div th:text="${dish.name}" class="menu-dish-title"></div>
+											<div th:text="${dish.description}"
+												class="menu-dish-description"></div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4 ">
+				<div class="grid-menu">
 					<h2>Lunch Menu</h2>
 					<div th:if="${lunchMenu} == null">
 						<h3>No evening menu to display yet.</h3>
 					</div>
 					<div th:unless="${lunchMenu} == null">
-						<div class="table-container">
-							<table class="styled-table1">
-								<tbody>
-									<tr>
-										<td>Menu Title</td>
-									</tr>
-									<tr>
-										<td th:text="${lunchMenu.title}"></td>
-									</tr>
-									<tr>
-										<td>Dish List</td>
-									</tr>
-									<tr th:each="dish : ${lunchMenu.getDishList()}">
-										<td th:text="${dish.name}"></td>
-										<td th:text="${dish.Nationality}"></td>
-									</tr>
-								</tbody>
-							</table>
+						<div class="menu-display-container">
+							<div class="menu-title center">
+								<h2 th:text="${lunchMenu.title}"></h2>
+							</div>							
+							<div class="menu-details">
+								<div class="menu-section-template"  th:if="${lunchMenu.getAppList().size()} > 0 ">
+									<div class="menu-section-title">Appetizer</div>
+									<div class="menu-section-content">
+										<div th:each="dish : ${lunchMenu.getAppList()}"
+											class="menu-section-dish">
+											<div th:text="${dish.name}" class="menu-dish-title"></div>
+											<div th:text="${dish.description}"
+												class="menu-dish-description"></div>
+										</div>
+									</div>
+								</div>
+								<div  class="menu-section-template" th:if="${lunchMenu.getEntreeList().size()} > 0 ">
+									<div class="menu-section-title">Entree</div>
+									<div class="menu-section-content">
+										<div th:each="dish : ${lunchMenu.getEntreeList()}"
+											class="menu-section-dish">
+											<div th:text="${dish.name}" class="menu-dish-title"></div>
+											<div th:text="${dish.description}"
+												class="menu-dish-description"></div>
+										</div>
+									</div>
+								</div>
+								<div class="menu-section-template" th:if="${lunchMenu.getDessertList().size()} > 0 ">
+									<div class="menu-section-title">Dessert</div>
+									<div class="menu-section-content">
+										<div th:each="dish : ${breakfastMenu.getDessertList()}"
+											class="menu-section-dish">
+											<div th:text="${dish.name}" class="menu-dish-title"></div>
+											<div th:text="${dish.description}"
+												class="menu-dish-description"></div>
+										</div>
+									</div>
+								</div>
+								<div class="menu-section-template" th:if="${lunchMenu.getDrinkList().size()} > 0 ">
+									<div class="menu-section-title">Drink</div>
+									<div class="menu-section-content">
+										<div th:each="dish : ${lunchMenu.getDrinkList()}"
+											class="menu-section-dish">
+											<div th:text="${dish.name}" class="menu-dish-title"></div>
+											<div th:text="${dish.description}"
+												class="menu-dish-description"></div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="grid-menu">
 					<h2>Evening Menu</h2>
 					<div th:if="${eveningMenu} == null">
 						<h3>No evening menu to display yet.</h3>
 					</div>
 					<div th:unless="${eveningMenu} == null">
-						<table class="styled-table1">
-							<tbody>
-								<tr>
-									<td>Menu Title</td>
-								</tr>
-								<tr>
-									<td th:text="${eveningMenu.title}"></td>
-								</tr>
-								<tr>
-									<td>Dish List</td>
-								</tr>
-								<tr th:each="dish : ${eveningMenu.getDishList()}">
-									<td th:text="${dish.name}"></td>
-									<td th:text="${dish.Nationality}"></td>
-								</tr>
-							</tbody>
-						</table>
+						<div class="menu-display-container">
+							<div class="menu-title center">
+								<h2 th:text="${eveningMenu.title}"></h2>
+							</div>
+							<div class="menu-details">
+								<div class="menu-section-template"  th:if="${eveningMenu.getAppList().size()} > 0 ">
+									<div class="menu-section-title">Appetizer</div>
+									<div class="menu-section-content">
+										<div th:each="dish : ${eveningMenu.getAppList()}"
+											class="menu-section-dish">
+											<div th:text="${dish.name}" class="menu-dish-title"></div>
+											<div th:text="${dish.description}"
+												class="menu-dish-description"></div>
+										</div>
+									</div>
+								</div>
+								<div class="menu-section-template"  th:if="${eveningMenu.getEntreeList().size()} > 0 ">
+									<div class="menu-section-title">Entree</div>
+									<div class="menu-section-content">
+										<div th:each="dish : ${eveningMenu.getEntreeList()}"
+											class="menu-section-dish">
+											<div th:text="${dish.name}" class="menu-dish-title"></div>
+											<div th:text="${dish.description}"
+												class="menu-dish-description"></div>
+										</div>
+									</div>
+								</div>
+								<div class="menu-section-template"  th:if="${eveningMenu.getDessertList().size()} > 0 ">
+									<div class="menu-section-title">Dessert</div>
+									<div class="menu-section-content">
+										<div th:each="dish : ${eveningMenu.getDessertList()}"
+											class="menu-section-dish">
+											<div th:text="${dish.name}" class="menu-dish-title"></div>
+											<div th:text="${dish.description}"
+												class="menu-dish-description"></div>
+										</div>
+									</div>
+								</div>
+								<div class="menu-section-template" th:if="${eveningMenu.getDrinkList().size()} > 0 ">
+									<div class="menu-section-title">Drink</div>
+									<div class="menu-section-content">
+										<div th:each="dish : ${eveningMenu.getDrinkList()}"
+											class="menu-section-dish">
+											<div th:text="${dish.name}" class="menu-dish-title"></div>
+											<div th:text="${dish.description}"
+												class="menu-dish-description"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
