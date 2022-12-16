@@ -61,7 +61,7 @@ public class IndexController {
 	@GetMapping("/userPanel")
 	public String goToUserPanel(Model model) {
 		
-		List<Reservation> allReservations = rS.getAllReservation();
+		List<Reservation> allReservations = rS.getAllCurrentOrFutureReservation();
 		List<Reservation> pendingReservations = new ArrayList<>();
 		
 		for(var res : allReservations) {

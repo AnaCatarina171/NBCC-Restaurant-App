@@ -37,7 +37,7 @@
 					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
 				</div>
 				<div class="navigation-item">
-					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
+					<a th:href="@{/todayFloorPlan}" class="nav-link">FloorPlan</a>
 				</div>
 				<div class="navigation-item">
 					<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
@@ -47,7 +47,7 @@
 			<div></div>
 		</div>
 
-		<div class="main">
+		<div class="main" th:if="${#session != null}">
 			<div class="top-information center">USER INFORMATION</div>
 			<div class="content">
 
@@ -78,9 +78,13 @@
 						</div>
 						<button id="btnMenuDetails" class="button-6">Submit</button>
 					</form>
+				
 			</div>
 		</div>
 	</div>
+	<div th:if="${#session == null}" class="">
+				<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
+			</div>
 </body>
 
 </html>

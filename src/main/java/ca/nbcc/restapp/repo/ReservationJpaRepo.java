@@ -18,6 +18,8 @@ public interface ReservationJpaRepo extends JpaRepository<Reservation, Long>{
 
 	List<Reservation> findByOrderByDateAscTimeDesc();
 	
+	List<Reservation> findByDate(Date d);
+	
 	@Query(customQueryFutureRes)
 	List<Reservation> findByOrderByDate();
 	

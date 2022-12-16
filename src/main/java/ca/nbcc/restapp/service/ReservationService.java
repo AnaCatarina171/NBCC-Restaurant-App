@@ -1,5 +1,6 @@
 package ca.nbcc.restapp.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,22 @@ public class ReservationService {
 		return null;
 	}
 	
-	public List<Reservation> getAllReservation(){
-		//return rR.findAll();
+	public List<Reservation> getAllCurrentOrFutureReservation(){
 		return rR.findByOrderByDate();
+	}
+	
+	public List<Reservation> getAllReservation(){
+		return rR.findAll();
+	}
+	
+	public List<Reservation> getByDate(Date d){
+		//return rR.findAll();
+		return rR.findByDate(d);
+	}
+	
+	public List<Reservation> getByDate(Date d){
+		//return rR.findAll();
+		return rR.findByDate(d);
 	}
 	
 	public List<Reservation> orderByDate(){

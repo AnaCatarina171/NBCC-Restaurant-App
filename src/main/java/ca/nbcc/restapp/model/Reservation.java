@@ -38,9 +38,6 @@ public class Reservation {
 	@Column(name="RES_GUESTS")
 	private int guests;
 	
-	@Column(name="RES_ADULTS")
-	private int adults;
-	
 	@Column(name="RES_KIDS")
 	private int kids;
 	
@@ -88,11 +85,10 @@ public class Reservation {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Reservation(Date dateTime, int adults, int kids, int vegetarian, int vegan,
+	public Reservation(Date dateTime, int kids, int vegetarian, int vegan,
 			boolean wheelChair, Restaurant restaurant, Customer customer) {
 		super();
 		this.date = dateTime;
-		this.adults = adults;
 		this.kids = kids;
 		this.vegetarian = vegetarian;
 		this.vegan = vegan;
@@ -132,14 +128,6 @@ public class Reservation {
 
 	public void setAdditionalInfo(String additionalInfo) {
 		this.additionalInfo = additionalInfo;
-	}
-
-	public int getAdults() {
-		return adults;
-	}
-
-	public void setAdults(int adults) {
-		this.adults = adults;
 	}
 
 	public int getKids() {
@@ -248,7 +236,7 @@ public class Reservation {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(adults, customer, date, id, kids, restaurant, vegan, vegetarian,
+		return Objects.hash( customer, date, id, kids, restaurant, vegan, vegetarian,
 				wheelChair);
 	}
 
@@ -261,7 +249,7 @@ public class Reservation {
 		if (getClass() != obj.getClass())
 			return false;
 		Reservation other = (Reservation) obj;
-		return adults == other.adults && Objects.equals(customer, other.customer)
+		return Objects.equals(customer, other.customer)
 				&& Objects.equals(date, other.date) && Objects.equals(id, other.id) && kids == other.kids
 				&& Objects.equals(restaurant, other.restaurant)
 				&& vegan == other.vegan && vegetarian == other.vegetarian && wheelChair == other.wheelChair;
@@ -269,9 +257,8 @@ public class Reservation {
 
 	@Override
 	public String toString() {
-		return "Reservation [id=" + id + ", dateTime=" + date + ", adults="
-				+ adults + ", kids=" + kids + ", vegetarian=" + vegetarian + ", vegan=" + vegan + ", wheelChair="
-				+ wheelChair + ", restaurant=" + restaurant + ", customer=" + customer + "]";
+		return "Reservation [id=" + id + ", dateTime=" + date + ", kids=" + kids + ", vegetarian=" + vegetarian
+				+ ", vegan=" + vegan + ", wheelChair=" + wheelChair + ", restaurant=" + restaurant + ", customer=" + customer + "]";
 	}
 
 	

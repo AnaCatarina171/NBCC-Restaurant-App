@@ -39,7 +39,7 @@
 						<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
 					</div>
 					<div class="navigation-item">
-						<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
+						<a th:href="@{/todayFloorPlan}" class="nav-link">FloorPlan</a>
 					</div>
 					<div class="navigation-item">
 						<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
@@ -49,7 +49,7 @@
 			<div></div>
 		</div>
 
-		<div class="main">
+		<div class="main" th:if="${#session != null}">
 			<div class="top-information center">USER INFORMATION</div>
 			<div class="content">
 				<div class="container">
@@ -61,7 +61,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<div id="booking" class="col-md-7">
+						<div id="booking" class="col-md-6">
 							<h1>
 								Reservation #<span th:text="${rToEdit.id}"></span>
 							</h1>
@@ -69,7 +69,8 @@
 								<form th:action="@{/updateReservation}" method="POST"
 									th:object="${rToEdit}">
 									<input type="text" th:field="*{id}" hidden> <input
-										type="text" th:field="*{table}" hidden>
+										type="text" th:field="*{table}" hidden> <input
+										type="date" th:field="*{date}" hidden>
 									<div class="row">
 										<div class="col-md-3"></div>
 										<div class="col-md-2">
@@ -93,12 +94,12 @@
 										</div>
 										<div class="col-md-5">
 											<div class="form-group">
-												<div class="form-control div-form-control" id="datefield">
+												<div class="form-control div-form-control" id="">
 													<span th:text="*{table.number}"></span>
 												</div>
 											</div>
 										</div>
-										<div class="col-md-2"></div>
+										<div class="col-md-2"><a th:href="@{/deleteResTable/{rId} (rId = ${rToEdit.id})}" style="text-decoration: none;"><span class="close-css"></span></a></div>
 									</div>
 									<div th:if="${rToEdit.table == null}" class="row">
 										<div class="col-md-12">
@@ -140,8 +141,9 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<input class="form-control" id="datefield" type='date'
-													th:attr="min=${minDate}" th:field="*{date}" readonly>
+												<input class="form-control" id="datefield" 
+													th:attr="min=${minDate}" th:value="${#dates.format(rToEdit.date, 'EEE, dd MMM yyyy')}" readonly>
+													
 												<span class="form-label">Date</span>
 											</div>
 										</div>
@@ -160,14 +162,7 @@
 													class="form-label">Guests</span>
 											</div>
 										</div>
-										<div class="col-md-3">
-											<div class="form-group">
-												<input class="form-control" id="" type='text'
-													th:field="*{adults}" readonly> <span
-													class="form-label">Adults</span>
-											</div>
-										</div>
-										<div class="col-md-3">
+										<div class="col-md-6">
 											<div class="form-group">
 												<input class="form-control" id="" type='text'
 													th:field="*{kids}" readonly> <span
@@ -252,7 +247,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-5">
+						<div class="col-md-6">
 							<h1>
 								Reservations For <span
 									th:text="${#dates.format(rToEdit.date, 'EEE, dd MMM yyyy')}"></span>
@@ -283,17 +278,15 @@
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
 							<div class="cart-primary">
 								<div class="cart-primary-title margin-top-5">Floor Plan -
 									Select a table to place reservation</div>
 								<div class="cart-primary-content no-flex">
 									<div class="row">
 										<div class="col-md-12">
-											<h3><span th:text="${currentPeriod.resGroup}"></span> Reservations</h3>
+											<h3>------------------------------------------ &nbsp; 
+											<span th:text="${currentPeriod.resGroup}"></span> Reservations 
+											&nbsp; ------------------------------------------</h3>
 										</div>
 									</div>
 									<div class="row">
@@ -441,9 +434,11 @@
 								</div>
 							</div>
 						</div>
-
 					</div>
 				</div>
+			</div>
+			<div class="margin-top-5">
+			
 			</div>
 			<div class="footer footerPanel">
 				<div class="row">
@@ -469,6 +464,9 @@
 				</div>
 			</div>
 		</div>
+		<div th:if="${#session == null}" class="">
+				<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
+			</div>
 	</div>
 
 	<!-- Modal Delete Res -->

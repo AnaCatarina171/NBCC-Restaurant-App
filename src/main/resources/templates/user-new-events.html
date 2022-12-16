@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/bootstrap.css">
+<title>RESTO-APP</title>
+</head>
+
+<body>
+	<div class="admin-page">
+		<div class="user-left-panel">
+			<div class="logoAdmin">
+				<img src="img/NBCC-white-simple.png">
+			</div>
+			<div>
+				<div class="logoAdmin2">
+					<img src="img/dinning-logo2.png">
+				</div>
+				<div class="user-navigation">
+					<div class="navigation-item">
+						<a th:href="@{/userPanel}" class="nav-link">Home</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/todayFloorPlan}" class="nav-link">FloorPlan</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
+					</div>
+					<div th:if="${#session == null}" class="">
+						<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
+					</div>
+				</div>
+			</div>
+			<div></div>
+		</div>
+
+		<div class="main" th:if="${#session != null}">
+			<div class="top-information center">USER INFORMATION</div>
+			<div class="content">
+
+				<section class="my-5">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-8 mx-auto">
+								<h2>Upload Image Example</h2>
+								<p th:text="${message}" th:if="${message ne null}"
+									class="alert alert-primary"></p>
+								<form method="post" th:action="@{/uploadEventImage}"
+									enctype="multipart/form-data">
+									<div class="form-group">
+										<input type="file" name="image" accept="image/*"
+											class="form-control-file">
+									</div>
+									<button type="submit" class="btn btn-primary">Upload
+										image</button>
+								</form>
+								<span th:if="${msg != null}" th:text="${msg}"></span>
+							</div>
+						</div>
+					</div>
+				</section>
+
+			</div>
+			<div class="footer footerPanel">
+				<div class="row">
+					<div class="col-md-12">© Copyright 2022. All Rights Reserved.
+						|| Designed By: DevAtlantics - Ana Silva & Jose Silva</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+
+</html>
