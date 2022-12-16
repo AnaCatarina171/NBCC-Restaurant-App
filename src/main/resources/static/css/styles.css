@@ -1767,7 +1767,6 @@ Simple CSS3 Fade-in Animation
 	padding: 10px;
 	background-color: transparent;
 	background-repeat: no-repeat;
-	font-size: 2.5rem;
 	cursor: pointer;
 	overflow: hidden;
     outline: none;
@@ -1780,7 +1779,6 @@ Simple CSS3 Fade-in Animation
 	padding: 10px;
 	background-color: transparent;
 	background-repeat: no-repeat;
-	font-size: 2.5rem;
 	cursor: pointer;
 	overflow: hidden;
     outline: none;
@@ -1962,6 +1960,60 @@ Simple CSS3 Fade-in Animation
 }
 .form-item label{
 	color:#000;
+}
+
+.grid-menu-container{
+	display:grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 5em;
+}
+
+.menu-details{
+	display:flex;
+	flex-direction:column;
+	gap:10px;
+}
+
+.menu-section-template {
+	display:grid;
+}
+
+.menu-section-title, .menu-section-content{
+	grid-column:1;
+	grid-row:1;
+} 
+
+.menu-section-title{
+	background-color: #fff;
+	color: #000;
+	font-weight:bold;
+	font-size: 1.2rem;
+	width:30%;
+	height:fit-content;
+	margin-left:1rem;
+	padding:0.5rem;
+	z-index:2;
+}
+
+.menu-section-content{
+	margin-top:1rem;
+	padding-top:2rem;
+	border:2px solid #fff;
+	width:100%;
+	z-index:1;
+}
+
+.menu-section-dish{
+	text-align: left;
+	padding-left: 5%;
+}
+
+.menu-dish-title{
+	font-size: 1rem;
+}
+
+.menu-dish-description{
+	margin-bottom:0.4rem;
 }
 
 /* Add styles to the form container 

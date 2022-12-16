@@ -46,6 +46,5 @@ public class DishService {
 
 	public void deleteDish(long dId) {
 		dishRepo.deleteById(dId);
-		
 	}
 }

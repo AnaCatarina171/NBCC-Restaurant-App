@@ -2,11 +2,13 @@ package ca.nbcc.restapp.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
@@ -49,15 +51,6 @@ public class MenuController {
 
 	@GetMapping("/customerMenuDisplay")
 	public String userMenuPage(Model model) {
-//		Menu breakfastMenu = ms.getBreakfastMenu();
-//		Menu lunchMenu = ms.getLunchMenu();
-//		Menu eveningMenu = ms.getEveningMenu();
-//		
-//		List<Menu> menusToDisplay = new ArrayList<>();
-//		
-//		menusToDisplay = ms.getMenusToDisplay();
-//		
-//		model.addAttribute("menusList", menusToDisplay);
 		setupMenuPanel(model);
 		return "menu-display";
 	}
@@ -183,9 +176,9 @@ public class MenuController {
 		dishToAdd.setMenuSet(newMenuSet);
 		ds.addNewDish(dishToAdd);
 
-		Set<Dish> newMenuDishSet = menuToPopulate.getDishList();
-		newMenuDishSet.add(dishToAdd);
-		menuToPopulate.setDishList(newMenuDishSet);
+		List<Dish> newMenuDishList = menuToPopulate.getDishList();
+		newMenuDishList.add(dishToAdd);		
+		menuToPopulate.setDishList(newMenuDishList);
 		ms.saveMenu(menuToPopulate);
 
 		setupPopulateMenuPage(model, 0);
@@ -195,7 +188,7 @@ public class MenuController {
 	@GetMapping("/addDishToMenu/{dId}")
 	public String addDishToMenu(Model model, @PathVariable("dId") long rId) {
 		Menu menuToPopulate = ms.getLastMenu();
-		Set<Dish> menuDishList = menuToPopulate.getDishList();
+		List<Dish> menuDishList = menuToPopulate.getDishList();
 		menuDishList.add(ds.getDishById(rId));
 		menuToPopulate.setDishList(menuDishList);
 		ms.saveMenu(menuToPopulate);
@@ -207,11 +200,10 @@ public class MenuController {
 	@GetMapping("/addDishToRecalledMenu/{dId}/{mId}")
 	public String addDishToRecalledMenu(Model model, @PathVariable("dId") long dId, @PathVariable("mId") long mId) {
 		Menu menuToPopulate = ms.getMenuById(mId);
-		Set<Dish> menuDishList = menuToPopulate.getDishList();
+		List<Dish> menuDishList = menuToPopulate.getDishList();
 
 		menuDishList.add(ds.getDishById(dId));
 //		System.out.println(menuDishList.toString());
-
 		menuToPopulate.setDishList(menuDishList);
 //		System.out.println(menuToPopulate.getDishList().toString());
 		ms.saveMenu(menuToPopulate);

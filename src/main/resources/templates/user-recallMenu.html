@@ -27,22 +27,22 @@
 					<img src="img/dinning-logo2.png">
 				</div>
 				<div class="user-navigation">
-				<div class="navigation-item">
-					<a th:href="@{/userPanel}" class="nav-link">Home</a>
+					<div class="navigation-item">
+						<a th:href="@{/userPanel}" class="nav-link">Home</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
+					</div>
+					<div class="navigation-item">
+						<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
+					</div>
 				</div>
-				<div class="navigation-item">
-					<a th:href="@{/toMenuPanel}" class="nav-link">Menus</a>
-				</div>
-				<div class="navigation-item">
-					<a th:href="@{/toReservationAdmin}" class="nav-link">Reservations</a>
-				</div>
-				<div class="navigation-item">
-					<a th:href="@{/toFloorPlanAdmin}" class="nav-link">FloorPlan</a>
-				</div>
-				<div class="navigation-item">
-					<a th:href="@{/toCustomerView}" class="nav-link">Customer View</a>
-				</div>
-			</div>
 			</div>
 			<div></div>
 		</div>
@@ -65,9 +65,7 @@
 									</form>
 								</div>
 								<div class="add-new-item">
-									<button class="button-6" id="btnNewDish">
-										Add Dish
-									</button>
+									<button class="button-6" id="btnNewDish">Add Dish</button>
 								</div>
 							</div>
 
@@ -79,8 +77,8 @@
 									<table class="styled-table2">
 										<thead>
 											<tr>
-												<th>Category</th>
 												<th>Name</th>
+												<th>Category</th>
 												<th>Nationality</th>
 												<th>Action</th>
 											</tr>
@@ -88,17 +86,15 @@
 										<tbody>
 											<!-- TO DO:  LIST OF APPETIZER, ENTREE, DESERT AND DRINK BASED ON MENU -->
 											<tr th:each="dish : ${dishList}">
-												<td th:text="${dish.category}"></td>
 												<td th:text="${dish.name}"></td>
+												<td th:text="${dish.category}"></td>
 												<td th:text="${dish.Nationality}"></td>
 												<td><a
 													th:href="@{/addDishToRecalledMenu/{dId}/{mId}(dId=${dish.id}, mId=${menuToPopulate.id})}"
 													class="action-link">Add <i
-														class="fa-regular fa-circle-right"></i></a> / 
-												<a
+														class="fa-regular fa-circle-right"></i></a> / <a
 													th:href="@{/deleteDishRecalled/{dId}/{mId}(dId=${dish.id}, mId=${menuToPopulate.id})}"
-													class="action-link">Delete <i
-														class="fa-solid fa-trash"></i></a></td>
+													class="action-link">Delete <i class="fa-solid fa-trash"></i></a></td>
 											</tr>
 										</tbody>
 									</table>
@@ -132,7 +128,9 @@
 								</h2>
 								<div class="content-right flex-container">
 									<div>
-										<a class="button-6" th:href="@{/toSaveMenu/{mId}(mId=${menuToPopulate.id})}">Save </a>
+										<a class="button-6"
+											th:href="@{/toSaveMenu/{mId}(mId=${menuToPopulate.id})}">Save
+										</a>
 									</div>
 								</div>
 							</div>
@@ -142,6 +140,7 @@
 									<thead>
 										<tr>
 											<th>Name</th>
+											<th>Category</th>
 											<th>Description</th>
 											<th>Nationality</th>
 										</tr>
@@ -149,6 +148,7 @@
 									<tbody>
 										<tr th:each="dish : ${menuToPopulate.getDishList()}">
 											<td th:text="${dish.name}"></td>
+											<td th:text="${dish.category}"></td>
 											<td th:text="${dish.Description}"></td>
 											<td th:text="${dish.Nationality}"></td>
 										</tr>

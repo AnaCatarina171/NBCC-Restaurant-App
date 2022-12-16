@@ -50,6 +50,9 @@
 			<div th:if="${#session == null}" class="">
 				<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
 			</div>
+			<div class="">
+				<a th:href="@{/userPanel}" class="button-6">Staff Panel</a>
+			</div>
 			<div th:if="${#session != null}" class="">
 				<a th:href="@{/goToLogout}" class="button-6 cancelBtn">Sign Out</a>
 			</div>
