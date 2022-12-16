@@ -146,7 +146,7 @@ public class ReservationController {
 		selectedDateS = sdt.format(selectedDate);
 
 		for (var r : todayReservations) {
-
+    
 			// Getting only confirmed reservations
 			if (r.getStatus().equals(ReservationStatus.CONFIRMED)) {
 
@@ -160,7 +160,6 @@ public class ReservationController {
 					nightReservations.add(r);
 				}
 			}
-
 		}
 
 		if (currentPeriod != null) {
