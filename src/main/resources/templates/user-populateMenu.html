@@ -83,8 +83,8 @@
 									<table class="styled-table2">
 										<thead>
 											<tr>
-												<th>Category</th>
 												<th>Name</th>
+												<th>Category</th>												
 												<th>Nationality</th>
 												<th>Action</th>
 											</tr>
@@ -92,8 +92,8 @@
 										<tbody>
 											<!-- TO DO:  LIST OF APPETIZER, ENTREE, DESERT AND DRINK BASED ON MENU -->
 											<tr th:each="dish : ${dishList}">
-												<td th:text="${dish.category}"></td>
 												<td th:text="${dish.name}"></td>
+												<td th:text="${dish.category}"></td>												
 												<td th:text="${dish.Nationality}"></td>
 												<td><a
 													th:href="@{/addDishToMenu/{dId}(dId=${dish.id})}"
@@ -151,6 +151,7 @@
 									<thead>
 										<tr>
 											<th>Name</th>
+											<th>Category</th>
 											<th>Description</th>
 											<th>Nationality</th>
 										</tr>
@@ -159,6 +160,7 @@
 										<!-- TO DO:  LIST OF APPETIZER, ENTREE, DESERT AND DRINK BASED ON MENU -->
 										<tr th:each="dish : ${menuToPopulate.getDishList()}">
 											<td th:text="${dish.name}"></td>
+											<td th:text="${dish.category}"></td>
 											<td th:text="${dish.Description}"></td>
 											<td th:text="${dish.Nationality}"></td>
 										</tr>

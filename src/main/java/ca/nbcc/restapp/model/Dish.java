@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Dish_Table")
-public class Dish {
+public class Dish  implements Comparable<Dish>{
 
 	@Id
 	@SequenceGenerator(name = "DISH_SEQ_GEN", sequenceName = "DISH_SEQ", initialValue = 1, allocationSize = 1)
@@ -126,5 +126,10 @@ public class Dish {
 	public String toString() {
 		return "Dish [id=" + id + ", name=" + name + ", description=" + description + ", nationality=" + nationality
 				+ ", category=" + category + ", menu=" + menu + "]";
+	}
+
+	@Override
+	public int compareTo(Dish o) {
+		return category.getCategoryValue() - o.getCategory().getCategoryValue();
 	}
 }
