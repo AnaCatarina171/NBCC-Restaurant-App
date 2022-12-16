@@ -131,7 +131,6 @@
 
 									<th:block th:replace="_modals :: modal('setBreakfast')">modal</th:block>
 								</div>
-
 							</div>
 							<div class="grid-menu ">
 								<h2>Lunch Menu</h2>
@@ -203,7 +202,6 @@
 										value="Change Featured Menu">
 
 									<th:block th:replace="_modals :: modal('setLunch')">modal</th:block>
-
 								</div>
 							</div>
 							<div class="grid-menu">
@@ -287,18 +285,22 @@
 				<div class="cart-primary">
 					<div class="cart-primary-title">All Menus</div>
 					<div class="cart-primary-content">
+
 						<div th:each="menu : ${allMenus}" class="cart-secondary">
 							<div class="cart-secondary-title flex-container-top-right-header">
 								<div>
 									<h3 th:text="${menu.title}"></h3>
 								</div>
 								<div>
+
 									<form th:action="@{/toDeleteMenu}" method="GET">
 										<input type="text" name="menuId" hidden th:value="${menu.id}">
 										<button class="icon-small">
 											<i class="fa-solid fa-trash"></i>
 										</button>
 									</form>
+
+
 								</div>
 							</div>
 							<div class="cart-secondary-content">
@@ -314,6 +316,7 @@
 											data-target="#displayMenu"
 											th:attr="data-object-id=''+${menu.id}+'', data-object-name=''+${menu.id}+'', data-target='#displayMenu'"
 											value="Hide">
+
 										<th:block th:replace="_modals :: modal('displayMenu')">modal</th:block>
 									</div>
 									 
@@ -322,6 +325,7 @@
 											data-target="#displayMenu"
 											th:attr="data-object-id=''+${menu.id}+'', data-object-name=''+${menu.id}+'', data-target='#displayMenu'"
 											value="Display">
+
 										<th:block th:replace="_modals :: modal('displayMenu')">modal</th:block>
 									</div>
  									-->
@@ -330,6 +334,7 @@
 								</div>
 							</div>
 						</div>
+
 					</div>
 				</div>
 			</div>
