@@ -12,9 +12,4 @@ public class CustomerController {
 		super();
 		this.ctx = ctx;
 	}
-	
-	@GetMapping("/toCustomerView")
-	public String toCustomerView() {
-		return "index.html";
-	}
 }

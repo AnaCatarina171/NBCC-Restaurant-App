@@ -43,18 +43,15 @@
 						Reservation </a>
 				</div>
 				<div class="navigation-item ">
-					<a th:href="@{/guestsEventsPage}" class="nav-link"> Next Events </a>
+					<a th:href="@{/guestsEventsPage}" class="nav-link"> Next Events
+					</a>
 				</div>
 				<div th:if="${#session != null}" class="navigation-item ">
 					<a th:href="@{/userPanel}" class=" button-6">Staff Panel</a>
 				</div>
 			</div>
-
 			<div th:if="${#session == null}" class="">
 				<a th:href="@{/goToLogin}" class="button-6">Staff Panel</a>
-			</div>
-			<div class="">
-				<a th:href="@{/userPanel}" class="button-6">Staff Panel</a>
 			</div>
 			<div th:if="${#session != null}" class="">
 				<a th:href="@{/goToLogout}" class="button-6 cancelBtn">Sign Out</a>
@@ -62,7 +59,7 @@
 		</div>
 	</div>
 
-<div class="titleBackground titleBackgroundCooker">
+	<div class="titleBackground titleBackgroundCooker">
 		<h1 class="firstPageTitle">Home</h1>
 	</div>
 	<div class="main  medium-width">
@@ -92,12 +89,12 @@
 				<div class="col-md-4">
 					<h2 class="">Additional Information</h2>
 					<div>
-					<ul class="ulHome">
-						<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-						<li>Sed ut perspiciatis unde omnis iste natus error </li>
-						<li>At vero eos et accusamus et iusto odio dignissimos</li>
-						<li> Aut illo voluptatem hic consectetur alias</li>
-					</ul>
+						<ul class="ulHome">
+							<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+							<li>Sed ut perspiciatis unde omnis iste natus error</li>
+							<li>At vero eos et accusamus et iusto odio dignissimos</li>
+							<li>Aut illo voluptatem hic consectetur alias</li>
+						</ul>
 					</div>
 				</div>
 				<div class="col-md-4 ">
@@ -135,12 +132,25 @@
 								</tr>
 							</tbody>
 						</table>
-						<a class="nav-link" th:href="@{/reservationOptions}">Check Reservation Times*</a>
+						<a class="nav-link" th:href="@{/reservationOptions}">Check
+							Reservation Times*</a>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<h2 class="">Next Events at Dinning Room 1234</h2>
-					<img class="eventsImg" src="img/ukrainFest.jpg">
+					<div class="slideshow-container">
+
+						<div class="mySlides fadeSlide" th:each="ev : ${events}">
+							<img th:src="@{${'/uploads/' + ev.imageUrl}}" style="width: 100%">
+							<div class="text" th:text="${ev.title}"></div>
+						</div>
+
+					</div>
+					<br>
+
+					<div style="text-align: center">
+						<span class="dot" th:each="ev : ${events}"></span> 
+					</div>
 				</div>
 			</div>
 
@@ -204,6 +214,31 @@
 			</div>
 		</div>
 	</footer>
+
+	<script>
+		let slideIndex = 0;
+		showSlides();
+
+		function showSlides() {
+			let i;
+			let slides = document.getElementsByClassName("mySlides");
+			let dots = document.getElementsByClassName("dot");
+			for (i = 0; i < slides.length; i++) {
+				slides[i].style.display = "none";
+			}
+			slideIndex++;
+			if (slideIndex > slides.length) {
+				slideIndex = 1
+			}
+			for (i = 0; i < dots.length; i++) {
+				dots[i].className = dots[i].className.replace(" activeSlide", "");
+			}
+			slides[slideIndex - 1].style.display = "block";
+			dots[slideIndex - 1].className += " activeSlide";
+			setTimeout(showSlides, 8000); // Change image every 2 seconds
+		}
+	</script>
+
 </body>
 
 </html>

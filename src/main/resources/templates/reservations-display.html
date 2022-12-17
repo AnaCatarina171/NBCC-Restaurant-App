@@ -156,7 +156,7 @@
 						th:each="pageNumber : ${pageNumbers}">
 						<a
 							th:if="${orderBySelected != null}"
-							th:href="@{/viewReservations(size=${resPage.size}, page=${pageNumber}, orderByP=${orderBySelected})}"
+							th:href="@{/viewReservations(size=${resPage.size}, page=${pageNumber}, orderBy=${orderBySelected})}"
 							th:text=${pageNumber}
 							th:class="${pageNumber==resPage.number + 1} ? active"></a>
 						<a

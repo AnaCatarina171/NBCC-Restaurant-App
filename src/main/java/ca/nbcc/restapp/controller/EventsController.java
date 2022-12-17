@@ -37,14 +37,7 @@ public class EventsController {
 	public String eventsPage(Model model) {
 
 		List<Event> allEvents = eS.getAllEvent();
-		List<Event> displayedEvents = new ArrayList<>();
-		
-		for(var a : allEvents) {
-			
-			if(a.isDisplayed()) {
-				displayedEvents.add(a);
-			}
-		}
+		List<Event> displayedEvents = eS.getDisplayedEvents();
 		
 		model.addAttribute("allEvents", allEvents);
 		model.addAttribute("displayedEvents", displayedEvents);
