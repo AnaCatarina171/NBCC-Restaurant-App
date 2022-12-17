@@ -462,37 +462,37 @@ public class ReservationController {
 		String formatDate = simpleDateFormat.format(rToEdit.getDate());
 
 		// Sending email to Customer
-		/*
-		 * if (rToEdit.getStatus().equals(ReservationStatus.CONFIRMED)) {
-		 * 
-		 * String customerSubject = "Reservation Accepted - Dining Room 1234 "; String
-		 * customerMessage = "Your reservation #" + rToEdit.getId() +
-		 * " at Dining Room 1234 was confirmed! \n" + "We are waiting to see you on " +
-		 * formatDate + " !" +
-		 * "\n\n\n\n------------------------------ Reservation Info ------------------------------"
-		 * + "\n\n				Reservation #" + rToEdit.getId() +
-		 * "\n				Number of Guests: " + rToEdit.getGuests() +
-		 * "\n				Date: " + formatDate + " - " + rToEdit.getTime() +
-		 * "\n				Customer Name: " + rToEdit.getFirstName() + " " +
-		 * rToEdit.getLastName(); String customerEmail = rToEdit.getEmail();
-		 * sendEmail(customerSubject, customerMessage, customerEmail);
-		 * 
-		 * } else if (rToEdit.getStatus().equals(ReservationStatus.DENIED)) {
-		 * 
-		 * String customerSubject = "Reservation Denied - Dining Room 1234"; String
-		 * customerMessage = "Unfortunately, due to the high volume of reservations on "
-		 * + formatDate + " , your reservation #" + rToEdit.getId() +
-		 * " was denied. \n\n" +
-		 * "Try again for another date, or send us an email at: MO.Hospitality@nbcc.ca \n\n"
-		 * + "We apologize for the inconvenience, and we hope to see you soon!" +
-		 * "\n\n\n\n------------------------------ Reservation Info ------------------------------"
-		 * + "\n\n				Reservation #" + rToEdit.getId() +
-		 * "\n				Number of Guests: " + rToEdit.getGuests() +
-		 * "\n				Date: " + formatDate + " - " + rToEdit.getTime() +
-		 * "\n				Customer Name: " + rToEdit.getFirstName() + " " +
-		 * rToEdit.getLastName(); String customerEmail = rToEdit.getEmail();
-		 * sendEmail(customerSubject, customerMessage, customerEmail); }
-		 */
+		
+		  if (rToEdit.getStatus().equals(ReservationStatus.CONFIRMED)) {
+		  
+		  String customerSubject = "Reservation Accepted - Dining Room 1234 "; String
+		  customerMessage = "Your reservation #" + rToEdit.getId() +
+		  " at Dining Room 1234 was confirmed! \n" + "We are waiting to see you on " +
+		  formatDate + " !" +
+		  "\n\n\n\n------------------------------ Reservation Info ------------------------------"
+		  + "\n\n				Reservation #" + rToEdit.getId() +
+		  "\n				Number of Guests: " + rToEdit.getGuests() +
+		  "\n				Date: " + formatDate + " - " + rToEdit.getTime() +
+		  "\n				Customer Name: " + rToEdit.getFirstName() + " " +
+		  rToEdit.getLastName(); String customerEmail = rToEdit.getEmail();
+		  sendEmail(customerSubject, customerMessage, customerEmail);
+		  
+		  } else if (rToEdit.getStatus().equals(ReservationStatus.DENIED)) {
+		  
+		  String customerSubject = "Reservation Denied - Dining Room 1234"; String
+		  customerMessage = "Unfortunately, due to the high volume of reservations on "
+		  + formatDate + " , your reservation #" + rToEdit.getId() +
+		  " was denied. \n\n" +
+		  "Try again for another date, or send us an email at: MO.Hospitality@nbcc.ca \n\n"
+		  + "We apologize for the inconvenience, and we hope to see you soon!" +
+		  "\n\n\n\n------------------------------ Reservation Info ------------------------------"
+		  + "\n\n				Reservation #" + rToEdit.getId() +
+		  "\n				Number of Guests: " + rToEdit.getGuests() +
+		  "\n				Date: " + formatDate + " - " + rToEdit.getTime() +
+		  "\n				Customer Name: " + rToEdit.getFirstName() + " " +
+		  rToEdit.getLastName(); String customerEmail = rToEdit.getEmail();
+		  sendEmail(customerSubject, customerMessage, customerEmail); }
+		 
 
 		return "redirect:/processReservation/" + rToEdit.getId();
 	}
@@ -565,12 +565,12 @@ public class ReservationController {
 
 		// Email variables
 		subject = "New Pending Reservation No. " + addedReservation.getId();
-		message = "A new reservation was placed under the name of ... for " + formatDate + " at "
+		message = "A new reservation was placed under the name of " + addedReservation.getFirstName() + " " +  addedReservation.getLastName() + ", for " + formatDate + " at "
 				+ addedReservation.getTime()
 				+ ". \n\nGo to /DinningRoom123.ca/viewReservations to analyze this request.";
 
 		// Sending email to Dining Room
-		// sendEmail(subject, message, email);
+		sendEmail(subject, message, email);
 
 		// Sending email to Customer
 		String customerSubject = "New Reservation at Dining Room 1234";
@@ -582,7 +582,7 @@ public class ReservationController {
 				+ reservationToAdd.getTime() + "\n				Customer Name: " + reservationToAdd.getFirstName() + " "
 				+ reservationToAdd.getLastName();
 		String customerEmail = reservationToAdd.getEmail();
-		// sendEmail(customerSubject, customerMessage, customerEmail);
+		sendEmail(customerSubject, customerMessage, customerEmail);
 
 		model.addAttribute("addedReservation", addedReservation);
 

@@ -33,6 +33,10 @@ public class EventService {
 		return er.findAll();
 	}
 	
+	public List<Event> getDisplayedEvents(){
+		return er.findDisplayedEvents();
+	}
+	
 	public Event addNewEvent(Event e) {
 		return er.save(e);
 	}

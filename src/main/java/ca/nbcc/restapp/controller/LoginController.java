@@ -49,21 +49,6 @@ public class LoginController {
 		super();
 		this.eS = eS;
 	}
-
-	@GetMapping("/")
-	public String toIndex(Model model) {
-
-		/*
-		 * Authentication authentication =
-		 * SecurityContextHolder.getContext().getAuthentication(); if (authentication ==
-		 * null || authentication instanceof AnonymousAuthenticationToken) {
-		 * 
-		 * model.addAttribute("empDet", new Employee());
-		 * 
-		 * return "login2"; }
-		 */
-		return "index";
-	}
 	
 	@GetMapping("/goToLogin")
 	public String toLoginIn(Model model) {

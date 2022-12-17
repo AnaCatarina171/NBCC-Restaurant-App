@@ -1,29 +1,79 @@
-<div class="row">
+<div class="black-modal row">
 	<div class="col-md-12">
 	<div th:if="${currentMenu} == null">
-		<h4>No menu to display yet.</h4>
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<h4>No menu to display yet.</h4>
+			</div>
+			<div class="col-md-1" >
+				<button type="button" class="close" style="color: #fff;" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+			</div>
+		</div>
 	</div>
 	<div th:unless="${currentMenu} == null">
-		<h2><span th:text="${currentMenu.type}"></span> Menu</h2>
-		<div class="table-container">
-			<table class="styled-table1">
-				<tbody>
-					<tr>
-						<td>Menu Title</td>
-					</tr>
-					<tr>
-						<td th:text="${currentMenu.title}"></td>
-					</tr>
-					<tr>
-						<td>Dish List</td>
-					</tr>
-					<tr th:each="dish : ${currentMenu.getDishList()}">
-						<td th:text="${dish.name}"></td>
-						<td th:text="${dish.Nationality}"></td>
-					</tr>
-				</tbody>
-			</table>
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<h4><span th:text="${currentMenu.type}"></span> Menu</h4>
+			</div>
+			<div class="col-md-1" >
+				<button type="button" class="close" style="color: #fff;" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+			</div>
 		</div>
+		<div class="menu-display-container">
+							<div class="menu-title center">
+								<h2 th:text="${currentMenu.title}"></h2>
+							</div>
+							<div class="menu-details">
+								<div class="menu-section-template" th:if="${currentMenu.getAppList().size()} > 0 ">
+									<div class="menu-section-title">Appetizer</div>
+									<div class="menu-section-content">
+										<div th:each="dish : ${currentMenu.getAppList()}"
+											class="menu-section-dish">
+											<div th:text="${dish.name}" class="menu-dish-title"></div>
+											<div th:text="${dish.description}"
+												class="menu-dish-description"></div>
+										</div>
+									</div>
+								</div>
+								<div class="menu-section-template" th:if="${currentMenu.getEntreeList().size()} > 0 ">
+									<div class="menu-section-title">Entree</div>
+									<div class="menu-section-content">
+										<div th:each="dish : ${currentMenu.getEntreeList()}"
+											class="menu-section-dish">
+											<div th:text="${dish.name}" class="menu-dish-title"></div>
+											<div th:text="${dish.description}"
+												class="menu-dish-description"></div>
+										</div>
+									</div>
+								</div>
+								<div class="menu-section-template" th:if="${currentMenu.getDessertList().size()} > 0 ">
+									<div class="menu-section-title">Dessert</div>
+									<div class="menu-section-content">
+										<div th:each="dish : ${currentMenu.getDessertList()}"
+											class="menu-section-dish">
+											<div th:text="${dish.name}" class="menu-dish-title"></div>
+											<div th:text="${dish.description}"
+												class="menu-dish-description"></div>
+										</div>
+									</div>
+								</div>
+								<div class="menu-section-template" th:if="${currentMenu.getDrinkList().size()} > 0 ">
+									<div class="menu-section-title">Drink</div>
+									<div class="menu-section-content">
+										<div th:each="dish : ${currentMenu.getDrinkList()}"
+											class="menu-section-dish">
+											<div th:text="${dish.name}" class="menu-dish-title"></div>
+											<div th:text="${dish.description}"
+												class="menu-dish-description"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 	</div>
 </div>
 </div>

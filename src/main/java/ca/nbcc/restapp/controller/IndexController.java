@@ -14,65 +14,78 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ca.nbcc.restapp.model.Employee;
 import ca.nbcc.restapp.model.Reservation;
 import ca.nbcc.restapp.model.ReservationStatus;
+import ca.nbcc.restapp.service.EventService;
 import ca.nbcc.restapp.service.ReservationService;
 
 @Controller
 public class IndexController {
 
 	private ReservationService rS;
-	
+	private EventService eS;
+
 	ApplicationContext ctx;
-	
+
 	public IndexController(ApplicationContext ctx) {
 		super();
 		this.ctx = ctx;
 	}
-	
+
 	@Autowired
-	public IndexController(ReservationService rS, ApplicationContext ctx) {
+	public IndexController(ReservationService rS, ApplicationContext ctx, EventService eS) {
 		super();
 		this.rS = rS;
 		this.ctx = ctx;
+		this.eS = eS;
 	}
 
+	@GetMapping("/toCustomerView")
+	public String goToIndex(Model model/*, HttpSession session*/) {
 
+		/*if (session.getAttribute("CURRENT_USER") != null && !session.getAttribute("CURRENT_USER").toString().equals("")) {
+			String currentEmp = (String) session.getAttribute("CURRENT_USER");
+			// System.out.println(currentEmp);
+			model.addAttribute("userName", currentEmp);
+		}*/
 
-	@GetMapping("/index")
-	public String goToIndex(Model model, HttpSession session) {
-		
-		String currentEmp = (String) session.getAttribute("CURRENT_USER");
-		//System.out.println(currentEmp);
-		model.addAttribute("userName", currentEmp);
-		
+		model.addAttribute("events", eS.getDisplayedEvents());
+
 		return "index";
 	}
 	
+	@RequestMapping(value="/")
+	public String showIndexPage(Model model) {
+		model.addAttribute("events", eS.getDisplayedEvents());
+		
+		return "index";
+	}
+
 	@GetMapping("/toAboutUs")
 	public String goToAboutUs(Model model) {
-		
+
 		return "about-us";
 	}
-	
+
 	@GetMapping("/userPanel")
 	public String goToUserPanel(Model model) {
-		
+
 		List<Reservation> allReservations = rS.getAllCurrentOrFutureReservation();
 		List<Reservation> pendingReservations = new ArrayList<>();
-		
-		for(var res : allReservations) {
-			
-			if(res.getStatus() == ReservationStatus.PENDING) {
+
+		for (var res : allReservations) {
+
+			if (res.getStatus() == ReservationStatus.PENDING) {
 				pendingReservations.add(res);
 			}
 		}
-		
+
 		model.addAttribute("pendingReservations", pendingReservations);
-		
+
 		return "user-panel";
 	}
 }
